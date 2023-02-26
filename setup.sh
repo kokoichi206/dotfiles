@@ -10,13 +10,22 @@ if [ "$(basename $PWD)" != "dotfiles" ]; then
     echo "Please move to the top of dotfiles repository."
 fi
 
-# When creating symbolic links, relative paths are not allowed.
-# Pay attention to the execution location.
-ln -s "$PWD/.gitconfig" ~/.gitconfig
-ln -s "$PWD/.git-templates" ~/.git-templates
-ln -s "$PWD/.zshrc" ~/.zshrc
-ln -s "$PWD/.vimrc" ~/.vimrc
-ln -s "$PWD/.shell_aliases" ~/.shell_aliases
+
+# from $2 to $1
+backup_and_alias() {
+    if [ -f "$2" ]; then
+        mv "$2" "$2.backup"
+    fi
+    # When creating symbolic links, relative paths are not allowed.
+    # Pay attention to the execution location.
+    ln -s "$1" "$2"
+}
+
+backup_and_alias "$PWD/.gitconfig" ~/.gitconfig
+backup_and_alias "$PWD/.git-templates" ~/.git-templates
+backup_and_alias "$PWD/.zshrc" ~/.zshrc
+backup_and_alias "$PWD/.vimrc" ~/.vimrc
+backup_and_alias "$PWD/.shell_aliases" ~/.shell_aliases
 
 if [[ $(uname) == "Linux" ]]; then
     echo "Linux"
