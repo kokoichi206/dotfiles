@@ -25,3 +25,5 @@
 [mergetool "sourcetree"]
 	cmd = /Users/kokoichi/Applications/Sourcetree.app/Contents/Resources/opendiff-w.sh \"$LOCAL\" \"$REMOTE\" -ancestor \"$BASE\" -merge \"$MERGED\"
 	trustExitCode = true
+[alias]
+	sw = !git branch --all --format=\"%(refname:short)\" | fzf | xargs git checkout
