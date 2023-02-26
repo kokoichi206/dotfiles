@@ -16,6 +16,7 @@ ln -s "$PWD/.gitconfig" ~/.gitconfig
 ln -s "$PWD/.git-templates" ~/.git-templates
 ln -s "$PWD/.zshrc" ~/.zshrc
 ln -s "$PWD/.vimrc" ~/.vimrc
+ln -s "$PWD/.shell_aliases" ~/.shell_aliases
 
 # Install with brew
 brew install fzf

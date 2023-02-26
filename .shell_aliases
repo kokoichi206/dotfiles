@@ -1,0 +1,11 @@
+alias dc="docker compose"
+alias dce="docker compose exec"
+alias rr="echo $?"
+
+# cd and ls
+function custom_cd()
+{
+  # \cd $@ && clear && ls
+  \cd $@ && ls
+}
+alias cd='custom_cd'

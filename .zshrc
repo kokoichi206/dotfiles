@@ -120,10 +120,6 @@ eval "$(anyenv init -)"
 # Android Studio
 export PATH=$PATH:/Users/kokoichi/Library/Android/sdk/platform-tools
 
-alias dc="docker compose"
-alias dce="docker compose exec"
-
-
 export PATH="$GOENV_ROOT/bin:$PATH"
 
 
@@ -157,21 +153,15 @@ export PATH="/opt/homebrew/opt/postgresql@12/bin:$PATH"
 export LDFLAGS="-L/opt/homebrew/opt/postgresql@12/lib"
 export CPPFLAGS="-I/opt/homebrew/opt/postgresql@12/include"
 
+# ============ Alias definitions ============
+if [ -f ~/.shell_aliases ]; then
+    . ~/.shell_aliases
+fi
 
+# ============ Alias ONLY for zsh ============
 alias sz="source ~/.zshrc"
 alias cz="cat ~/.zshrc"
 alias vz="vim ~/.zshrc"
-
-alias rr="echo $?"
-
-alias koko="cd ~/ghq/github.com/kokoichi206/"
-
-function custom_cd()
-{
-  # \cd $@ && clear && ls
-  \cd $@ && ls
-}
-alias cd='custom_cd'
 
 select-history() {
     # Write to command-line.
@@ -182,3 +172,6 @@ select-history() {
 # Assign Ctrl + R.
 zle -N select-history
 bindkey '^r' select-history
+
+# ============ Alias in my mac ============
+alias koko="cd ~/ghq/github.com/kokoichi206/"

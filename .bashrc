@@ -33,6 +33,12 @@ if ! shopt -oq posix; then
     fi
 fi
 
+# ============ Alias definitions ============
+if [ -f ~/.shell_aliases ]; then
+    . ~/.shell_aliases
+fi
+
+# ============ Alias ONLY for bash ============
 alias vb="vim ~/.bashrc"
 alias cb="cat ~/.bashrc"
 alias sb="source ~/.bashrc"
@@ -45,15 +51,3 @@ select-history() {
 }
 # Assign Ctrl + R.
 bind -x '"\C-r": select-history'
-
-alias dc="docker compose"
-alias dce="docker compose exec"
-alias rr="echo $?"
-
-# cd and ls
-function custom_cd()
-{
-  # \cd $@ && clear && ls
-  \cd $@ && ls
-}
-alias cd='custom_cd'
