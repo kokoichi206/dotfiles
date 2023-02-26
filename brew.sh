@@ -2,6 +2,8 @@
 
 # Install command-line tools using Homebrew
 
+brew update
+
 # git
 brew install ghq
 
