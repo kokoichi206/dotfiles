@@ -18,8 +18,13 @@ ln -s "$PWD/.zshrc" ~/.zshrc
 ln -s "$PWD/.vimrc" ~/.vimrc
 ln -s "$PWD/.shell_aliases" ~/.shell_aliases
 
-# Install with brew
-brew install fzf
+if [[ $(uname) == "Linux" ]]; then
+    echo "Linux"
+    # TODO: Do something
+elif [[ $(uname) == "Darwin" ]]; then
+    echo "MacOS"
+    bash brew.sh
+fi
 
 # Install oh-my-zsh
 # https://ohmyz.sh/#install
