@@ -124,9 +124,7 @@ alias dc="docker compose"
 alias dce="docker compose exec"
 
 
-export GOENV_ROOT="$HOME/.goenv"
 export PATH="$GOENV_ROOT/bin:$PATH"
-eval "$(goenv init -)"
 
 
 eval "$(nodenv init -)"
@@ -134,8 +132,10 @@ export PATH="$PATH:$(npm bin -g)"
 
 export PATH="$PATH:/Users/kokoichi/flutter/bin"
 
-export PATH="$PATH:$HOME/go/1.18.4/bin/"
-export PATH="$PATH:$HOME/go/1.16.10/bin/"
+export PATH="$PATH:/usr/local/go/bin/go"
+export PATH="$PATH:$HOME/go/bin"
+export GOPATH="$HOME/go"
+export GOROOT="/usr/local/go/"
 
 autoload -U +X bashcompinit && bashcompinit
 complete -o nospace -C /opt/homebrew/Cellar/tfenv/2.2.3/versions/1.2.2/terraform terraform
@@ -157,7 +157,6 @@ export PATH="/opt/homebrew/opt/postgresql@12/bin:$PATH"
 export LDFLAGS="-L/opt/homebrew/opt/postgresql@12/lib"
 export CPPFLAGS="-I/opt/homebrew/opt/postgresql@12/include"
 
-export PATH="$PATH:$(go env GOPATH)/bin"
 
 alias sz="source ~/.zshrc"
 alias cz="cat ~/.zshrc"
@@ -174,4 +173,12 @@ function custom_cd()
 }
 alias cd='custom_cd'
 
-
+select-history() {
+    # Write to command-line.
+    BUFFER="$(history -n -r 1 | fzf --query "$BUFFER")"
+    # Move cursor to the right end of the command-line.
+    CURSOR="$#BUFFER"
+}
+# Assign Ctrl + R.
+zle -N select-history
+bindkey '^r' select-history

@@ -1,7 +1,8 @@
 #!/bin/bash
 #
 # Description
-#   Setup for my dotfiles.
+#   Setup of my dotfiles.
+#   Now, only MacOS with zsh is supported. 
 set -euo pipefail
 
 if [ "$(basename $PWD)" != "dotfiles" ]; then
@@ -13,3 +14,11 @@ fi
 # Pay attention to the execution location.
 ln -s "$PWD/.gitconfig" ~/.gitconfig
 ln -s "$PWD/.git-templates" ~/.git-templates
+ln -s "$PWD/.zshrc" ~/.zshrc
+
+# Install with brew
+brew install fzf
+
+# Install oh-my-zsh
+# https://ohmyz.sh/#install
+sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
