@@ -165,7 +165,8 @@ alias vz="vim ~/.zshrc"
 
 select-history() {
     # Write to command-line.
-    BUFFER="$(history -n -r 1 | fzf --query "$BUFFER")"
+    # BUFFER="$(history -n -r 1 | fzf --query "$BUFFER")"
+    BUFFER="$(history -n -r 1 | sort | uniq | fzf --query "$BUFFER")"
     # Move cursor to the right end of the command-line.
     CURSOR="$#BUFFER"
 }
