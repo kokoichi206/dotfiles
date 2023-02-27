@@ -61,3 +61,14 @@ alias emptytrash=" \
     rm -rv \"/Users/paulirish/Library/Application Support/stremio/Cache\";  \
     rm -rv \"/Users/paulirish/Library/Application Support/stremio/stremio-cache\" \
 "
+
+# pbcopy command
+if [[ $(uname -a | grep microsoft) -eq 0 ]]; then
+    # WSL2
+    echo "wsl2"
+    # alias pbcopy='clip.exe'
+elif [[ $(uname) == "Linux" ]]; then
+    # Linux
+    echo "linux"
+    # alias pbcopy='xsel --clipboard --input'
+fi
