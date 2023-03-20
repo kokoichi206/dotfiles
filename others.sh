@@ -23,7 +23,7 @@ OS="$(uname | tr '[:upper:]' '[:lower:]')"
 TARGET="${GO_VERSION}.${OS}-${arch}.tar.gz"
 # rm -rf /usr/local/go && tar -C /usr/local -xzf "go$GO_VERSION.${OS,,}-${arch}.tar.gz"
 wget -N "https://golang.org/dl/${TARGET}"
-sudo tar -C /usr/local/-xzf "${TARGET}"
+sudo tar -C /usr/local/ -xzf "${TARGET}"
 rm "${TARGET}"
 
 echo "add the following line to the .bashrc or .zshrc"
