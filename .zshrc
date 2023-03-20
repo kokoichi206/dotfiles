@@ -111,8 +111,6 @@ source $ZSH/oh-my-zsh.sh
 # alias vim="nvim"
 # alias view="nvim -R"
 
-eval "$(anyenv init -)"
-
 # To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
 [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
 
@@ -123,7 +121,6 @@ export PATH=$PATH:/Users/kokoichi/Library/Android/sdk/platform-tools
 export PATH="$GOENV_ROOT/bin:$PATH"
 
 
-eval "$(nodenv init -)"
 export PATH="$PATH:$(npm bin -g)"
 
 export PATH="$PATH:/Users/kokoichi/flutter/bin"
@@ -136,14 +133,7 @@ export GOROOT="/usr/local/go/"
 autoload -U +X bashcompinit && bashcompinit
 complete -o nospace -C /opt/homebrew/Cellar/tfenv/2.2.3/versions/1.2.2/terraform terraform
 
-# rbenv
-if [[ -s ~/.rbenv ]]; then
-  eval "$(rbenv init -)"
-fi
-
 alias gtt="/Users/kokoichi/ghq/github.com/kokoichi206/go-gtt/gtt"
-
-eval "$(rbenv init -)"
 
 source $HOME/.zshenv
 
