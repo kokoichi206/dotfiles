@@ -3,7 +3,7 @@
 ## other installation
 
 - [go](https://go.dev/doc/install)
-- [docker]()
+- [docker](https://docs.docker.com/engine/install/ubuntu)
 - [oh-my-zsh](https://ohmyz.sh/#install)
 
 ## brew
