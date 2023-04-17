@@ -12,3 +12,9 @@
 # Brewfile is created by this command.
 brew bundle dump
 ```
+
+## DOING...
+
+``` sh
+curl -o https://github.com/kokoichi206/dotfiles/setup-repo.sh
+```
