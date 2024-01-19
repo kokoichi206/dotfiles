@@ -118,8 +118,6 @@ source $ZSH/oh-my-zsh.sh
 # Android Studio
 export PATH=$PATH:/Users/kokoichi/Library/Android/sdk/platform-tools
 
-export PATH="$GOENV_ROOT/bin:$PATH"
-
 
 export PATH="$PATH:$(npm bin -g)"
 
@@ -128,7 +126,6 @@ export PATH="$PATH:/Users/kokoichi/flutter/bin"
 export PATH="$PATH:/usr/local/go/bin/go"
 export PATH="$PATH:$HOME/go/bin"
 export GOPATH="$HOME/go"
-export GOROOT="/usr/local/go/"
 
 autoload -U +X bashcompinit && bashcompinit
 complete -o nospace -C /opt/homebrew/Cellar/tfenv/2.2.3/versions/1.2.2/terraform terraform
@@ -153,10 +150,90 @@ alias sz="source ~/.zshrc"
 alias cz="cat ~/.zshrc"
 alias vz="vim ~/.zshrc"
 
+# ============ Alias in my mac ============
+alias koko="cd ~/ghq/github.com/kokoichi206/"
+
+export LANG=en_US.UTF-8
+export LC_ALL=en_US.UTF-8
+
+export NVM_DIR="$HOME/.nvm"
+[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
+[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
+
+export PATH="$PATH:$(go env GOPATH)/bin"
+
+
+javahome() {
+  unset JAVA_HOME 
+  export JAVA_HOME=$(/usr/libexec/java_home -v "$1");
+  java -version
+}
+
+alias j1.8='javahome 1.8'
+alias j11='javahome 11'
+alias j17='javahome 17'
+j11
+
+uuid() {
+  uuidgen | tr A-Z a-z
+}
+
+. /opt/homebrew/opt/asdf/libexec/asdf.sh
+
+
+export PYENV_ROOT="$HOME/.pyenv"
+export PATH="$PYENV_ROOT/bin:$PATH"
+eval "$(pyenv init --path)"
+eval "$(pyenv init -)"
+
+# ======== k8s ========
+alias kt='kubectl'
+alias kc='kubectl'
+
+# history of zsh
+setopt HIST_EXPIRE_DUPS_FIRST
+setopt HIST_IGNORE_DUPS
+# NOT set this flag in order to keep past successful commands (and can be searched).
+# setopt HIST_IGNORE_ALL_DUPS
+setopt HIST_IGNORE_SPACE
+setopt HIST_FIND_NO_DUPS
+setopt HIST_SAVE_NO_DUPS
+setopt HIST_REDUCE_BLANKS
+setopt EXTENDED_HISTORY
+setopt HIST_NO_STORE
+setopt SHARE_HISTORY
+
+HISTFILE="$HOME/.zsh_history"
+HISTSIZE=50000
+SAVEHIST=10000
+
+HISTORY_IGNORE="(vz|sz|cz|ls|cd|pwd|exit|cd ..|last_command=*|grep -vxF*|sed '$d' $HISTFILE*)"
+
+precmd() {
+    if [[ $? != 0 ]]; then
+        # Write to $HISTFILE immediatlly.
+        fc -W
+
+        # Delete from $HISTFILE when the last command fails.
+        # version1
+        # last_command="$(tail -n1 $HISTFILE)";
+        # grep -vxF "$last_command" $HISTFILE > temp_histfile && mv temp_histfile $HISTFILE
+        # version2
+        sed '$d' $HISTFILE > temp_histfile && mv temp_histfile $HISTFILE
+
+        # NOT updating the history command here in order to load the previous command using the up arrow key.
+        # fc -R $HISTFILE
+    fi
+}
+
 select-history() {
+    # Load from $HISTFILE (update history command).
+    fc -R $HISTFILE
+
     # Write to command-line.
-    # BUFFER="$(history -n -r 1 | fzf --query "$BUFFER")"
-    BUFFER="$(history -n -r 1 | sort | uniq | fzf --query "$BUFFER")"
+    # BUFFER="$(HISTCONTROL=ignoredups; history -n -r 1 | fzf --query "$BUFFER")"
+    BUFFER="$(history | awk '{for(i=2;i<=NF;++i) printf "%s ", $i; printf "\n"}' | sort | uniq | fzf --query "$BUFFER")"
+
     # Move cursor to the right end of the command-line.
     CURSOR="$#BUFFER"
 }
@@ -164,5 +241,12 @@ select-history() {
 zle -N select-history
 bindkey '^r' select-history
 
-# ============ Alias in my mac ============
-alias koko="cd ~/ghq/github.com/kokoichi206/"
+alias ks='k9s'
+
+export PATH="$HOME/.istio/istio-1.20.0/bin:$PATH"
+
+nvm use 18.19.0
+
+alias rr='echo $?'
+
+export PATH="$HOME/.cargo/bin:$PATH"
