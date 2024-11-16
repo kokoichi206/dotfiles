@@ -9,7 +9,7 @@ fi
 # export PATH=$HOME/bin:/usr/local/bin:$PATH
 
 # Path to your oh-my-zsh installation.
-export ZSH="/Users/kokoichi/.oh-my-zsh"
+export ZSH="$HOME/.oh-my-zsh"
 
 # Set name of the theme to load --- if set to "random", it will
 # load a random theme each time oh-my-zsh is loaded, in which case,
@@ -116,12 +116,12 @@ source $ZSH/oh-my-zsh.sh
 
 
 # Android Studio
-export PATH=$PATH:/Users/kokoichi/Library/Android/sdk/platform-tools
+export PATH=$PATH:$HOME/Library/Android/sdk/platform-tools
 
 
 export PATH="$PATH:$(npm bin -g)"
 
-export PATH="$PATH:/Users/kokoichi/flutter/bin"
+export PATH="$PATH:$HOME/flutter/bin"
 
 export PATH="$PATH:/usr/local/go/bin/go"
 export PATH="$PATH:$HOME/go/bin"
@@ -130,7 +130,7 @@ export GOPATH="$HOME/go"
 autoload -U +X bashcompinit && bashcompinit
 complete -o nospace -C /opt/homebrew/Cellar/tfenv/2.2.3/versions/1.2.2/terraform terraform
 
-alias gtt="/Users/kokoichi/ghq/github.com/kokoichi206/go-gtt/gtt"
+alias gtt="$HOME/ghq/github.com/kokoichi206/go-gtt/gtt"
 
 source $HOME/.zshenv
 
