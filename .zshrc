@@ -120,6 +120,7 @@ export PATH=$PATH:$HOME/Library/Android/sdk/platform-tools
 
 
 export PATH="$PATH:$(npm bin -g)"
+export PATH="$(npm prefix -g)/bin:$PATH"
 
 export PATH="$PATH:$HOME/flutter/bin"
 
@@ -245,8 +246,139 @@ alias ks='k9s'
 
 export PATH="$HOME/.istio/istio-1.20.0/bin:$PATH"
 
-nvm use 18.19.0
-
 alias rr='echo $?'
 
 export PATH="$HOME/.cargo/bin:$PATH"
+
+jwt-claims () {
+    awk -F. '(l = length($2)){printf $2} END {if (l%4 != 0) {for(i=1; i<=(4-l%4); i++){printf "="}}}' | base64 -d
+}
+
+jtg () {
+	  node /usr/local/json-to-go/json-to-go.js
+}
+jtgc () {
+	  pbpaste | jtg | pbcopy
+}
+
+alias tf='terraform'
+
+alias pc='pbcopy'
+alias date-now='TZ=Asia/Tokyo date +%Y%m%d_%H%M%S'
+
+# Created by `pipx` on 2024-11-16 17:47:35
+export PATH="$PATH:$HOME/.local/bin"
+
+
+# asdf で ruby を install, build するため
+export LDFLAGS="-L/opt/homebrew/opt/libffi/lib"
+export CPPFLAGS="-I/opt/homebrew/opt/libffi/include"
+export PKG_CONFIG_PATH="/opt/homebrew/opt/libffi/lib/pkgconfig"
+export RUBY_CONFIGURE_OPTS="--with-openssl-dir=$(brew --prefix openssl@3)"
+
+export PATH="/opt/homebrew/opt/postgresql@16/bin:$PATH"
+
+# Added by Windsurf
+export PATH="/Users/kokoichi206/.codeium/windsurf/bin:$PATH"
+
+alias ws="windsurf"
+
+# Added by Windsurf - Next
+export PATH="/Users/kokoichi206/.codeium/windsurf/bin:$PATH"
+
+alias gw="git worktree"
+
+# https://zenn.dev/k3ntar0/articles/09ee240f379be1
+asdf reshim nodejs
+
+test -e "${HOME}/.iterm2_shell_integration.zsh" && source "${HOME}/.iterm2_shell_integration.zsh"
+
+
+
+# iTerm2環境かどうかをチェック
+is_iterm2() {
+    [[ "$TERM_PROGRAM" == "iTerm.app" ]] || [[ -n "$ITERM_SESSION_ID" ]]
+}
+
+# iTerm2 Badge更新関数
+update_iterm2_badge() {
+    # iTerm2環境でない場合は何もしない
+    if ! is_iterm2; then
+        return
+    fi
+    
+    local current_path="$PWD"
+    local badge_text=""
+    
+    # ghq配下のパスかチェック
+    if [[ "$current_path" =~ ^/Users/kokoichi206/ghq/github\.com/([^/]+)/([^/]+)/git/(.+)$ ]]; then
+        # パターンマッチした場合
+        local owner="${match[1]}"
+        local repo="${match[2]}"
+        local subpath="${match[3]}"
+        badge_text="[$repo] $subpath"
+    elif [[ "$current_path" =~ ^/Users/kokoichi206/ghq/ ]]; then
+        # ghq配下だが上記のパターンにマッチしない場合
+        badge_text="[ghq] ${current_path#/Users/kokoichi206/ghq/}"
+    else
+        # ghq配下でない場合は空にする（または好きな文字列に）
+        badge_text=""
+    fi
+    
+    # iTerm2のBadgeを設定
+    printf "\033]1337;SetBadgeFormat=%s\007" "$(echo -n "$badge_text" | base64)"
+}
+
+# 既存のcustom_cdがある場合の対処
+if type custom_cd > /dev/null 2>&1; then
+    # 既存のcustom_cdを保存
+    eval "original_$(declare -f custom_cd)"
+    
+    # 新しいcustom_cdを定義
+    custom_cd() {
+        # 元のcustom_cdを実行
+        original_custom_cd "$@"
+        # Badge更新
+        update_iterm2_badge
+    }
+else
+    # custom_cdが存在しない場合は新規作成
+    custom_cd() {
+        builtin cd "$@" && update_iterm2_badge
+    }
+    
+    # cdをcustom_cdにエイリアス
+    alias cd='custom_cd'
+fi
+
+# pushd/popdでも更新
+pushd() {
+    builtin pushd "$@" && update_iterm2_badge
+}
+
+popd() {
+    builtin popd "$@" && update_iterm2_badge
+}
+
+update_iterm2_badge
+
+
+claude() {
+    # 既存のclaudeコマンドを実行
+    command claude "$@"
+    # Badge更新
+    update_iterm2_badge
+}
+
+export PATH="/opt/homebrew/opt/pueue/bin/pueue:$PATH"
+
+[[ "$TERM_PROGRAM" == "kiro" ]] && . "$(kiro --locate-shell-integration-path zsh)"
+
+# bun completions
+[ -s "/Users/kokoichi206/.bun/_bun" ] && source "/Users/kokoichi206/.bun/_bun"
+
+# bun
+export BUN_INSTALL="$HOME/.bun"
+export PATH="$BUN_INSTALL/bin:$PATH"
+
+
