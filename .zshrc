@@ -157,10 +157,6 @@ alias koko="cd ~/ghq/github.com/kokoichi206/"
 export LANG=en_US.UTF-8
 export LC_ALL=en_US.UTF-8
 
-export NVM_DIR="$HOME/.nvm"
-[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
-[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
-
 export PATH="$PATH:$(go env GOPATH)/bin"
 
 
@@ -179,7 +175,6 @@ uuid() {
   uuidgen | tr A-Z a-z
 }
 
-. /opt/homebrew/opt/asdf/libexec/asdf.sh
 
 
 export PYENV_ROOT="$HOME/.pyenv"
@@ -288,9 +283,6 @@ export PATH="/Users/kokoichi206/.codeium/windsurf/bin:$PATH"
 
 alias gw="git worktree"
 
-# https://zenn.dev/k3ntar0/articles/09ee240f379be1
-asdf reshim nodejs
-
 test -e "${HOME}/.iterm2_shell_integration.zsh" && source "${HOME}/.iterm2_shell_integration.zsh"
 
 
@@ -306,10 +298,10 @@ update_iterm2_badge() {
     if ! is_iterm2; then
         return
     fi
-    
+
     local current_path="$PWD"
     local badge_text=""
-    
+
     # ghq配下のパスかチェック
     if [[ "$current_path" =~ ^/Users/kokoichi206/ghq/github\.com/([^/]+)/([^/]+)/git/(.+)$ ]]; then
         # パターンマッチした場合
@@ -324,7 +316,7 @@ update_iterm2_badge() {
         # ghq配下でない場合は空にする（または好きな文字列に）
         badge_text=""
     fi
-    
+
     # iTerm2のBadgeを設定
     printf "\033]1337;SetBadgeFormat=%s\007" "$(echo -n "$badge_text" | base64)"
 }
@@ -333,7 +325,7 @@ update_iterm2_badge() {
 if type custom_cd > /dev/null 2>&1; then
     # 既存のcustom_cdを保存
     eval "original_$(declare -f custom_cd)"
-    
+
     # 新しいcustom_cdを定義
     custom_cd() {
         # 元のcustom_cdを実行
@@ -346,7 +338,7 @@ else
     custom_cd() {
         builtin cd "$@" && update_iterm2_badge
     }
-    
+
     # cdをcustom_cdにエイリアス
     alias cd='custom_cd'
 fi
@@ -363,12 +355,12 @@ popd() {
 update_iterm2_badge
 
 
-claude() {
-    # 既存のclaudeコマンドを実行
-    command claude "$@"
-    # Badge更新
-    update_iterm2_badge
-}
+# clacommand claudecommand claudeude() {
+#     # 既存のclaudeコマンドを実行
+#     command claude "$@"
+#     # Badge更新
+#     update_iterm2_badge
+# }
 
 export PATH="/opt/homebrew/opt/pueue/bin/pueue:$PATH"
 
@@ -382,3 +374,177 @@ export BUN_INSTALL="$HOME/.bun"
 export PATH="$BUN_INSTALL/bin:$PATH"
 
 
+
+# =============================================================================
+#
+# Utility functions for zoxide.
+#
+
+# pwd based on the value of _ZO_RESOLVE_SYMLINKS.
+function __zoxide_pwd() {
+    \builtin pwd -L
+}
+
+# cd + custom logic based on the value of _ZO_ECHO.
+function __zoxide_cd() {
+    # shellcheck disable=SC2164
+    \builtin cd -- "$@"
+}
+
+# =============================================================================
+#
+# Hook configuration for zoxide.
+#
+
+# Hook to add new entries to the database.
+function __zoxide_hook() {
+    # shellcheck disable=SC2312
+    \command zoxide add -- "$(__zoxide_pwd)"
+}
+
+# Initialize hook.
+\builtin typeset -ga precmd_functions
+\builtin typeset -ga chpwd_functions
+# shellcheck disable=SC2034,SC2296
+precmd_functions=("${(@)precmd_functions:#__zoxide_hook}")
+# shellcheck disable=SC2034,SC2296
+chpwd_functions=("${(@)chpwd_functions:#__zoxide_hook}")
+chpwd_functions+=(__zoxide_hook)
+
+# Report common issues.
+function __zoxide_doctor() {
+    [[ ${_ZO_DOCTOR:-1} -ne 0 ]] || return 0
+    [[ ${chpwd_functions[(Ie)__zoxide_hook]:-} -eq 0 ]] || return 0
+
+    _ZO_DOCTOR=0
+    \builtin printf '%s\n' \
+        'zoxide: detected a possible configuration issue.' \
+        'Please ensure that zoxide is initialized right at the end of your shell configuration file (usually ~/.zshrc).' \
+        '' \
+        'If the issue persists, consider filing an issue at:' \
+        'https://github.com/ajeetdsouza/zoxide/issues' \
+        '' \
+        'Disable this message by setting _ZO_DOCTOR=0.' \
+        '' >&2
+    }
+
+# =============================================================================
+#
+# When using zoxide with --no-cmd, alias these internal functions as desired.
+#
+
+# Jump to a directory using only keywords.
+function __zoxide_z() {
+    __zoxide_doctor
+    if [[ "$#" -eq 0 ]]; then
+        __zoxide_cd ~
+    elif [[ "$#" -eq 1 ]] && { [[ -d "$1" ]] || [[ "$1" = '-' ]] || [[ "$1" =~ ^[-+][0-9]$ ]]; }; then
+        __zoxide_cd "$1"
+    elif [[ "$#" -eq 2 ]] && [[ "$1" = "--" ]]; then
+        __zoxide_cd "$2"
+    else
+        \builtin local result
+        # shellcheck disable=SC2312
+        result="$(\command zoxide query --exclude "$(__zoxide_pwd)" -- "$@")" && __zoxide_cd "${result}"
+    fi
+}
+
+# Jump to a directory using interactive search.
+function __zoxide_zi() {
+    __zoxide_doctor
+    \builtin local result
+    result="$(\command zoxide query --interactive -- "$@")" && __zoxide_cd "${result}"
+}
+
+# =============================================================================
+#
+# Commands for zoxide. Disable these using --no-cmd.
+#
+
+function z() {
+    __zoxide_z "$@"
+}
+
+function zi() {
+    __zoxide_zi "$@"
+}
+
+# Completions.
+if [[ -o zle ]]; then
+    __zoxide_result=''
+
+    function __zoxide_z_complete() {
+        # Only show completions when the cursor is at the end of the line.
+        # shellcheck disable=SC2154
+        [[ "${#words[@]}" -eq "${CURRENT}" ]] || return 0
+
+            if [[ "${#words[@]}" -eq 2 ]]; then
+                # Show completions for local directories.
+                _cd -/
+
+            elif [[ "${words[-1]}" == '' ]]; then
+                # Show completions for Space-Tab.
+                # shellcheck disable=SC2086
+                __zoxide_result="$(\command zoxide query --exclude "$(__zoxide_pwd || \builtin true)" --interactive -- ${words[2,-1]})" || __zoxide_result=''
+
+                # Set a result to ensure completion doesn't re-run
+                compadd -Q ""
+
+                # Bind '\e[0n' to helper function.
+                \builtin bindkey '\e[0n' '__zoxide_z_complete_helper'
+                # Sends query device status code, which results in a '\e[0n' being sent to console input.
+                \builtin printf '\e[5n'
+
+                # Report that the completion was successful, so that we don't fall back
+                # to another completion function.
+                return 0
+            fi
+        }
+
+    function __zoxide_z_complete_helper() {
+        if [[ -n "${__zoxide_result}" ]]; then
+            # shellcheck disable=SC2034,SC2296
+            BUFFER="z ${(q-)__zoxide_result}"
+            __zoxide_result=''
+            \builtin zle reset-prompt
+            \builtin zle accept-line
+        else
+            \builtin zle reset-prompt
+        fi
+    }
+\builtin zle -N __zoxide_z_complete_helper
+
+[[ "${+functions[compdef]}" -ne 0 ]] && \compdef __zoxide_z_complete z
+fi
+
+
+# Added by Antigravity
+export PATH="/Users/kokoichi206/.antigravity/antigravity/bin:$PATH"
+
+# Added by Antigravity
+export PATH="/Users/kokoichi206/.antigravity/antigravity/bin:$PATH"
+
+# pnpm
+export PNPM_HOME="/Users/kokoichi206/Library/pnpm"
+case ":$PATH:" in
+    *":$PNPM_HOME:"*) ;;
+    *) export PATH="$PNPM_HOME:$PATH" ;;
+esac
+# pnpm end
+eval "$(mise activate zsh)"
+
+
+alias ei="eza --icons --git"
+alias ea="eza -la --icons --git"
+alias ee="eza -aahl --icons --git"
+alias et="eza -T -L 3 -a -I 'node_modules|.git|.cache' --icons"
+alias ls=ei
+alias la=ea
+alias ll=ee
+
+# 既存 cd を置き換える。
+eval "$(zoxide init zsh --cmd cd)"
+
+alias gui='gitui'
+alias vi='nvim'
+alias vim='nvim'
