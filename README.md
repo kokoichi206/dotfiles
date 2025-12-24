@@ -13,6 +13,12 @@
 brew bundle dump
 ```
 
+## config
+
+``` sh
+ln -s "$HOME"/ghq/github.com/kokoichi206/dotfiles/.config/nvim ~/.config/nvim
+```
+
 ## DOING...
 
 ``` sh
