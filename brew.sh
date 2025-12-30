@@ -1,18 +1,11 @@
 #!/bin/bash
 
-# Install command-line tools using Homebrew
+# Install command-line tools using Homebrew from Brewfile
+#
+# To update Brewfile with currently installed packages:
+#   brew bundle dump --force
 
 brew update
 
-# git
-brew install ghq
-
-# util
-brew install fzf
-brew install tree
-brew install jq
-brew install hugo
-brew install openssl@3
-
-# android
-brew install scrcpy
+# Install packages from Brewfile
+brew bundle --file=Brewfile
