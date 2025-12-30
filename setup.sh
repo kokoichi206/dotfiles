@@ -25,6 +25,7 @@ backup_and_alias "$PWD/.gitconfig" ~/.gitconfig
 backup_and_alias "$PWD/.git-templates" ~/.git-templates
 backup_and_alias "$PWD/.zshrc" ~/.zshrc
 backup_and_alias "$PWD/.vimrc" ~/.vimrc
+backup_and_alias "$PWD/.config/wezterm" ~/.config/wezterm
 backup_and_alias "$PWD/.shell_aliases" ~/.shell_aliases
 
 if [[ $(uname) == "Linux" ]]; then
