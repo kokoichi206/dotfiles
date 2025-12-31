@@ -8,7 +8,7 @@ config.font = wezterm.font_with_fallback({
     { family = "Cica", assume_emoji_presentation = true },
 })
 config.use_ime = true
-config.window_background_opacity = 0.55
+config.window_background_opacity = 0.75
 config.macos_window_background_blur = 20
 
 ----------------------------------------------------

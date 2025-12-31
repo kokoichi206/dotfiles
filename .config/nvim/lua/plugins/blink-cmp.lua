@@ -1,7 +1,10 @@
 return {
 	"saghen/blink.cmp",
 	-- optional: provides snippets for the snippet source
-	dependencies = { "rafamadriz/friendly-snippets" },
+	dependencies = {
+		"rafamadriz/friendly-snippets",
+		"giuxtaposition/blink-cmp-copilot",
+	},
 
 	-- use a release tag to download pre-built binaries
 	version = "1.*",
@@ -26,8 +29,7 @@ return {
 		--
 		-- See :h blink-cmp-config-keymap for defining your own keymap
 		keymap = {
-			preset = "default",
-			["<C-Z>"] = { "accept", "fallback" },
+			preset = "super-tab", -- Tab to accept, handles snippets intelligently
 		},
 
 		appearance = {
@@ -48,6 +50,15 @@ return {
 				"path",
 				"snippets",
 				"buffer",
+				"copilot",
+			},
+			providers = {
+				copilot = {
+					name = "copilot",
+					module = "blink-cmp-copilot",
+					score_offset = 100, -- show copilot suggestions above other sources
+					async = true,
+				},
 			},
 		},
 
