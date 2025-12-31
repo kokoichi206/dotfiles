@@ -5,7 +5,7 @@ config.automatically_reload_config = true
 config.font_size = 18.0
 config.font = wezterm.font_with_fallback({
     { family = "Cica" },
-    { family = "Cica", assume_emoji_presenttion = true },
+    { family = "Cica", assume_emoji_presentation = true },
 })
 config.use_ime = true
 config.window_background_opacity = 0.55
