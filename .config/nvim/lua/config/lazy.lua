@@ -22,7 +22,7 @@ vim.g.mapleader = " "
 vim.g.maplocalleader = "\\"
 
 require("config.options")
-
+require("config.autocmds")
 
 -- Setup lazy.nvim
 require("lazy").setup({
@@ -39,4 +39,3 @@ require("lazy").setup({
 
 
 require("config.keymaps")
-
