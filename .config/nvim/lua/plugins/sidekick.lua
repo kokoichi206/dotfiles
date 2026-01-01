@@ -13,6 +13,12 @@ return {
                     cmd = { "zsh", "-lc", "codex" },
                 },
             },
+            win = {
+                layout = "right",
+                split = {
+                    width = 0.33,
+                },
+            },
         },
     },
     keys = {
