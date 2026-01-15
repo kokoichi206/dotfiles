@@ -82,6 +82,9 @@ return {
         { key = "l", mods = "LEADER", action = act.ActivatePaneDirection("Right") },
         { key = "k", mods = "LEADER", action = act.ActivatePaneDirection("Up") },
         { key = "j", mods = "LEADER", action = act.ActivatePaneDirection("Down") },
+        -- SUPER key を使った Pnae の移動。
+        { key = "[", mods = "SUPER", action = act.ActivatePaneDirection("Left") },
+        { key = "]", mods = "SUPER", action = act.ActivatePaneDirection("Right") },
         -- Pane選択
         { key = "[", mods = "CTRL|SHIFT", action = act.PaneSelect },
         -- 選択中のPaneのみ表示
