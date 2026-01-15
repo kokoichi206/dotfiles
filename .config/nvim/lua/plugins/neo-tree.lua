@@ -38,18 +38,6 @@ return {
     },
     init = function()
         vim.g.neo_tree_remove_legacy_commands = 1
-
-        -- 起動時に常に Neo-tree を開く
-        vim.api.nvim_create_autocmd("VimEnter", {
-            callback = function()
-                require("neo-tree.command").execute({
-                    dir = vim.loop.cwd(),
-                    position = "left",
-                    source = "filesystem",
-                    reveal = true,
-                })
-            end,
-        })
     end,
     opts = {
         close_if_last_window = true,
