@@ -1,0 +1,92 @@
+{
+  "editor.indentSize": 2,
+  "[json]": {
+    "editor.defaultFormatter": "vscode.json-language-features"
+  },
+  "[typescript]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  "[typescriptreact]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  "[prisma]": {
+    "editor.defaultFormatter": "Prisma.prisma"
+  },
+
+  "terminal.integrated.suggest.enabled": false,
+
+  // https://code.visualstudio.com/docs/python/editing#_enable-auto-imports
+  "python.analysis.autoImportCompletions": true,
+  // enable user files
+  // https://github.com/microsoft/pylance-release/blob/main/docs/settings/python_analysis_indexing.md#what-is-pythonanalysisindexing
+  "python.analysis.indexing": true,
+
+  "database-client.autoSync": true,
+  "diffEditor.ignoreTrimWhitespace": false,
+  "files.trimFinalNewlines": false,
+  "editor.accessibilitySupport": "off",
+  "editor.codeActionsOnSave": {
+    "source.fixAll.eslint": "explicit"
+  },
+  "editor.formatOnSave": true,
+  "files.autoSave": "afterDelay",
+  "files.insertFinalNewline": true,
+  "github.copilot.editor.enableAutoCompletions": true,
+  "github.copilot.enable": {
+    "*": true,
+    "plaintext": false,
+    "markdown": true,
+    "scminput": false,
+    "zig": true
+  },
+  "githubPullRequests.pullBranch": "never",
+  "go.toolsManagement.autoUpdate": true,
+  "liveServer.settings.port": "3000",
+  "markdown.extension.toc.updateOnSave": false,
+  "prettier.embeddedLanguageFormatting": "auto",
+  "ruby.intellisense": "rubyLocate",
+  "ruby.useLanguageServer": true,
+  "terminal.integrated.env.osx": {
+    "Q_NEW_SESSION": "1"
+  },
+  "vs-kubernetes": {
+    "vscode-kubernetes.minikube-path-mac": "/Users/kokoichi/.vs-kubernetes/tools/minikube/darwin-arm64/minikube"
+  },
+  "[javascript]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  "python.analysis.generateWithTypeAnnotation": true,
+  "chat.editing.autoAcceptDelay": 1,
+  "docker.extension.enableComposeLanguageServer": false,
+  "liveServer.settings.donotShowInfoMsg": true,
+  "github.copilot.nextEditSuggestions.enabled": true,
+  "[sql]": {
+    "editor.defaultFormatter": "ReneSaarsoo.sql-formatter-vsc"
+  },
+  "SQL-Formatter-VSCode.dialect": "postgresql",
+  "SQL-Formatter-VSCode.paramTypes": {
+    "custom": [
+      { "regex": "@[a-zA-Z0-9_]+" },
+      { "regex": "sqlc\\.\\w+\\(.*?\\)" }
+    ]
+  },
+  "[dockercompose]": {
+    "editor.insertSpaces": true,
+    "editor.tabSize": 2,
+    "editor.autoIndent": "advanced",
+    "editor.quickSuggestions": {
+      "other": true,
+      "comments": false,
+      "strings": true
+    },
+    "editor.defaultFormatter": "redhat.vscode-yaml"
+  },
+  "[github-actions-workflow]": {
+    "editor.defaultFormatter": "redhat.vscode-yaml"
+  },
+  "javascript.updateImportsOnFileMove.enabled": "always",
+  "terminal.integrated.defaultProfile.osx": "zsh",
+  "claudeCode.preferredLocation": "panel",
+  "zig.zls.enabled": "on",
+  "chatgpt.openOnStartup": true
+}

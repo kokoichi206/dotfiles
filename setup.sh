@@ -13,7 +13,8 @@ fi
 
 # from $2 to $1
 backup_and_alias() {
-    if [ -f "$2" ]; then
+    # Backup existing file, directory, or symlink
+    if [ -e "$2" ] || [ -L "$2" ]; then
         mv "$2" "$2.backup"
     fi
     # When creating symbolic links, relative paths are not allowed.
@@ -21,11 +22,12 @@ backup_and_alias() {
     ln -s "$1" "$2"
 }
 
+backup_and_alias "$PWD/.config/wezterm" ~/.config/wezterm
+
 backup_and_alias "$PWD/.gitconfig" ~/.gitconfig
 backup_and_alias "$PWD/.git-templates" ~/.git-templates
 backup_and_alias "$PWD/.zshrc" ~/.zshrc
 backup_and_alias "$PWD/.vimrc" ~/.vimrc
-backup_and_alias "$PWD/.config/wezterm" ~/.config/wezterm
 backup_and_alias "$PWD/.shell_aliases" ~/.shell_aliases
 
 if [[ $(uname) == "Linux" ]]; then
@@ -34,6 +36,22 @@ if [[ $(uname) == "Linux" ]]; then
 elif [[ $(uname) == "Darwin" ]]; then
     echo "MacOS"
     bash brew.sh
+
+    # VSCode settings
+    VSCODE_USER_DIR="$HOME/Library/Application Support/Code/User"
+    if [ -d "$VSCODE_USER_DIR" ]; then
+        backup_and_alias "$PWD/.config/vscode/settings.json" "$VSCODE_USER_DIR/settings.json"
+        backup_and_alias "$PWD/.config/vscode/keybindings.json" "$VSCODE_USER_DIR/keybindings.json"
+        backup_and_alias "$PWD/.config/vscode/snippets" "$VSCODE_USER_DIR/snippets"
+    fi
+
+    # Windsurf settings (same config as VSCode)
+    WINDSURF_USER_DIR="$HOME/Library/Application Support/Windsurf/User"
+    if [ -d "$WINDSURF_USER_DIR" ]; then
+        backup_and_alias "$PWD/.config/vscode/settings.json" "$WINDSURF_USER_DIR/settings.json"
+        backup_and_alias "$PWD/.config/vscode/keybindings.json" "$WINDSURF_USER_DIR/keybindings.json"
+        backup_and_alias "$PWD/.config/vscode/snippets" "$WINDSURF_USER_DIR/snippets"
+    fi
 fi
 
 # Install oh-my-zsh

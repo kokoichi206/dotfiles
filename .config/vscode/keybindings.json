@@ -1,0 +1,179 @@
+// Place your key bindings in this file to override the defaults
+[
+  {
+    "key": "ctrl+c",
+    "command": "references-view.next",
+    "when": "reference-list.hasResult && references-view.canNavigate"
+  },
+  {
+    "key": "f4",
+    "command": "-references-view.next",
+    "when": "reference-list.hasResult && references-view.canNavigate"
+  },
+  {
+    "key": "ctrl+x",
+    "command": "references-view.prev",
+    "when": "reference-list.hasResult && references-view.canNavigate"
+  },
+  {
+    "key": "shift+f4",
+    "command": "-references-view.prev",
+    "when": "reference-list.hasResult && references-view.canNavigate"
+  },
+  {
+    "key": "ctrl+c",
+    "command": "workbench.action.navigateForward",
+    "when": "canNavigateForward"
+  },
+  {
+    "key": "ctrl+shift+-",
+    "command": "-workbench.action.navigateForward",
+    "when": "canNavigateForward"
+  },
+  {
+    "key": "ctrl+x",
+    "command": "workbench.action.navigateBack",
+    "when": "canNavigateBack"
+  },
+  {
+    "key": "ctrl+-",
+    "command": "-workbench.action.navigateBack",
+    "when": "canNavigateBack"
+  },
+  {
+    "key": "shift+cmd+j f",
+    "command": "workbench.action.output.toggleOutput",
+    "when": "workbench.panel.output.active"
+  },
+  {
+    "key": "shift+cmd+u",
+    "command": "-workbench.action.output.toggleOutput",
+    "when": "workbench.panel.output.active"
+  },
+  {
+    "key": "ctrl+shift+u",
+    "command": "editor.action.transformToUppercase"
+  },
+  {
+    "key": "shift+cmd+l",
+    "command": "-notebook.selectAllFindMatches",
+    "when": "config.notebook.multiCursor.enabled && notebookFindWidgetFocused || config.notebook.multiCursor.enabled && notebookCellEditorFocused && activeEditor == 'workbench.editor.notebook'"
+  },
+  {
+    "key": "shift+cmd+o shift+cmd+j",
+    "command": "selectAllSearchEditorMatches",
+    "when": "inSearchEditor"
+  },
+  {
+    "key": "shift+cmd+l",
+    "command": "-selectAllSearchEditorMatches",
+    "when": "inSearchEditor"
+  },
+  {
+    "key": "shift+cmd+w shift+cmd+e",
+    "command": "editor.action.selectHighlights",
+    "when": "editorFocus"
+  },
+  {
+    "key": "shift+cmd+l",
+    "command": "-editor.action.selectHighlights",
+    "when": "editorFocus"
+  },
+  {
+    "key": "shift+cmd+e shift+cmd+w",
+    "command": "addCursorsAtSearchResults",
+    "when": "fileMatchOrMatchFocus && searchViewletVisible"
+  },
+  {
+    "key": "shift+cmd+l",
+    "command": "-addCursorsAtSearchResults",
+    "when": "fileMatchOrMatchFocus && searchViewletVisible"
+  },
+  {
+    "key": "shift+cmd+l",
+    "command": "editor.action.transformToLowercase"
+  },
+  {
+    "key": "shift+enter",
+    "command": "workbench.action.terminal.sendSequence",
+    "args": {
+      "text": "\\\r\n"
+    },
+    "when": "terminalFocus"
+  },
+  {
+    "key": "cmd+]",
+    "command": "-editor.action.indentLines",
+    "when": "editorTextFocus && !editorReadonly"
+  },
+  {
+    "key": "cmd+]",
+    "command": "-markdown.extension.onIndentLines",
+    "when": "editorTextFocus && !suggestWidgetVisible && editorLangId =~ /^markdown$|^rmd$|^quarto$/"
+  },
+  {
+    "key": "cmd+]",
+    "command": "workbench.action.terminal.focusNextPane",
+    "when": "terminalFocus && terminalHasBeenCreated || terminalFocus && terminalProcessSupported"
+  },
+  {
+    "key": "alt+cmd+down",
+    "command": "-workbench.action.terminal.focusNextPane",
+    "when": "terminalFocus && terminalHasBeenCreated || terminalFocus && terminalProcessSupported"
+  },
+  {
+    "key": "shift+cmd+[",
+    "command": "workbench.action.terminal.focusPrevious",
+    "when": "terminalFocus && terminalHasBeenCreated && !terminalEditorFocus || terminalFocus && terminalProcessSupported && !terminalEditorFocus"
+  },
+  {
+    "key": "shift+cmd+[",
+    "command": "-workbench.action.terminal.focusPrevious",
+    "when": "terminalFocus && terminalHasBeenCreated && !terminalEditorFocus || terminalFocus && terminalProcessSupported && !terminalEditorFocus"
+  },
+  {
+    "key": "cmd+[",
+    "command": "workbench.action.terminal.focusPreviousPane",
+    "when": "terminalFocus && terminalHasBeenCreated || terminalFocus && terminalProcessSupported"
+  },
+  {
+    "key": "alt+cmd+up",
+    "command": "-workbench.action.terminal.focusPreviousPane",
+    "when": "terminalFocus && terminalHasBeenCreated || terminalFocus && terminalProcessSupported"
+  },
+  {
+    "key": "shift+cmd+] shift+cmd+backspace",
+    "command": "markdown.extension.onBackspaceKey",
+    "when": "editorTextFocus && !editorHasMultipleSelections && !editorReadonly && !markdown.extension.editor.cursor.inFencedCodeBlock && !markdown.extension.editor.cursor.inMathEnv && !suggestWidgetVisible && vim.mode != 'CommandlineInProgress' && vim.mode != 'EasyMotionInputMode' && vim.mode != 'EasyMotionMode' && vim.mode != 'Normal' && vim.mode != 'Replace' && vim.mode != 'SearchInProgressMode' && vim.mode != 'SurroundInputMode' && vim.mode != 'Visual' && vim.mode != 'VisualBlock' && vim.mode != 'VisualLine' && editorLangId =~ /^markdown$|^rmd$|^quarto$/"
+  },
+  {
+    "key": "backspace",
+    "command": "-markdown.extension.onBackspaceKey",
+    "when": "editorTextFocus && !editorHasMultipleSelections && !editorReadonly && !markdown.extension.editor.cursor.inFencedCodeBlock && !markdown.extension.editor.cursor.inMathEnv && !suggestWidgetVisible && vim.mode != 'CommandlineInProgress' && vim.mode != 'EasyMotionInputMode' && vim.mode != 'EasyMotionMode' && vim.mode != 'Normal' && vim.mode != 'Replace' && vim.mode != 'SearchInProgressMode' && vim.mode != 'SurroundInputMode' && vim.mode != 'Visual' && vim.mode != 'VisualBlock' && vim.mode != 'VisualLine' && editorLangId =~ /^markdown$|^rmd$|^quarto$/"
+  },
+  {
+    "key": "backspace shift+cmd",
+    "command": "C_Cpp.SwitchHeaderSource",
+    "when": "editorTextFocus && editorLangId =~ /^(c|(cuda-)?cpp)$/ && !(config.C_Cpp.intelliSenseEngine =~ /^[dD]isabled$/)"
+  },
+  {
+    "key": "alt+o",
+    "command": "-C_Cpp.SwitchHeaderSource",
+    "when": "editorTextFocus && editorLangId =~ /^(c|(cuda-)?cpp)$/ && !(config.C_Cpp.intelliSenseEngine =~ /^[dD]isabled$/)"
+  },
+  {
+    "key": "shift+alt+h",
+    "command": "-references-view.showCallHierarchy",
+    "when": "editorHasCallHierarchyProvider"
+  },
+  {
+    "key": "o",
+    "command": "-notebook.cell.toggleOutputs",
+    "when": "notebookEditorFocused && !inputFocus && !notebookOutputInputFocused"
+  },
+  {
+    "key": "ctrl+shift+u",
+    "command": "-rust-analyzer.parentModule",
+    "when": "editorTextFocus && editorLangId == 'rust'"
+  }
+]

@@ -1,0 +1,13 @@
+{
+  "Details/Summary": {
+    "prefix": "details",
+    "body": [
+      "<details><summary>$1</summary>",
+      "",
+      "$0",
+      "",
+      "</details>"
+    ],
+    "description": "Insert details/summary HTML tags"
+  }
+}
