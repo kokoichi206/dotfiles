@@ -1,6 +1,8 @@
 local wezterm = require("wezterm")
 local config = wezterm.config_builder()
 
+config.audible_bell = "SystemBeep"
+
 config.automatically_reload_config = true
 config.font_size = 18.0
 config.font = wezterm.font_with_fallback({

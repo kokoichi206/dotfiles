@@ -115,6 +115,12 @@ return {
             mods = "LEADER",
             action = act.ActivateKeyTable({ name = "activate_pane", timeout_milliseconds = 1000 }),
         },
+        -- Shift+Enterで改行を送信
+        {
+            key = 'Enter',
+            mods = 'SHIFT',
+            action = wezterm.action.SendString('\n')
+        },
     },
     -- キーテーブル
     -- https://wezfurlong.org/wezterm/config/key-tables.html
