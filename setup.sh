@@ -30,6 +30,12 @@ backup_and_alias "$PWD/.zshrc" ~/.zshrc
 backup_and_alias "$PWD/.vimrc" ~/.vimrc
 backup_and_alias "$PWD/.shell_aliases" ~/.shell_aliases
 
+# Claude Code settings
+mkdir -p ~/.claude/commands
+backup_and_alias "$PWD/.claude/CLAUDE.md" ~/.claude/CLAUDE.md
+backup_and_alias "$PWD/.claude/settings.json" ~/.claude/settings.json
+backup_and_alias "$PWD/.claude/commands/pr.md" ~/.claude/commands/pr.md
+
 if [[ $(uname) == "Linux" ]]; then
     echo "Linux"
     # TODO: Do something
