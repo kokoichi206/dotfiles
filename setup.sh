@@ -31,10 +31,16 @@ backup_and_alias "$PWD/.vimrc" ~/.vimrc
 backup_and_alias "$PWD/.shell_aliases" ~/.shell_aliases
 
 # Claude Code settings
-mkdir -p ~/.claude/commands
+mkdir -p ~/.claude
 backup_and_alias "$PWD/.claude/CLAUDE.md" ~/.claude/CLAUDE.md
 backup_and_alias "$PWD/.claude/settings.json" ~/.claude/settings.json
 backup_and_alias "$PWD/.claude/hooks" ~/.claude/hooks
+backup_and_alias "$PWD/.claude/commands" ~/.claude/commands
+
+# Codex CLI settings
+mkdir -p ~/.codex
+backup_and_alias "$PWD/.codex/AGENTS.md" ~/.codex/AGENTS.md
+backup_and_alias "$PWD/.codex/skills" ~/.codex/skills
 
 if [[ $(uname) == "Linux" ]]; then
     echo "Linux"
