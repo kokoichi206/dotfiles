@@ -47,6 +47,8 @@ config.colors = {
     tab_bar = {
         inactive_tab_edge = "none",
     },
+    -- ペイン間の区切り線の色を変更。
+    split = "#F19DB5",
 }
 
 -- タブの形をカスタマイズ
