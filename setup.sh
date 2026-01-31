@@ -34,7 +34,7 @@ backup_and_alias "$PWD/.shell_aliases" ~/.shell_aliases
 mkdir -p ~/.claude/commands
 backup_and_alias "$PWD/.claude/CLAUDE.md" ~/.claude/CLAUDE.md
 backup_and_alias "$PWD/.claude/settings.json" ~/.claude/settings.json
-backup_and_alias "$PWD/.claude/commands/pr.md" ~/.claude/commands/pr.md
+backup_and_alias "$PWD/.claude/hooks" ~/.claude/hooks
 
 if [[ $(uname) == "Linux" ]]; then
     echo "Linux"
