@@ -1,19 +1,19 @@
 {
   "$schema": "https://json.schemastore.org/claude-code-settings.json",
   "cleanupPeriodDays": 30,
-  "hooks": {
-    "Stop": [
-      {
-        "hooks": [
-          {
-            "type": "command",
-            "command": "python3 \"$HOME/.claude/hooks/check-tentative-language.py\""
-          }
-        ]
-      }
-    ]
+  "env": {
+    "CLAUDE_CODE_ENABLE_TELEMETRY": "0",
+    "DISABLE_TELEMETRY": "1",
+    "DISABLE_ERROR_REPORTING": "1",
+    "DISABLE_COST_WARNINGS": "0",
+    "BASH_DEFAULT_TIMEOUT_MS": "300000",
+    "BASH_MAX_TIMEOUT_MS": "1200000",
+    "BASH_MAX_OUTPUT_LENGTH": "50000",
+    "CLAUDE_CODE_SHELL": "/bin/zsh",
+    "CLAUDE_CODE_ENABLE_TASKS": "true",
+    "CLAUDE_CODE_DISABLE_TERMINAL_TITLE": "0",
+    "USE_BUILTIN_RIPGREP": "1"
   },
-  "allowedTools": ["mcp__*"],
   "permissions": {
     "allow": [
       "Skill",
@@ -188,7 +188,7 @@
       "Bash(export:*)",
       "Bash(history)",
       "Bash(alias:*)",
-      "Read(**)",
+      "Read",
       "Edit(~/projects/**)",
       "Edit(~/work/**)",
       "Edit(~/dev/**)",
@@ -236,7 +236,8 @@
       "NotebookEdit(~/dev/**)",
       "NotebookEdit(~/src/**)",
       "NotebookEdit(./**)",
-      "Bash(./gradlew:*)"
+      "Bash(./gradlew:*)",
+      "Bash(source:*)"
     ],
     "deny": [
       "Bash(rm -rf /)",
@@ -307,18 +308,17 @@
       "Write(/etc/sudoers)"
     ]
   },
-  "env": {
-    "CLAUDE_CODE_ENABLE_TELEMETRY": "0",
-    "DISABLE_TELEMETRY": "1",
-    "DISABLE_ERROR_REPORTING": "1",
-    "DISABLE_COST_WARNINGS": "0",
-    "BASH_DEFAULT_TIMEOUT_MS": "300000",
-    "BASH_MAX_TIMEOUT_MS": "1200000",
-    "BASH_MAX_OUTPUT_LENGTH": "50000",
-    "CLAUDE_CODE_SHELL": "/bin/zsh",
-    "CLAUDE_CODE_ENABLE_TASKS": "true",
-    "CLAUDE_CODE_DISABLE_TERMINAL_TITLE": "0",
-    "USE_BUILTIN_RIPGREP": "1"
+  "hooks": {
+    "Stop": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "python3 \"$HOME/.claude/hooks/check-tentative-language.py\""
+          }
+        ]
+      }
+    ]
   },
   "statusLine": {
     "type": "command",
@@ -329,9 +329,9 @@
     "rust-analyzer-lsp@claude-plugins-official": true,
     "playwright-skill@playwright-skill": true,
     "ww@cc-plugins": true,
-    "code-simplifier@claude-plugins-official": true
+    "code-simplifier@claude-plugins-official": true,
+    "gopls-lsp@claude-plugins-official": true
   },
-  "preferredNotifChannel": "terminal_bell",
   "spinnerVerbs": {
     "mode": "replace",
     "verbs": [
@@ -348,5 +348,9 @@
       "ごきげんよう〜",
       "本当に本当に偉いですよ〜✨✨"
     ]
-  }
+  },
+  "allowedTools": [
+    "mcp__*"
+  ],
+  "preferredNotifChannel": "terminal_bell"
 }
