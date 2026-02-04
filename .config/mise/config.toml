@@ -1,0 +1,7 @@
+[tools]
+bottom = "latest"
+neovim = "latest"
+node = "24"
+pnpm = "latest"
+rust = "latest"
+terraform = "1.13"

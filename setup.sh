@@ -23,6 +23,7 @@ backup_and_alias() {
 }
 
 backup_and_alias "$PWD/.config/wezterm" ~/.config/wezterm
+backup_and_alias "$PWD/.config/mise" ~/.config/mise
 
 backup_and_alias "$PWD/.gitconfig" ~/.gitconfig
 backup_and_alias "$PWD/.git-templates" ~/.git-templates
