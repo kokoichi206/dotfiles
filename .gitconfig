@@ -19,6 +19,7 @@
 	templatedir = ~/.git-templates/git-secrets
 [core]
 	excludesfile = /Users/kokoichi/.gitignore_global
+	editor = vim
 [difftool "sourcetree"]
 	cmd = opendiff \"$LOCAL\" \"$REMOTE\"
 	path = 
