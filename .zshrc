@@ -548,3 +548,6 @@ eval "$(zoxide init zsh --cmd cd)"
 alias gui='gitui'
 alias vi='nvim'
 alias vim='nvim'
+
+alias top='btm'
+alias codex='codex --sandbox danger-full-access'
