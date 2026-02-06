@@ -13,6 +13,36 @@ config.use_ime = true
 config.window_background_opacity = 0.75
 config.macos_window_background_blur = 20
 
+-- 背景画像の設定
+config.window_background_image = wezterm.config_dir .. "/background.png"
+config.window_background_image_hsb = {
+    brightness = 0.05, -- テキストの可読性を保つために暗めに設定（0.0-1.0、低いほど暗い）
+    hue = 1.0,
+    saturation = 1.0,
+}
+
+-- ウィンドウサイズの設定（起動時のサイズを記憶）
+config.initial_cols = 210
+config.initial_rows = 54
+
+-- ハイパーリンク設定（URLやファイルパスをクリック可能に）
+config.hyperlink_rules = wezterm.default_hyperlink_rules()
+-- ファイルパス:行番号 の形式を検出（例: src/main.rs:123）
+table.insert(config.hyperlink_rules, {
+    regex = [[["]?([\w\d]{1}[\w\d\.\-\_/]+):(\d+):?(\d+)?["]?]],
+    format = "$1:$2:$3",
+})
+-- 絶対パスを検出
+table.insert(config.hyperlink_rules, {
+    regex = [[/[\w\d\.\-\_/]+]],
+    format = "$0",
+})
+
+-- ペイン選択時の表示設定
+config.pane_select_font_size = 24
+config.pane_select_bg_color = "#F19DB5"
+config.pane_select_fg_color = "#FFFFFF"
+
 ----------------------------------------------------
 -- Tab
 ----------------------------------------------------
@@ -32,9 +62,10 @@ config.window_frame = {
 }
 
 -- タブバーを背景色に合わせる
-config.window_background_gradient = {
-    colors = { "#000000" },
-}
+-- 背景画像を使用する場合はコメントアウト
+-- config.window_background_gradient = {
+--     colors = { "#000000" },
+-- }
 
 -- タブの追加ボタンを非表示
 config.show_new_tab_button_in_tab_bar = false

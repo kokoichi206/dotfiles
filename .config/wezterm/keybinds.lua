@@ -1,13 +1,32 @@
 local wezterm = require("wezterm")
 local act = wezterm.action
 
--- Show which key table is active in the status area
+-- Show which key table is active in the status area + pane info
 wezterm.on("update-right-status", function(window, pane)
+    local status = {}
+
+    -- キーテーブル表示
     local name = window:active_key_table()
     if name then
-        name = "TABLE: " .. name
+        table.insert(status, "TABLE: " .. name)
     end
-    window:set_right_status(name or "")
+
+    -- ペイン情報表示（複数ペインがある場合のみ）
+    local tab = window:active_tab()
+    if tab then
+        local panes = tab:panes()
+        if #panes > 1 then
+            local active_pane = tab:active_pane()
+            for i, p in ipairs(panes) do
+                if p:pane_id() == active_pane:pane_id() then
+                    table.insert(status, string.format("Pane %d/%d", i, #panes))
+                    break
+                end
+            end
+        end
+    end
+
+    window:set_right_status(table.concat(status, " | "))
 end)
 
 return {
@@ -106,6 +125,17 @@ return {
         { key = "7", mods = "SUPER", action = act.ActivateTab(6) },
         { key = "8", mods = "SUPER", action = act.ActivateTab(7) },
         { key = "9", mods = "SUPER", action = act.ActivateTab(-1) },
+
+        -- ペイン切替 Leader + 数字
+        { key = "1", mods = "LEADER", action = act.ActivatePaneByIndex(0) },
+        { key = "2", mods = "LEADER", action = act.ActivatePaneByIndex(1) },
+        { key = "3", mods = "LEADER", action = act.ActivatePaneByIndex(2) },
+        { key = "4", mods = "LEADER", action = act.ActivatePaneByIndex(3) },
+        { key = "5", mods = "LEADER", action = act.ActivatePaneByIndex(4) },
+        { key = "6", mods = "LEADER", action = act.ActivatePaneByIndex(5) },
+        { key = "7", mods = "LEADER", action = act.ActivatePaneByIndex(6) },
+        { key = "8", mods = "LEADER", action = act.ActivatePaneByIndex(7) },
+        { key = "9", mods = "LEADER", action = act.ActivatePaneByIndex(8) },
 
         -- コマンドパレット
         { key = "p", mods = "SHIFT|CTRL", action = act.ActivateCommandPalette },
