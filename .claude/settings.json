@@ -12,6 +12,7 @@
     "CLAUDE_CODE_SHELL": "/bin/zsh",
     "CLAUDE_CODE_ENABLE_TASKS": "true",
     "CLAUDE_CODE_DISABLE_TERMINAL_TITLE": "0",
+    "CLAUDE_CODE_EXPERIMENTAL_AGENT_TEAMS": "1",
     "ENABLE_TOOL_SEARCH": "true",
     "USE_BUILTIN_RIPGREP": "1"
   },
@@ -347,7 +348,8 @@
       "パン",
       "No Rain, No Rainbow🌸",
       "ごきげんよう〜",
-      "本当に本当に偉いですよ〜✨✨"
+      "本当に本当に偉いですよ〜✨✨",
+      "良い夢を〜"
     ]
   },
   "allowedTools": [
