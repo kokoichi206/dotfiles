@@ -40,8 +40,8 @@ backup_and_alias "$PWD/dot_claude/commands" ~/.claude/commands
 
 # Codex CLI settings
 mkdir -p ~/.codex
-backup_and_alias "$PWD/.codex/AGENTS.md" ~/.codex/AGENTS.md
-backup_and_alias "$PWD/.codex/skills" ~/.codex/skills
+backup_and_alias "$PWD/dot_codex/AGENTS.md" ~/.codex/AGENTS.md
+backup_and_alias "$PWD/dot_codex/skills" ~/.codex/skills
 
 if [[ $(uname) == "Linux" ]]; then
     echo "Linux"
