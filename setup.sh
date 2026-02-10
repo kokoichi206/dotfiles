@@ -33,10 +33,10 @@ backup_and_alias "$PWD/.shell_aliases" ~/.shell_aliases
 
 # Claude Code settings
 mkdir -p ~/.claude
-backup_and_alias "$PWD/.claude/CLAUDE.md" ~/.claude/CLAUDE.md
-backup_and_alias "$PWD/.claude/settings.json" ~/.claude/settings.json
-backup_and_alias "$PWD/.claude/hooks" ~/.claude/hooks
-backup_and_alias "$PWD/.claude/commands" ~/.claude/commands
+backup_and_alias "$PWD/dot_claude/CLAUDE.md" ~/.claude/CLAUDE.md
+backup_and_alias "$PWD/dot_claude/settings.json" ~/.claude/settings.json
+backup_and_alias "$PWD/dot_claude/hooks" ~/.claude/hooks
+backup_and_alias "$PWD/dot_claude/commands" ~/.claude/commands
 
 # Codex CLI settings
 mkdir -p ~/.codex
