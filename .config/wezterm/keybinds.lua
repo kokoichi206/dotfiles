@@ -91,6 +91,19 @@ return {
         -- Tab移動
         { key = "Tab", mods = "CTRL", action = act.ActivateTabRelative(1) },
         { key = "Tab", mods = "SHIFT|CTRL", action = act.ActivateTabRelative(-1) },
+        { key = "=", mods = "SUPER", action = act.ActivateTabRelative(1) },
+        -- 前のタブに戻る
+        {
+            key = "-",
+            mods = "SUPER",
+            action = wezterm.action_callback(function(window, pane)
+                local win_id = window:window_id()
+                local idx = prev_tab_idx[win_id]
+                if idx ~= nil then
+                    window:perform_action(act.ActivateTab(idx), pane)
+                end
+            end),
+        },
         -- Tab入れ替え
         { key = "{", mods = "LEADER", action = act({ MoveTabRelative = -1 }) },
         -- Tab新規作成
