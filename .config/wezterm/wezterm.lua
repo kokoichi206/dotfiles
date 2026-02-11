@@ -38,6 +38,12 @@ table.insert(config.hyperlink_rules, {
     format = "$0",
 })
 
+-- 非アクティブペインを暗くして区別しやすくする
+config.inactive_pane_hsb = {
+    saturation = 0.3,
+    brightness = 0.2,
+}
+
 -- ペイン選択時の表示設定
 config.pane_select_font_size = 24
 config.pane_select_bg_color = "#F19DB5"
