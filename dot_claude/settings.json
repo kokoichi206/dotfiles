@@ -17,6 +17,7 @@
     "USE_BUILTIN_RIPGREP": "1"
   },
   "permissions": {
+    "defaultMode": "plan",
     "allow": [
       "Skill",
       "Bash(afplay:*)",
@@ -317,6 +318,24 @@
           {
             "type": "command",
             "command": "python3 \"$HOME/.claude/hooks/check-tentative-language.py\""
+          }
+        ]
+      },
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "\"$HOME/.claude/hooks/focus-wezterm.sh\""
+          }
+        ]
+      }
+    ],
+    "Notification": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "\"$HOME/.claude/hooks/focus-wezterm.sh\""
           }
         ]
       }

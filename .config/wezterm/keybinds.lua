@@ -1,6 +1,10 @@
 local wezterm = require("wezterm")
 local act = wezterm.action
 
+-- 前回アクティブだったタブのインデックスを記録（ウィンドウごと）
+local prev_tab_idx = {}
+local current_tab_idx = {}
+
 -- Show which key table is active in the status area + pane info
 wezterm.on("update-right-status", function(window, pane)
     local status = {}
@@ -24,6 +28,21 @@ wezterm.on("update-right-status", function(window, pane)
                 end
             end
         end
+    end
+
+    -- タブ変更の追跡
+    local win_id = window:window_id()
+    local tabs = window:mux_window():tabs()
+    local active_idx = 0
+    for i, t in ipairs(tabs) do
+        if t:tab_id() == pane:tab():tab_id() then
+            active_idx = i - 1
+            break
+        end
+    end
+    if current_tab_idx[win_id] ~= active_idx then
+        prev_tab_idx[win_id] = current_tab_idx[win_id]
+        current_tab_idx[win_id] = active_idx
     end
 
     window:set_right_status(table.concat(status, " | "))

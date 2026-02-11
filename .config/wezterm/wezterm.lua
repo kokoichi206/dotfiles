@@ -112,6 +112,17 @@ wezterm.on("format-tab-title", function(tab, tabs, panes, config, hover, max_wid
 end)
 
 ----------------------------------------------------
+-- Claude Code 完了時にフォーカスを戻す
+----------------------------------------------------
+wezterm.on("user-var-changed", function(window, pane, name, value)
+    if name == "claude_code_stop" then
+        pane:tab():activate()
+        pane:activate()
+        window:focus()
+    end
+end)
+
+----------------------------------------------------
 -- keybinds
 ----------------------------------------------------
 config.disable_default_key_bindings = true
