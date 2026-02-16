@@ -1,0 +1,34 @@
+# zsh-abbr user abbreviations
+# generated from aliases in .zshrc
+abbr -U gtt="$HOME/ghq/github.com/kokoichi206/go-gtt/gtt"
+abbr -U sz="source ~/.zshrc"
+abbr -U cz="cat ~/.zshrc"
+abbr -U vz="vim ~/.zshrc"
+abbr -U koko="cd ~/ghq/github.com/kokoichi206/"
+abbr -U j1.8='javahome 1.8'
+abbr -U j11='javahome 11'
+abbr -U j17='javahome 17'
+abbr -U kt='kubectl'
+abbr -U kc='kubectl'
+abbr -U ks='k9s'
+abbr -U rr='echo $?'
+abbr -U tf='terraform'
+abbr -U pc='pbcopy'
+abbr -U date-now='TZ=Asia/Tokyo date +%Y%m%d_%H%M%S'
+abbr -U ws="windsurf"
+abbr -U gw="git worktree"
+abbr -U ei="eza --icons --git"
+abbr -U ea="eza -la --icons --git"
+abbr -U ee="eza -aahl --icons --git"
+abbr -U et="eza -T -L 3 -a -I 'node_modules|.git|.cache' --icons"
+abbr -U ls="eza --icons --git"
+abbr -U la="eza -la --icons --git"
+abbr -U ll="eza -aahl --icons --git"
+abbr -U gui='gitui'
+abbr -U vi='nvim'
+abbr -U vim='nvim'
+abbr -U top='btm'
+abbr -U codex='codex --sandbox danger-full-access'
+abbr -U cc='claude --continue'
+abbr -U hc='bunx happy-coder --continue'
+abbr -U cl='codex resume --last --yolo'

@@ -78,7 +78,18 @@ ZSH_THEME="powerlevel10k/powerlevel10k"
 # Custom plugins may be added to $ZSH_CUSTOM/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
-plugins=(git autojump web-search fzf zsh-autosuggestions)
+plugins=(
+  git
+  autojump
+  web-search
+  fzf
+  zsh-completions
+  zsh-autosuggestions
+  zsh-abbr
+  zsh-syntax-highlighting
+)
+
+export ABBR_USER_ABBREVIATIONS_FILE="${XDG_CONFIG_HOME:-$HOME/.config}/zsh-abbr/user-abbreviations"
 
 source $ZSH/oh-my-zsh.sh
 
@@ -131,7 +142,6 @@ export GOPATH="$HOME/go"
 autoload -U +X bashcompinit && bashcompinit
 complete -o nospace -C /opt/homebrew/Cellar/tfenv/2.2.3/versions/1.2.2/terraform terraform
 
-alias gtt="$HOME/ghq/github.com/kokoichi206/go-gtt/gtt"
 
 source $HOME/.zshenv
 
@@ -147,12 +157,8 @@ if [ -f ~/.shell_aliases ]; then
 fi
 
 # ============ Alias ONLY for zsh ============
-alias sz="source ~/.zshrc"
-alias cz="cat ~/.zshrc"
-alias vz="vim ~/.zshrc"
 
 # ============ Alias in my mac ============
-alias koko="cd ~/ghq/github.com/kokoichi206/"
 
 export LANG=en_US.UTF-8
 export LC_ALL=en_US.UTF-8
@@ -166,11 +172,6 @@ javahome() {
   java -version
 }
 
-alias j1.8='javahome 1.8'
-alias j11='javahome 11'
-alias j17='javahome 17'
-j11
-
 uuid() {
   uuidgen | tr A-Z a-z
 }
@@ -183,8 +184,6 @@ eval "$(pyenv init --path)"
 eval "$(pyenv init -)"
 
 # ======== k8s ========
-alias kt='kubectl'
-alias kc='kubectl'
 
 # history of zsh
 setopt HIST_EXPIRE_DUPS_FIRST
@@ -237,11 +236,9 @@ select-history() {
 zle -N select-history
 bindkey '^r' select-history
 
-alias ks='k9s'
 
 export PATH="$HOME/.istio/istio-1.20.0/bin:$PATH"
 
-alias rr='echo $?'
 
 export PATH="$HOME/.cargo/bin:$PATH"
 
@@ -256,10 +253,7 @@ jtgc () {
 	  pbpaste | jtg | pbcopy
 }
 
-alias tf='terraform'
 
-alias pc='pbcopy'
-alias date-now='TZ=Asia/Tokyo date +%Y%m%d_%H%M%S'
 
 # Created by `pipx` on 2024-11-16 17:47:35
 export PATH="$PATH:$HOME/.local/bin"
@@ -276,9 +270,7 @@ export PATH="/opt/homebrew/opt/postgresql@16/bin:$PATH"
 # Added by Windsurf
 export PATH="~/.codeium/windsurf/bin:$PATH"
 
-alias ws="windsurf"
 
-alias gw="git worktree"
 
 test -e "${HOME}/.iterm2_shell_integration.zsh" && source "${HOME}/.iterm2_shell_integration.zsh"
 
@@ -525,28 +517,13 @@ esac
 eval "$(mise activate zsh)"
 
 
-alias ei="eza --icons --git"
-alias ea="eza -la --icons --git"
-alias ee="eza -aahl --icons --git"
-alias et="eza -T -L 3 -a -I 'node_modules|.git|.cache' --icons"
-alias ls=ei
-alias la=ea
-alias ll=ee
 
 # 既存 cd を置き換える。
 eval "$(zoxide init zsh --cmd cd)"
 
-alias gui='gitui'
-alias vi='nvim'
-alias vim='nvim'
 
-alias top='btm'
-alias codex='codex --sandbox danger-full-access'
 
-alias cc='claude --continue'
-alias hc='bunx happy-coder --continue'
 
-alias cl='codex resume --last --yolo'
 
 # kp stands for kill port
 kp() {
