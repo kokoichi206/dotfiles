@@ -58,6 +58,19 @@ setup_claude() {
     create_symlink "$SCRIPT_DIR/dot_claude/hooks" "$CLAUDE_DIR/hooks"
     create_symlink "$SCRIPT_DIR/dot_claude/commands" "$CLAUDE_DIR/commands"
 
+    # Symlink custom skills (not marketplace skills)
+    if [ -d "$SCRIPT_DIR/dot_claude/skills" ]; then
+        log_info "Setting up custom skills..."
+        mkdir -p "$CLAUDE_DIR/skills"
+
+        for skill_dir in "$SCRIPT_DIR/dot_claude/skills"/*; do
+            if [ -d "$skill_dir" ]; then
+                skill_name=$(basename "$skill_dir")
+                create_symlink "$skill_dir" "$CLAUDE_DIR/skills/$skill_name"
+            fi
+        done
+    fi
+
     # Install marketplace plugins
     if [ -f "$SCRIPT_DIR/dot_claude/marketplace-plugins.txt" ]; then
         log_info "Installing Claude Code plugins..."
@@ -71,15 +84,15 @@ setup_claude() {
         done < "$SCRIPT_DIR/dot_claude/marketplace-plugins.txt"
     fi
 
-    # Install marketplace skills
+    # Install marketplace skills (separate from custom skills)
     if [ -f "$SCRIPT_DIR/dot_claude/marketplace-skills.txt" ]; then
-        log_info "Installing Claude Code skills..."
+        log_info "Installing marketplace skills..."
         while IFS= read -r skill || [ -n "$skill" ]; do
             # Skip comments and empty lines
             [[ "$skill" =~ ^[[:space:]]*# ]] && continue
             [[ -z "$skill" ]] && continue
 
-            log_info "Installing skill: $skill"
+            log_info "Installing marketplace skill: $skill"
             claude skill install "$skill" || log_warn "Failed to install: $skill"
         done < "$SCRIPT_DIR/dot_claude/marketplace-skills.txt"
     fi
