@@ -274,12 +274,9 @@ export RUBY_CONFIGURE_OPTS="--with-openssl-dir=$(brew --prefix openssl@3)"
 export PATH="/opt/homebrew/opt/postgresql@16/bin:$PATH"
 
 # Added by Windsurf
-export PATH="/Users/kokoichi206/.codeium/windsurf/bin:$PATH"
+export PATH="~/.codeium/windsurf/bin:$PATH"
 
 alias ws="windsurf"
-
-# Added by Windsurf - Next
-export PATH="/Users/kokoichi206/.codeium/windsurf/bin:$PATH"
 
 alias gw="git worktree"
 
@@ -366,12 +363,6 @@ export PATH="/opt/homebrew/opt/pueue/bin/pueue:$PATH"
 
 [[ "$TERM_PROGRAM" == "kiro" ]] && . "$(kiro --locate-shell-integration-path zsh)"
 
-# bun completions
-[ -s "/Users/kokoichi206/.bun/_bun" ] && source "/Users/kokoichi206/.bun/_bun"
-
-# bun
-export BUN_INSTALL="$HOME/.bun"
-export PATH="$BUN_INSTALL/bin:$PATH"
 
 
 
@@ -525,7 +516,7 @@ export PATH="/Users/kokoichi206/.antigravity/antigravity/bin:$PATH"
 export PATH="/Users/kokoichi206/.antigravity/antigravity/bin:$PATH"
 
 # pnpm
-export PNPM_HOME="/Users/kokoichi206/Library/pnpm"
+export PNPM_HOME="~/Library/pnpm"
 case ":$PATH:" in
     *":$PNPM_HOME:"*) ;;
     *) export PATH="$PNPM_HOME:$PATH" ;;
@@ -551,3 +542,27 @@ alias vim='nvim'
 
 alias top='btm'
 alias codex='codex --sandbox danger-full-access'
+
+alias cc='claude --continue'
+alias hc='bunx happy-coder --continue'
+
+alias cl='codex resume --last --yolo'
+
+# kp stands for kill port
+kp() {
+  if [[ -z "$1" ]]; then
+    echo "Usage: kp <port>"
+    return 1
+  fi
+
+  local pids
+  pids=("${(@f)$(lsof -t -i :"$1")}")
+
+  if (( ${#pids[@]} == 0 )); then
+    echo "No process using port $1"
+    return 0
+  fi
+
+  echo "Killing: ${pids[@]}"
+  kill -9 "${pids[@]}"
+}
