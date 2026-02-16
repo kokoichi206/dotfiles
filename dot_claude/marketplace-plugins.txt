@@ -1,0 +1,7 @@
+# Claude Code Marketplace Plugins
+# Install with: while read -r plugin; do [[ "$plugin" =~ ^[^#] ]] && claude plugin install "$plugin"; done < marketplace-plugins.txt
+
+ww@cc-plugins
+rust-analyzer-lsp@claude-plugins-official
+code-simplifier@claude-plugins-official
+gopls-lsp@claude-plugins-official

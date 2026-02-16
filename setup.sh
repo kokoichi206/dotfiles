@@ -31,18 +31,6 @@ backup_and_alias "$PWD/.zshrc" ~/.zshrc
 backup_and_alias "$PWD/.vimrc" ~/.vimrc
 backup_and_alias "$PWD/.shell_aliases" ~/.shell_aliases
 
-# Claude Code settings
-mkdir -p ~/.claude
-backup_and_alias "$PWD/dot_claude/CLAUDE.md" ~/.claude/CLAUDE.md
-backup_and_alias "$PWD/dot_claude/settings.json" ~/.claude/settings.json
-backup_and_alias "$PWD/dot_claude/hooks" ~/.claude/hooks
-backup_and_alias "$PWD/dot_claude/commands" ~/.claude/commands
-
-# Codex CLI settings
-mkdir -p ~/.codex
-backup_and_alias "$PWD/dot_codex/AGENTS.md" ~/.codex/AGENTS.md
-backup_and_alias "$PWD/dot_codex/skills" ~/.codex/skills
-
 if [[ $(uname) == "Linux" ]]; then
     echo "Linux"
     # TODO: Do something

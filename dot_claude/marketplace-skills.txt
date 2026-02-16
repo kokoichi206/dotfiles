@@ -1,0 +1,4 @@
+# Claude Code Marketplace Skills
+# Install with: while read -r skill; do [[ "$skill" =~ ^[^#] ]] && claude skill install "$skill"; done < marketplace-skills.txt
+
+ui-ux-pro-max@ui-ux-pro-max-skill
