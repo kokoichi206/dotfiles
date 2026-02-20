@@ -1,5 +1,6 @@
 [tools]
 bottom = "latest"
+bun = "latest"
 neovim = "latest"
 node = "24"
 pnpm = "latest"

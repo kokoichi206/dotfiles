@@ -17,7 +17,6 @@
     "USE_BUILTIN_RIPGREP": "1"
   },
   "permissions": {
-    "defaultMode": "plan",
     "allow": [
       "Skill",
       "Bash(afplay:*)",
@@ -240,7 +239,8 @@
       "NotebookEdit(~/src/**)",
       "NotebookEdit(./**)",
       "Bash(./gradlew:*)",
-      "Bash(source:*)"
+      "Bash(source:*)",
+      "Bash(codex:*)"
     ],
     "deny": [
       "Bash(rm -rf /)",
@@ -309,7 +309,8 @@
       "Write(/etc/passwd)",
       "Write(/etc/shadow)",
       "Write(/etc/sudoers)"
-    ]
+    ],
+    "defaultMode": "bypassPermissions"
   },
   "hooks": {
     "Stop": [
@@ -371,8 +372,10 @@
       "良い夢を〜"
     ]
   },
+  "skipDangerousModePermissionPrompt": true,
   "allowedTools": [
     "mcp__*"
   ],
-  "preferredNotifChannel": "terminal_bell"
+  "preferredNotifChannel": "terminal_bell",
+  "model": "opus"
 }
