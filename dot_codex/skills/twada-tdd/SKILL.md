@@ -1,6 +1,6 @@
 ---
 name: twada-tdd
-description: Apply Takuya Wada inspired TDD flow: tiny tests first, keep cycles tight, and refactor mercilessly.
+description: "Apply Takuya Wada inspired TDD flow: tiny tests first, keep cycles tight, and refactor mercilessly."
 metadata:
   short-description: t_wada TDD one-liner
 ---
