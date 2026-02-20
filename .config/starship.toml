@@ -1,0 +1,46 @@
+"$schema" = "https://starship.rs/config-schema.json"
+
+format = """
+$directory\
+$git_branch\
+$git_status\
+$fill\
+$cmd_duration\
+$line_break\
+$character"""
+
+[directory]
+truncation_length = 3
+truncate_to_repo = true
+
+[git_branch]
+format = "[$symbol$branch(:$remote_branch)]($style) "
+
+[git_status]
+format = '([\[$all_status$ahead_behind\]]($style) )'
+
+[fill]
+symbol = " "
+
+[cmd_duration]
+min_time = 3_000
+format = "[$duration]($style)"
+
+[character]
+success_symbol = "[❯](bold green)"
+error_symbol = "[❯](bold red)"
+
+[python]
+detect_files = ["pyproject.toml", "Pipfile", ".python-version"]
+
+[nodejs]
+detect_files = ["package.json", ".node-version"]
+
+[golang]
+detect_files = ["go.mod"]
+
+[ruby]
+detect_files = ["Gemfile", ".ruby-version"]
+
+[rust]
+detect_files = ["Cargo.toml"]
