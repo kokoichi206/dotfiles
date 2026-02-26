@@ -376,6 +376,5 @@
   "allowedTools": [
     "mcp__*"
   ],
-  "preferredNotifChannel": "terminal_bell",
-  "model": "opus"
+  "preferredNotifChannel": "terminal_bell"
 }
