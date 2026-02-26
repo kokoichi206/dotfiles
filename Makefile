@@ -1,4 +1,6 @@
 .DEFAULT_GOAL := help
+FLAKE_REF := path:.
+DARWIN_HOST ?= $(shell hostname)
 
 .PHONY: help
 help:	## https://postd.cc/auto-documented-makefile/
@@ -19,3 +21,25 @@ update-claude-settings:	## Update .claude settings from ~/.claude
 	@cp ~/.claude/settings.json .claude/
 	@cp ~/.claude/commands/pr.md .claude/commands/
 	@echo "Claude Code settings updated successfully!"
+
+.PHONY: nix-check
+nix-check:	## Check flake outputs
+	nix --extra-experimental-features 'nix-command flakes' flake check $(FLAKE_REF)
+
+# 初回セットアップ用: darwin-rebuild がまだ PATH にない場合に使う
+.PHONY: nix-bootstrap
+nix-bootstrap:	## [初回] Build and apply nix-darwin configuration
+	nix --extra-experimental-features 'nix-command flakes' build $(FLAKE_REF)#darwinConfigurations.$(DARWIN_HOST).system
+	sudo ./result/sw/bin/darwin-rebuild switch --flake $(FLAKE_REF)#$(DARWIN_HOST)
+
+.PHONY: nix-switch
+nix-switch:	## Apply nix-darwin configuration for this host
+	sudo darwin-rebuild switch --flake $(FLAKE_REF)#$(DARWIN_HOST)
+
+.PHONY: nix-build
+nix-build:	## Build without applying (dry-run)
+	darwin-rebuild build --flake $(FLAKE_REF)#$(DARWIN_HOST)
+
+.PHONY: nix-update
+nix-update:	## Update flake.lock inputs
+	nix --extra-experimental-features 'nix-command flakes' flake update
