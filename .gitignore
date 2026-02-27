@@ -1,2 +1,4 @@
 .claude/settings.local.json
 nix/local/identity.nix
+
+__pycache__/
