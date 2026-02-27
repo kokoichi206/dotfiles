@@ -25,6 +25,10 @@
       largesize = 95;
       # Dock の表示位置。
       orientation = "bottom";
+      # 3/4 本指スワイプで App Expose。
+      showAppExposeGestureEnabled = true;
+      # 右下ホットコーナーをクイックメモに設定。
+      wvous-br-corner = 14;
     };
 
     NSGlobalDomain = {
@@ -44,6 +48,8 @@
       # フォルダ/ファイルのスプリングロード設定。
       "com.apple.springing.enabled" = true;
       "com.apple.springing.delay" = 0.5;
+      # 外観をダークに固定。
+      AppleInterfaceStyle = "Dark";
     };
 
     trackpad = {
@@ -89,6 +95,158 @@
       TrackpadTwoFingerDoubleTapGesture = true;
       # 右端スワイプで通知センター。
       TrackpadTwoFingerFromRightEdgeSwipeGesture = 3;
+    };
+
+    screencapture = {
+      # 保存先を既定の Desktop から ~/Documents/imgs へ変更。
+      location = "/Users/${username}/Documents/imgs";
+    };
+
+    WindowManager = {
+      # Stage Manager 利用時は同一アプリのウィンドウをまとめて表示。
+      AppWindowGroupingBehavior = true;
+      # タイル配置時のウィンドウ余白を無効へ変更。
+      EnableTiledWindowMargins = false;
+    };
+
+    menuExtraClock = {
+      # 午前/午後を表示。
+      ShowAMPM = true;
+      # 日付は「スペースがある場合のみ表示」。
+      ShowDate = 0;
+      # 曜日を表示。
+      ShowDayOfWeek = true;
+    };
+
+    loginwindow = {
+      # ゲストログインを無効へ変更。
+      GuestEnabled = false;
+    };
+
+    CustomUserPreferences = {
+      # Spotlight / 入力切替など、独自に変更したショートカットのみを固定。
+      # AppleSymbolicHotKeys の ID 一覧（非公式）:
+      # - https://gist.github.com/aca/bb6d936325fc59b2b61090d14f9852a5
+      # - https://stackoverflow.com/a/78820725 (例: 184 = Screenshot and recording options)
+      "com.apple.symbolichotkeys" = {
+        AppleSymbolicHotKeys = {
+          "15" = { enabled = false; };
+          "16" = { enabled = false; };
+          "17" = { enabled = false; };
+          "18" = { enabled = false; };
+          "19" = { enabled = false; };
+          "20" = { enabled = false; };
+          "21" = { enabled = false; };
+          "22" = { enabled = false; };
+          "23" = { enabled = false; };
+          "24" = { enabled = false; };
+          "25" = { enabled = false; };
+          "26" = { enabled = false; };
+          "28" = {
+            enabled = false;
+            value = {
+              type = "standard";
+              parameters = [
+                51
+                20
+                1179648
+              ];
+            };
+          };
+          "29" = {
+            enabled = false;
+            value = {
+              type = "standard";
+              parameters = [
+                51
+                20
+                1441792
+              ];
+            };
+          };
+          "30" = {
+            enabled = false;
+            value = {
+              type = "standard";
+              parameters = [
+                52
+                21
+                1179648
+              ];
+            };
+          };
+          "31" = {
+            enabled = false;
+            value = {
+              type = "standard";
+              parameters = [
+                52
+                21
+                1441792
+              ];
+            };
+          };
+          "60" = {
+            enabled = true;
+            value = {
+              type = "standard";
+              parameters = [
+                32
+                49
+                1048576
+              ];
+            };
+          };
+          "61" = {
+            enabled = true;
+            value = {
+              type = "standard";
+              parameters = [
+                32
+                49
+                786432
+              ];
+            };
+          };
+          "64" = {
+            enabled = true;
+            value = {
+              type = "standard";
+              parameters = [
+                32
+                49
+                262144
+              ];
+            };
+          };
+          "79" = { enabled = true; };
+          "80" = { enabled = true; };
+          "81" = { enabled = true; };
+          "82" = { enabled = true; };
+          "164" = {
+            enabled = false;
+            value = {
+              type = "standard";
+              parameters = [
+                65535
+                65535
+                0
+              ];
+            };
+          };
+          "184" = {
+            enabled = false;
+            value = {
+              type = "standard";
+              parameters = [
+                53
+                23
+                1179648
+              ];
+            };
+          };
+        };
+      };
     };
   };
 

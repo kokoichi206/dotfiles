@@ -182,6 +182,9 @@ update_iterm2_badge
 test -e "${HOME}/.iterm2_shell_integration.zsh" && source "${HOME}/.iterm2_shell_integration.zsh"
 [[ "$TERM_PROGRAM" == "kiro" ]] && . "$(kiro --locate-shell-integration-path zsh)"
 
+# direnv (nix-direnv) のフック
+eval "$(direnv hook zsh)"
+
 eval "$(mise activate zsh)"
 
 # zoxide と starship は末尾で初期化（precmd hooks の順序のため）
