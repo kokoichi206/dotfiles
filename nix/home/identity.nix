@@ -11,7 +11,7 @@
 
   # Home Manager で入れるユーザー向けパッケージ。
   home.packages = with pkgs; [
-    sqlit-tui
+    rainfrog
     bat
     eza
     fd

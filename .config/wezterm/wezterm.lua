@@ -63,8 +63,8 @@ config.hide_tab_bar_if_only_one_tab = true
 
 -- タブバーの透過
 config.window_frame = {
-    inactive_titlebar_bg = "none",
-    active_titlebar_bg = "none",
+    inactive_titlebar_bg = "rgba(13, 13, 13, 0.75)",
+    active_titlebar_bg = "rgba(13, 13, 13, 0.75)",
 }
 
 -- タブバーを背景色に合わせる
@@ -82,6 +82,7 @@ config.show_close_tab_button_in_tabs = false
 -- タブ同士の境界線を非表示
 config.colors = {
     tab_bar = {
+        background = "#5c6d74",
         inactive_tab_edge = "none",
     },
     -- ペイン間の区切り線の色を変更。

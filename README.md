@@ -10,7 +10,7 @@
 
 ``` sh
 # Brewfile is created by this command.
-brew bundle dump
+brew bundle dump --force
 ```
 
 ## config
