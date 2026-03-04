@@ -250,6 +250,14 @@
     };
   };
 
+  # スリープまでの時間（分）。
+  # power.sleep.* は per-source 指定不可のため pmset で直接設定する。
+  # -b: battery, -c: power adapter
+  system.activationScripts.extraActivation.text = ''
+    /usr/bin/pmset -b displaysleep 20 sleep 20
+    /usr/bin/pmset -c displaysleep 120 sleep 120
+  '';
+
   system.keyboard = {
     # 明示適用にして、既存 remap を activation 時にクリアする。
     enableKeyMapping = true;
