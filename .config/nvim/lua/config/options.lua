@@ -46,6 +46,12 @@ vim.opt.listchars = { tab = "» ", trail = "·", nbsp = "␣" }
 -- Minimal number of screen lines to keep above and below the cursor.
 vim.opt.scrolloff = 5
 
+-- Folding with treesitter
+-- za: toggle, zo: open, zc: close, zM: close all, zR: open all
+vim.opt.foldmethod = "expr"
+vim.opt.foldexpr = "v:lua.vim.treesitter.foldexpr()"
+vim.opt.foldlevel = 99
+
 -- Force indent settings for lua files (override vim-sleuth)
 vim.api.nvim_create_autocmd("FileType", {
 	pattern = "lua",
