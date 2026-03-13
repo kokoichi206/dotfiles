@@ -37,13 +37,19 @@ description: codex, gemini cli, coderabbit を用いてローカルと default �
 
 各ツールはパイプ入力の対応状況が異なる。ツールごとに正しい呼び出し方を使うこと。
 
-- **Codex CLI** (パイプ + `codex exec`):
+- **Codex CLI** (`codex exec` + コマンド置換):
   `codex review` は `--base` 指定時にプロンプトを受け付けないため、観点別レビューには使えない。
-  代わりに `codex exec` を使う。stdin パイプで差分を渡し、プロンプトで観点を指定する。
+  代わりに `codex exec` を使う。**パイプではなくコマンド置換で差分をプロンプトに埋め込む。**
+  パイプや `2>` リダイレクトと組み合わせると引数パースエラーになるため、必ず以下の形式を使うこと。
   ```
-  git diff <default-branch> | codex exec "この差分を【セキュリティの観点】からレビューしてください"
+  # 1. 事前に差分をファイルに保存（1回だけ、全観点で共有）
+  git diff <default-branch> > /tmp/multi-review-diff.patch
+
+  # 2. コマンド置換でプロンプトに含め、stdout リダイレクトで結果を保存
+  codex exec "$(cat /tmp/multi-review-diff.patch)
+
+  上記の差分を【セキュリティの観点】からレビューしてください" > /tmp/codex-security.txt
   ```
-  結果は `-o <file>` で出力先ファイルを指定するか、stdout から取得する。
 
 - **Gemini CLI** (パイプ可、positional prompt):
   stdin でパイプ入力を受け付ける。`-y` で確認プロンプトをスキップする。
