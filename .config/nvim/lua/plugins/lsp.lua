@@ -11,6 +11,28 @@ return {
 
 		-- Useful status updates for LSP.
 		{ "j-hui/fidget.nvim", opts = {} },
+
+		-- JSON/YAML schema catalog for LSP (jsonls, yamlls と連携)
+		--
+		-- 仕組み:
+		--   SchemaStore.org (https://www.schemastore.org/) が管理する JSON Schema カタログを
+		--   Lua テーブルに変換して同梱したプラグイン。
+		--   各スキーマには fileMatch (glob) が定義されており、開いたファイルのパスから
+		--   自動的に適切なスキーマが選ばれて補完・バリデーション・ホバーが有効になる。
+		--
+		-- 対応例:
+		--   .github/workflows/*.yml → GitHub Workflow
+		--   docker-compose.yml      → Compose spec
+		--   package.json            → npm package
+		--   tsconfig.json           → TypeScript config
+		--
+		-- ローカルのカタログ定義:
+		--   ~/.local/share/nvim/lazy/schemastore.nvim/lua/schemastore/catalog.lua
+		-- 大元:
+		--   https://github.com/SchemaStore/schemastore (src/api/json/catalog.json)
+		-- 更新タイミング:
+		--   :Lazy update schemastore.nvim (または :Lazy sync で一括)
+		"b0o/schemastore.nvim",
 	},
 	config = function()
 		-- Brief aside: **What is LSP?**
@@ -315,6 +337,9 @@ return {
 			-- not in lsp
 			"prettier",
 			"prettierd",
+			-- servers テーブル外で明示 setup するため、ここで ensure_installed に追加
+			"jsonls",
+			"yamlls",
 		})
 		require("mason-tool-installer").setup({ ensure_installed = ensure_installed })
 
@@ -330,6 +355,31 @@ return {
 					server.capabilities = vim.tbl_deep_extend("force", {}, capabilities, server.capabilities or {})
 					require("lspconfig")[server_name].setup(server)
 				end,
+			},
+		})
+
+		-- schemastore.nvim 連携が必要なサーバーは handler 経由だと settings が渡らないため、明示的に setup する
+		require("lspconfig").jsonls.setup({
+			capabilities = capabilities,
+			settings = {
+				json = {
+					schemas = require("schemastore").json.schemas(),
+					validate = { enable = true },
+				},
+			},
+		})
+
+		require("lspconfig").yamlls.setup({
+			capabilities = capabilities,
+			settings = {
+				yaml = {
+					schemaStore = {
+						-- schemastore.nvim 側で管理するので built-in は無効化
+						enable = false,
+						url = "",
+					},
+					schemas = require("schemastore").yaml.schemas(),
+				},
 			},
 		})
 	end,
