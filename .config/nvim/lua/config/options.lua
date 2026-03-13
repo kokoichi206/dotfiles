@@ -51,6 +51,7 @@ vim.opt.scrolloff = 5
 vim.opt.foldmethod = "expr"
 vim.opt.foldexpr = "v:lua.vim.treesitter.foldexpr()"
 vim.opt.foldlevel = 99
+vim.opt.foldtext = ""
 
 -- Force indent settings for lua files (override vim-sleuth)
 vim.api.nvim_create_autocmd("FileType", {
