@@ -365,6 +365,7 @@
     "code-simplifier@claude-plugins-official": true,
     "gopls-lsp@claude-plugins-official": true
   },
+  "outputStyle": "Explanatory",
   "spinnerVerbs": {
     "mode": "replace",
     "verbs": [
