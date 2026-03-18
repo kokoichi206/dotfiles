@@ -11,8 +11,11 @@ autoload -U +X bashcompinit && bashcompinit
 # ============ Sheldon (plugin manager) ============
 eval "$(sheldon source)"
 
+# ============ XDG Base Directory ============
+export XDG_CONFIG_HOME="$HOME/.config"
+
 # ============ Abbreviations ============
-export ABBR_USER_ABBREVIATIONS_FILE="${XDG_CONFIG_HOME:-$HOME/.config}/zsh-abbr/user-abbreviations"
+export ABBR_USER_ABBREVIATIONS_FILE="${XDG_CONFIG_HOME}/zsh-abbr/user-abbreviations"
 
 # ============ PATH ============
 export PATH="$HOME/.cargo/bin:$PATH"
@@ -183,7 +186,9 @@ test -e "${HOME}/.iterm2_shell_integration.zsh" && source "${HOME}/.iterm2_shell
 [[ "$TERM_PROGRAM" == "kiro" ]] && . "$(kiro --locate-shell-integration-path zsh)"
 
 # direnv (nix-direnv) のフック
-eval "$(direnv hook zsh)"
+if command -v direnv &>/dev/null; then
+  eval "$(direnv hook zsh)"
+fi
 
 eval "$(mise activate zsh)"
 

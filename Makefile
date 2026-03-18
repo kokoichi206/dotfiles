@@ -1,6 +1,6 @@
 .DEFAULT_GOAL := help
 FLAKE_REF := path:.
-DARWIN_HOST ?= $(shell hostname)
+DARWIN_HOST ?= $(shell hostname -s)
 
 .PHONY: help
 help:	## https://postd.cc/auto-documented-makefile/

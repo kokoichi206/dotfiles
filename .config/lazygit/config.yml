@@ -1,0 +1,7 @@
+customCommands:
+  - key: "G"
+    context: "files"
+    description: "AI commit message (Claude)"
+    command: >-
+      git diff --cached | claude -p 'Generate a concise commit message following Conventional Commits format. Output ONLY the commit message, nothing else. Use lowercase type (feat, fix, refactor, docs, chore, test, style, perf, ci, build). Keep the subject line under 72 characters. If the change is simple, use a single line. If complex, add a body separated by a blank line.' > /tmp/lazygit-ai-commit-msg.txt && git commit -e -F /tmp/lazygit-ai-commit-msg.txt && rm -f /tmp/lazygit-ai-commit-msg.txt
+    output: "terminal"
