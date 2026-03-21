@@ -11,6 +11,10 @@
 
   # Home Manager で入れるユーザー向けパッケージ。
   home.packages = with pkgs; [
+    # BEAM (Erlang/Elixir) — OTP バージョンの整合性を beam.packages で保証。
+    beam.packages.erlang_28.erlang
+    beam.packages.erlang_28.elixir
+
     rainfrog
     bat
     eza
@@ -25,6 +29,7 @@
     gh
     ghq
     tree
+    inetutils # telnet, ftp, ping 等
     watch
     starship
     gum
