@@ -106,6 +106,8 @@ return {
         },
         -- Tab入れ替え
         { key = "{", mods = "LEADER", action = act({ MoveTabRelative = -1 }) },
+        -- Window 新規作成
+        { key = "n", mods = "SUPER", action = act.SpawnWindow },
         -- Tab新規作成
         { key = "t", mods = "SUPER", action = act({ SpawnTab = "CurrentPaneDomain" }) },
         -- Tabを閉じる
