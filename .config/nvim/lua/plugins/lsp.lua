@@ -290,6 +290,9 @@ return {
 			pyright = {},
 			rust_analyzer = {},
 
+			-- erlang
+			elp = {},
+
 			-- typescript
 			biome = {},
 			tsgo = {},
