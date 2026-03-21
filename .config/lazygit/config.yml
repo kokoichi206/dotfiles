@@ -5,5 +5,5 @@ customCommands:
     context: "files"
     description: "AI commit message (Claude)"
     command: >-
-      git diff --cached | claude -p 'Generate a concise commit message. Output ONLY the commit message, nothing else. No prefix like feat: or fix:. Keep the subject line under 72 characters. If the change is simple, use a single line. If complex, add a body separated by a blank line.' > /tmp/lazygit-ai-commit-msg.txt && git commit -e -F /tmp/lazygit-ai-commit-msg.txt && rm -f /tmp/lazygit-ai-commit-msg.txt
+      git diff --cached | claude -p '簡潔なコミットメッセージを日本語で生成して。コミットメッセージのみを出力。feat: や fix: のような prefix は不要。1行目は72文字以内。変更が単純なら1行、複雑なら空行を挟んで本文を追加。' > /tmp/lazygit-ai-commit-msg.txt && git commit -e -F /tmp/lazygit-ai-commit-msg.txt && rm -f /tmp/lazygit-ai-commit-msg.txt
     output: "terminal"
