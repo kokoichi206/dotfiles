@@ -11,6 +11,9 @@ autoload -U +X bashcompinit && bashcompinit
 # ============ Sheldon (plugin manager) ============
 eval "$(sheldon source)"
 
+# ============ Default Editor ============
+export EDITOR="nvim"
+
 # ============ XDG Base Directory ============
 export XDG_CONFIG_HOME="$HOME/.config"
 
