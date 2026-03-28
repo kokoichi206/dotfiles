@@ -14,6 +14,7 @@
     # BEAM (Erlang/Elixir) — OTP バージョンの整合性を beam.packages で保証。
     beam.packages.erlang_28.erlang
     beam.packages.erlang_28.elixir
+    beam.packages.erlang_28.rebar3
 
     rainfrog
     bat
