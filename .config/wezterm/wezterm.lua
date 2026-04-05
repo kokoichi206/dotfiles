@@ -26,7 +26,13 @@ config.initial_cols = 210
 config.initial_rows = 54
 
 -- ハイパーリンク設定（URLやファイルパスをクリック可能に）
-config.hyperlink_rules = wezterm.default_hyperlink_rules()
+-- default_hyperlink_rules() から mailto ルールを除外（@入りテキストでメーラーが開くのを防ぐ）
+config.hyperlink_rules = {}
+for _, rule in ipairs(wezterm.default_hyperlink_rules()) do
+	if not rule.format:find("mailto:") then
+		table.insert(config.hyperlink_rules, rule)
+	end
+end
 -- ファイルパス:行番号 の形式を検出（例: src/main.rs:123）
 table.insert(config.hyperlink_rules, {
     regex = [[["]?([\w\d]{1}[\w\d\.\-\_/]+):(\d+):?(\d+)?["]?]],
