@@ -14,7 +14,10 @@
     "CLAUDE_CODE_DISABLE_TERMINAL_TITLE": "0",
     "CLAUDE_CODE_EXPERIMENTAL_AGENT_TEAMS": "1",
     "ENABLE_TOOL_SEARCH": "true",
-    "USE_BUILTIN_RIPGREP": "1"
+    "USE_BUILTIN_RIPGREP": "1",
+    "CLAUDE_CODE_EFFORT_LEVEL": "max",
+    "CLAUDE_CODE_DISABLE_BACKGROUND_TASKS": "1",
+    "CLAUDE_CODE_DISABLE_ADAPTIVE_THINKING": "1"
   },
   "permissions": {
     "allow": [
@@ -363,9 +366,20 @@
     "playwright-skill@playwright-skill": true,
     "ww@cc-plugins": true,
     "code-simplifier@claude-plugins-official": true,
-    "gopls-lsp@claude-plugins-official": true
+    "gopls-lsp@claude-plugins-official": true,
+    "swift-lsp@claude-plugins-official": true,
+    "ui-ux-pro-max@ui-ux-pro-max-skill": true
+  },
+  "extraKnownMarketplaces": {
+    "ui-ux-pro-max-skill": {
+      "source": {
+        "source": "github",
+        "repo": "nextlevelbuilder/ui-ux-pro-max-skill"
+      }
+    }
   },
   "outputStyle": "Explanatory",
+  "showThinkingSummaries": true,
   "spinnerVerbs": {
     "mode": "replace",
     "verbs": [
@@ -384,6 +398,7 @@
       "良い夢を〜"
     ]
   },
+  "effortLevel": "high",
   "skipDangerousModePermissionPrompt": true,
   "allowedTools": [
     "mcp__*"
