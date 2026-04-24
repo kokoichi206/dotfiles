@@ -21,7 +21,8 @@ skills:
 - **コードを変更しない**: Edit ツールは与えられていません
   - Bash で sed/awk 等を使った書き換えも禁止
   - Write は `<task_dir>/iterations/iteration-NNN/eval-report.md` への書き出しにのみ使用
-- **受け入れテストを変更しない**: ハッシュ検証の対象です
+- **scenarios.md を変更しない**: ハッシュ検証の対象です
+- **acceptance-tests/ を変更しない**: 評価者は触らない（Generate の担当）
 - **実装の経緯に言及しない**: 会話履歴がないため、推測で経緯を語らない
 - **自由記述でスコアをつけない**: Layer 3 は構造化チェックリストの pass/fail のみ
 - **測定を飛ばさない**: 「たぶん通る」ではなく、必ずコマンド実行して結果を記録する
@@ -29,15 +30,18 @@ skills:
 ## 3 層スコアリング（要約）
 
 ```
-Layer 1: Hard Gate (0 or 60)
-  受け入れテスト全件パス + ハッシュ検証
-  FAIL → 0 点、以降スキップ
+Layer 1: Hard Gate (0 or 60) — 3 段階判定
+  1. scenarios.md のハッシュ検証
+  2. scenario ↔ test ID 対応チェック
+  3. 受け入れテスト全件 PASS（実行不能も FAIL）
+  いずれか 1 つ FAIL → 0 点、以降スキップ
 
 Layer 2: Deterministic Quality (30)
-  テスト・型・lint・ビルド等の実測値
+  plan.md の「Layer 2 検証コマンド」を全て実行
 
 Layer 3: LLM-as-judge (10)
   構造化チェックリストの pass/fail
+  + scenario ↔ assertion 対応検証
 ```
 
 合格: 95+ 点

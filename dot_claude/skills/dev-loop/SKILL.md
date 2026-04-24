@@ -31,6 +31,14 @@ description: |
 | Evaluate | `dev-evaluate` | Read, Grep, Glob, Bash, Write | **Edit**（評価中の改変防止） |
 | External Review | `dev-external-review` | Bash, Read, Write | **Edit, Grep, Glob** |
 
+## 設計の核: spec と tests の分離
+
+- **spec = `scenarios.md`（自然言語、ハッシュロック）**: 人間承認、不変
+- **tests = `acceptance-tests/`（実装の一部、柔軟）**: Generate が整備・調整
+
+この分離により、lint/import/format/セレクタ等の実装詳細は柔軟に調整できる一方、
+「何を満たすべきか」の spec はブレない。
+
 ## ファイルベース通信（タスクディレクトリ構造）
 
 タスクディレクトリ名は `YYYYMMDD-HHMMSS-<base-slug>` 形式のタイムスタンプ prefix 付き。
@@ -39,9 +47,10 @@ description: |
 ```
 .dev-loop/
   20260419-103000-add-auth-feature/  ← <task-slug> = timestamp-prefix + base-slug
-    plan.md                       ← dev-plan の出力
-    acceptance-tests/             ← dev-plan が作成、以降改変禁止（ハッシュ保護）
-    acceptance-hash.txt           ← 受け入れテストのハッシュ
+    plan.md                       ← dev-plan の出力（実装計画）
+    scenarios.md                  ← dev-plan の出力（受け入れシナリオ、★ ハッシュロック）
+    scenarios-hash.txt            ← scenarios.md のハッシュ
+    acceptance-tests/             ← テスト（★ ロックしない、Generate が整備）
     ui-checks.yaml                ← UI タスクのプロジェクト固有チェック
     iterations/
       iteration-001/
@@ -52,8 +61,9 @@ description: |
         ...
     latest-feedback.md            ← iterations/iteration-NNN/feedback.md へのシンボリックリンク
                                     dev-generate はこれを読む
-    plan-history/                 ← Escalation で書き直された旧 plan
+    plan-history/                 ← Escalation で書き直された旧 plan / scenarios
       plan-v1-{timestamp}.md
+      scenarios-v1-{timestamp}.md
     iteration-log.md              ← 全イテレーションの記録
     score-log.md                  ← スコアの根拠と推移
 
@@ -110,21 +120,28 @@ description: |
 ```
 Agent({
   subagent_type: "dev-plan",
-  description: "dev-plan: 実装計画策定",
+  description: "dev-plan: 実装計画・受け入れシナリオ策定",
   prompt: `
     task_dir = .dev-loop/<slug>/
 
     ## タスク
     {ユーザーから受け取ったタスクの説明}
 
-    task_dir 配下に plan.md, acceptance-tests/, ui-checks.yaml（UI タスクの場合）を作成してください。
+    task_dir 配下に以下を作成してください:
+    - scenarios.md（受け入れシナリオ、ハッシュロック対象）
+    - scenarios-hash.txt
+    - plan.md（実装計画）
+    - acceptance-tests/（テストの初期テンプレート、ロックしない）
+    - ui-checks.yaml（UI タスクの場合）
   `
 })
 ```
 
 Agent 完了後:
-1. `<task_dir>/plan.md` を Read する
-2. **計画をユーザーに提示し、承認を得る**
+1. `<task_dir>/scenarios.md` と `<task_dir>/plan.md` を Read する
+2. **ユーザーに受け入れシナリオ（scenarios.md）と計画（plan.md）を提示し、承認を得る**
+   - 特に scenarios.md の過不足を人間に確認してもらう（スペック自体の品質を担保する唯一のゲート）
+   - scenarios.md に `## 要確認` があればそれに回答を得る
 3. 修正要求があれば Agent を再起動
 
 ### Stage 2: Generate
@@ -186,13 +203,33 @@ Agent({
 
 1. `<task_dir>/iterations/iteration-NNN/eval-report.md` と同 `external-review.md` を Read する
 2. 両者のスコアと指摘を統合する
+
+**統合スコアの計算式:**
+
+```
+統合スコア = min(evaluate_score, external_score)
+```
+
+`min()` を使う理由: 片方が甘くても通らないようにするため（評価ゲーミング対策）。
+平均や重み付けにすると「Evaluate 甘く、External でカバー」のような抜け道が生まれる。
+
+**乖離チェック:**
+
+```
+|evaluate_score - external_score| >= 20
+```
+
+20 点以上の乖離は、どちらかが誤判定している可能性が高い。
+この場合は Human Escalation を検討する（短絡条件で後述）。
+
 3. `<task_dir>/score-log.md` にスコア推移を追記する:
 
 ```markdown
 ## Iteration NNN
 - Evaluate: XX/100 (L1: X, L2: Y, L3: Z)
 - External: XX/100
-- 統合スコア: XX
+- 統合スコア: XX（= min(Evaluate, External)）
+- 乖離: Δ（evaluate - external）
 - 指摘件数: [修正可能] X, [修正不可能] Y, [設計起因] Z
 ```
 
@@ -265,12 +302,34 @@ N = 6-7: Incremental Fix（Plan 書き直し後）
 
 ### 短絡条件
 
-以下の場合は通常のループを中断し、Human Escalation に飛ぶ:
+以下の場合は通常のループを中断する:
+
+**Human Escalation（人間判断へ）:**
 
 - Layer 1 で 3 回連続 0 点（完了条件を満たせない）
   → 要件が曖昧 or 達成不可能の可能性
 - 統合スコアが 3 回連続で改善していない（差分 ±2 以内）
   → 現在のアプローチで上限に達している
+- Evaluate と External のスコア乖離が 2 回連続で 20 点以上
+  → 評価者のどちらかがバイアスを持っている可能性
+
+**早期 Plan Rewrite（scenarios 修正ルート）:**
+
+- [設計起因] の指摘が「**scenarios.md 自体の修正を要求**」するケースが 2 回連続で出た場合
+  → iteration 5 を待たず、即 Plan Rewrite に飛ぶ
+  → 通常の Plan Rewrite 回数制限（最大 1 回）にはカウントしない
+  → ただし Plan Rewrite 時のみ `<task_dir>/scenarios.md` の再作成を許可する
+    - 旧 scenarios.md は `<task_dir>/plan-history/scenarios-v{n}-{timestamp}.md` に退避
+    - 新しい scenarios_hash を新 plan.md に記録
+    - 旧 scenarios-hash.txt も history に退避し、新しい値を `<task_dir>/scenarios-hash.txt` に書く
+  → 修正された scenarios.md は人間に再度提示して承認を得る
+
+**このルートの制約:**
+
+- scenarios.md の書き換えは Plan Rewrite 経由でのみ可能（直接の iteration 内では禁止）
+- dev-generate / dev-evaluate は scenarios.md を改変できない（acceptance-tests/ は自由）
+- ハッシュ保護は Plan Rewrite 後も維持される（新しいハッシュで固定）
+- 旧 scenarios は plan-history/ に残るため監査可能
 
 ### Stage 6: Report（オーケストレーター自身）
 

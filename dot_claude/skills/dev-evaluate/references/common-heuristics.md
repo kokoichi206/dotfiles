@@ -3,6 +3,47 @@
 backend / refactor / bugfix の Layer 3 で使う構造化チェックリスト。
 LLM に **pass/fail** を返させる。自由記述でスコアさせない。
 
+## 全タスク共通: scenario ↔ assertion 対応
+
+**必須チェック項目（全タスクタイプで評価）:**
+
+scenarios.md の各シナリオ（S1, S2, ...）について、対応するテストの assertion が
+Then 節の期待値を実際に検証しているか確認する。
+
+- [ ] S1 のテストが S1 の Then を検証する assertion を持つ（単なる true/truthy チェックではない）
+- [ ] S2 のテストが S2 の Then を検証する assertion を持つ
+- [ ] ...（全シナリオについて繰り返し）
+- [ ] テスト名は ID 対応しているが、中身が空・コメントのみ・無関係な assertion のテストがない
+- [ ] Mock / Stub がシナリオの検証を骨抜きにしていない（例: 全てを mock して「通した」状態になっていない）
+
+**判定例:**
+
+scenarios.md:
+```
+## S1: 正しい認証情報でログイン成功
+- Then: ダッシュボードに遷移、ウェルカムメッセージが表示
+```
+
+acceptance-tests/auth.spec.ts:
+```typescript
+test('S1: 正しい認証情報でログイン成功', async ({ page }) => {
+  await page.goto('/login');
+  // ...操作...
+  await expect(page).toHaveURL('/dashboard');       // ← URL 遷移を検証 ✓
+  await expect(page.getByText(/ようこそ/)).toBeVisible();  // ← welcome 表示を検証 ✓
+});
+```
+→ **pass**（Then の 2 項目をそれぞれ assertion で検証している）
+
+```typescript
+test('S1: 正しい認証情報でログイン成功', async ({ page }) => {
+  await page.goto('/login');
+  // ...操作...
+  expect(true).toBe(true);  // ← 何も検証していない
+});
+```
+→ **fail**（空の assertion、Then を検証していない）
+
 ## backend タスク
 
 ### エラーハンドリング
