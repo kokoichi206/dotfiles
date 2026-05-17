@@ -58,6 +58,11 @@ if [ -f ~/.shell_aliases ]; then
     . ~/.shell_aliases
 fi
 
+# ============ Word boundaries ============
+# `/` を除外して `origin/main` のようなパスを Ctrl+W / Option+Delete で
+# 一語ずつ消せるようにする。デフォルト値から差分だけを引く形で書く。
+WORDCHARS=${WORDCHARS:s@/@}
+
 # ============ History ============
 setopt HIST_EXPIRE_DUPS_FIRST
 setopt HIST_IGNORE_DUPS
