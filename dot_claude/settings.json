@@ -379,7 +379,6 @@
     }
   },
   "outputStyle": "Explanatory",
-  "showThinkingSummaries": true,
   "spinnerVerbs": {
     "mode": "replace",
     "verbs": [
@@ -399,10 +398,12 @@
       "良い夢を〜"
     ]
   },
-  "effortLevel": "high",
+  "effortLevel": "xhigh",
+  "showThinkingSummaries": true,
   "skipDangerousModePermissionPrompt": true,
+  "preferredNotifChannel": "terminal_bell",
   "allowedTools": [
     "mcp__*"
   ],
-  "preferredNotifChannel": "terminal_bell"
+  "theme": "light-daltonized"
 }
