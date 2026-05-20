@@ -350,7 +350,7 @@
         "hooks": [
           {
             "type": "command",
-            "command": "/Users/tominagatakahiro/.claude/hooks/rtk-rewrite.sh"
+            "command": "\"$HOME/.claude/hooks/rtk-rewrite.sh\""
           }
         ]
       }
