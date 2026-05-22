@@ -3,6 +3,11 @@
 [user]
 	name = kokoichi206
 	email = 52474650+kokoichi206@users.noreply.github.com
+	# signingkey は GPG 鍵の指紋で、鍵への参照を指定。
+	# 鍵の実体は ~/.gnupg/ にあり、別 PC で署名するにはその PC のキーリングへ秘密鍵を import する必要がある:
+	#   旧PCでexport: gpg --export-secret-keys --armor F98180B6D8286AA0A40FB9FF315BE4660DC92770 > private.key
+	#   新PCでimport: gpg --import private.key && gpg --edit-key F98180B6D8286AA0A40FB9FF315BE4660DC92770 trust
+	signingkey = F98180B6D8286AA0A40FB9FF315BE4660DC92770
 [include]
 	path = ~/.gitconfig-email
 # 指定された配下のリポジトリを操作する場合のみ、設定値を読み込む。
