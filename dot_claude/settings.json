@@ -354,6 +354,18 @@
           }
         ]
       }
+    ],
+    "PostToolUse": [
+      {
+        "matcher": "Edit|Write|MultiEdit",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "\"$HOME/.claude/hooks/auto-format.sh\"",
+            "timeout": 30
+          }
+        ]
+      }
     ]
   },
   "statusLine": {
