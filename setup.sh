@@ -35,6 +35,9 @@ backup_and_alias "$PWD/.config/zsh-abbr" ~/.config/zsh-abbr
 backup_and_alias "$PWD/.config/sheldon" ~/.config/sheldon
 backup_and_alias "$PWD/.config/starship.toml" ~/.config/starship.toml
 
+mkdir -p ~/.config/lazygit
+backup_and_alias "$PWD/.config/lazygit/config.yml" ~/.config/lazygit/config.yml
+
 
 if [[ $(uname) == "Linux" ]]; then
     echo "Linux"
