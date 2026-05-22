@@ -57,6 +57,7 @@ setup_claude() {
     create_symlink "$SCRIPT_DIR/dot_claude/settings.json" "$CLAUDE_DIR/settings.json"
     create_symlink "$SCRIPT_DIR/dot_claude/hooks" "$CLAUDE_DIR/hooks"
     create_symlink "$SCRIPT_DIR/dot_claude/commands" "$CLAUDE_DIR/commands"
+    create_symlink "$SCRIPT_DIR/dot_claude/rules" "$CLAUDE_DIR/rules"
 
     # Symlink custom skills (not marketplace skills)
     if [ -d "$SCRIPT_DIR/dot_claude/skills" ]; then
