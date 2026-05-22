@@ -332,6 +332,14 @@
             "command": "\"$HOME/.claude/hooks/focus-wezterm.sh\""
           }
         ]
+      },
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "\"$HOME/.claude/hooks/tts-notify.sh\""
+          }
+        ]
       }
     ],
     "Notification": [
