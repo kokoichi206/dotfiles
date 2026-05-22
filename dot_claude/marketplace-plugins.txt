@@ -5,3 +5,4 @@ ww@cc-plugins
 rust-analyzer-lsp@claude-plugins-official
 code-simplifier@claude-plugins-official
 gopls-lsp@claude-plugins-official
+cc-caffeine@samber
