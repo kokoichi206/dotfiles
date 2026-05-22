@@ -1,7 +1,8 @@
 [ghq]
 	username = kokoichi206
 [user]
-	name = takahiro.tominaga
+	name = kokoichi206
+	email = 52474650+kokoichi206@users.noreply.github.com
 [include]
 	path = ~/.gitconfig-email
 # 指定された配下のリポジトリを操作する場合のみ、設定値を読み込む。
