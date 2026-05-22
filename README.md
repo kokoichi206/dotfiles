@@ -1,51 +1,58 @@
 # dotfiles
 
-## other installation
+Personal dotfiles for macOS (zsh).
 
-- [go](https://go.dev/doc/install)
-- [docker](https://docs.docker.com/engine/install/ubuntu)
-- [oh-my-zsh](https://ohmyz.sh/#install)
+## Setup
 
-## brew
+```sh
+# Clone (kept under ghq)
+git clone https://github.com/kokoichi206/dotfiles.git \
+  ~/ghq/github.com/kokoichi206/dotfiles
+cd ~/ghq/github.com/kokoichi206/dotfiles
 
-``` sh
-# Brewfile is created by this command.
-brew bundle dump --force
+# Symlink configs, install Homebrew packages, install oh-my-zsh
+bash setup.sh
 ```
 
-## config
-
-``` sh
-ln -s "$HOME"/ghq/github.com/kokoichi206/dotfiles/.config/nvim ~/.config/nvim
-```
-
-## DOING...
-
-``` sh
-curl -o https://github.com/kokoichi206/dotfiles/setup-repo.sh
-```
+`setup.sh` symlinks the configs (wezterm, mise, neovim, git, zsh, lazygit, VSCode/Windsurf, …),
+runs `brew.sh` to install everything from the `Brewfile`, and installs oh-my-zsh.
 
 ## nix-darwin + home-manager
 
+nix-darwin manages macOS system defaults (Dock, trackpad, keyboard shortcuts) and
+home-manager manages user CLI tools. Both are applied together via `make nix-switch`.
+
 ```sh
-# Create local identity file (not tracked by Git)
+# Create local identity file (username / hostname / system; not tracked by Git)
 cp nix/local/identity.example.nix nix/local/identity.nix
 
-# Build system derivation
-make nix-build
+# First machine only: darwin-rebuild is not yet on PATH
+make nix-bootstrap
 
-# Apply configuration
-make nix-switch
-
-# Validate flake outputs
-make nix-check
-
-# Update pinned inputs
-make nix-update
+make nix-switch   # Apply configuration
+make nix-build    # Build without applying (dry-run)
+make nix-check    # Validate flake outputs
+make nix-update   # Update pinned inputs (flake.lock)
 ```
 
-If hostname differs from `hostname`, use:
+If the hostname differs from `hostname -s`:
 
 ```sh
 DARWIN_HOST=<hostname> make nix-switch
+```
+
+## What manages what
+
+| Layer | Manages | Source |
+| --- | --- | --- |
+| mise | language runtimes — node, python, ruby, rust, terraform, neovim, … | `.config/mise/config.toml` |
+| home-manager | CLI tools — bat, eza, fd, ripgrep, gh, ghq, starship, … | `nix/home/identity.nix` |
+| nix-darwin | macOS system defaults | `nix/darwin/configuration.nix` |
+| Homebrew | GUI apps & docker | `Brewfile` |
+
+## Maintenance
+
+```sh
+make help              # list all make targets
+make update-brewfile   # regenerate Brewfile from installed packages
 ```
