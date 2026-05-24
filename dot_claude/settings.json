@@ -342,17 +342,6 @@
           }
         ]
       }
-    ],
-    "PreToolUse": [
-      {
-        "matcher": "Bash",
-        "hooks": [
-          {
-            "type": "command",
-            "command": "\"$HOME/.claude/hooks/rtk-rewrite.sh\""
-          }
-        ]
-      }
     ]
   },
   "statusLine": {
@@ -410,8 +399,9 @@
   "showThinkingSummaries": true,
   "skipDangerousModePermissionPrompt": true,
   "preferredNotifChannel": "terminal_bell",
-  "allowedTools": [
-    "mcp__*"
-  ],
-  "theme": "light-daltonized"
+  "theme": "light-daltonized",
+  "language": "japanese",
+  "awaySummaryEnabled": true,
+  "feedbackSurveyRate": 0,
+  "tui": "fullscreen"
 }
