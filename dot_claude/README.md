@@ -159,7 +159,7 @@ Codex CLI 用の自作スキルは `dot_codex/skills/` で管理されます。
 
 ```bash
 # プラグイン
-claude plugin install ww@cc-plugins
+claude plugin install kk-dev@cc-plugins
 
 # スキル
 claude skill install ui-ux-pro-max@ui-ux-pro-max-skill

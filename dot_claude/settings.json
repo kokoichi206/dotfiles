@@ -352,14 +352,12 @@
   "enabledPlugins": {
     "rust-analyzer-lsp@claude-plugins-official": true,
     "playwright-skill@playwright-skill": true,
-    "ww@cc-plugins": true,
     "code-simplifier@claude-plugins-official": true,
     "gopls-lsp@claude-plugins-official": true,
-    "swift-lsp@claude-plugins-official": true,
     "ui-ux-pro-max@ui-ux-pro-max-skill": true,
-    "commit-commands@claude-plugins-official": true,
     "security-guidance@claude-plugins-official": true,
-    "feature-dev@claude-plugins-official": true
+    "feature-dev@claude-plugins-official": true,
+    "kk-dev@cc-plugins": true
   },
   "extraKnownMarketplaces": {
     "ui-ux-pro-max-skill": {
@@ -367,15 +365,17 @@
         "source": "github",
         "repo": "nextlevelbuilder/ui-ux-pro-max-skill"
       }
-    }
-  },
-  "mcpServers": {
-    "context7": {
-      "command": "npx",
-      "args": ["-y", "@upstash/context7-mcp@latest"]
+    },
+    "kokoichi-cc-plugins": {
+      "source": {
+        "source": "github",
+        "repo": "kokoichi206/cc-plugins"
+      }
     }
   },
   "outputStyle": "Explanatory",
+  "language": "japanese",
+  "feedbackSurveyRate": 0,
   "spinnerVerbs": {
     "mode": "replace",
     "verbs": [
@@ -396,12 +396,17 @@
     ]
   },
   "effortLevel": "xhigh",
+  "awaySummaryEnabled": true,
   "showThinkingSummaries": true,
   "skipDangerousModePermissionPrompt": true,
-  "preferredNotifChannel": "terminal_bell",
   "theme": "light-daltonized",
-  "language": "japanese",
-  "awaySummaryEnabled": true,
-  "feedbackSurveyRate": 0,
-  "tui": "fullscreen"
+  "mcpServers": {
+    "context7": {
+      "command": "npx",
+      "args": [
+        "-y",
+        "@upstash/context7-mcp@latest"
+      ]
+    }
+  }
 }
