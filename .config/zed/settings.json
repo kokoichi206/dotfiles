@@ -1,0 +1,65 @@
+// Zed settings. Docs: https://zed.dev/docs/configuring-zed
+{
+  // "vim_mode": true,
+
+  "git_panel": {
+    "tree_view": true
+  },
+  "tab_size": 2,
+  "format_on_save": "on",
+  "ensure_final_newline_on_save": true,
+  // 末尾改行・末尾空白は自動削除しない。
+  "remove_trailing_whitespace_on_save": false,
+  "autosave": { "after_delay": { "milliseconds": 1000 } },
+
+  // Sakura 系を使いたければ Extensions で "Sakura" を検索して入れ、ここを差し替える。
+  "theme": "One Dark",
+
+  // Copilot を補完プロバイダにする。初回は cmd-shift-p → "copilot: sign in" が必要。
+  // Zed 純正の Zeta を使うなら "zed" に変える。
+  "edit_predictions": {
+    "provider": "copilot",
+  },
+
+  // Go/Rust/TS は LSP 内蔵。Python は Extensions で "Pyright" と "Ruff" を入れると効く。
+  "languages": {
+    "Go": {
+      "format_on_save": "on",
+      "formatter": "language_server",
+    },
+    "Rust": {
+      "format_on_save": "on",
+      "formatter": "language_server",
+    },
+    "TypeScript": {
+      "tab_size": 2,
+      "formatter": "prettier",
+    },
+    "TSX": {
+      "tab_size": 2,
+      "formatter": "prettier",
+    },
+    "JavaScript": {
+      "tab_size": 2,
+      "formatter": "prettier",
+    },
+    "Python": {
+      "tab_size": 4,
+      "format_on_save": "on",
+    },
+  },
+
+  "lsp": {
+    // 保存時に clippy を回す。
+    "rust-analyzer": {
+      "initialization_options": {
+        "check": { "command": "clippy" },
+      },
+    },
+    "gopls": {
+      "initialization_options": {
+        "staticcheck": true,
+      },
+    },
+  },
+}

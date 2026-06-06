@@ -39,6 +39,12 @@ backup_and_alias "$PWD/.config/starship.toml" ~/.config/starship.toml
 mkdir -p ~/.config/lazygit
 backup_and_alias "$PWD/.config/lazygit/config.yml" ~/.config/lazygit/config.yml
 
+# Zed editor: ~/.config/zed は拡張やキャッシュも書き込むため、
+# ディレクトリごとではなく設定ファイルだけを個別に symlink する。
+mkdir -p ~/.config/zed
+backup_and_alias "$PWD/.config/zed/settings.json" ~/.config/zed/settings.json
+backup_and_alias "$PWD/.config/zed/keymap.json" ~/.config/zed/keymap.json
+
 
 if [[ $(uname) == "Linux" ]]; then
     echo "Linux"

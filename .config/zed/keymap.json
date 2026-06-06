@@ -1,0 +1,18 @@
+[
+  {
+    // ctrl+x = 履歴を戻る / ctrl+c = 履歴を進む。
+    "context": "Editor",
+    "bindings": {
+      "ctrl-x": "pane::GoBack",
+      "ctrl-c": "pane::GoForward"
+    }
+  },
+  {
+    // ctrl+shift+u = 大文字化 / shift+cmd+l = 小文字化。
+    "context": "Editor",
+    "bindings": {
+      "ctrl-shift-u": "editor::ConvertToUpperCase",
+      "cmd-shift-l": "editor::ConvertToLowerCase"
+    }
+  }
+]
