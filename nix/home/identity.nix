@@ -17,6 +17,7 @@
     beam.packages.erlang_28.rebar3
 
     rainfrog
+    maven
     bat
     eza
     fd
