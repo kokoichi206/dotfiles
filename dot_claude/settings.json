@@ -314,6 +314,7 @@
     ],
     "defaultMode": "bypassPermissions"
   },
+  "model": "claude-fable-5",
   "hooks": {
     "Stop": [
       {
