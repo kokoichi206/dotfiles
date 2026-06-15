@@ -99,6 +99,15 @@ select-history() {
 zle -N select-history
 bindkey '^r' select-history
 
+# prefix history search:
+# 何か入力した状態で ↑/↓ を押すと、その prefix で始まる履歴だけを遡る/進む。
+# 空入力時は通常の history-up/down として動く。
+autoload -Uz up-line-or-beginning-search down-line-or-beginning-search
+zle -N up-line-or-beginning-search
+zle -N down-line-or-beginning-search
+bindkey '^[[A' up-line-or-beginning-search    # ↑
+bindkey '^[[B' down-line-or-beginning-search  # ↓
+
 # ============ Custom functions ============
 javahome() {
   unset JAVA_HOME
