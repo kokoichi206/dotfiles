@@ -8,6 +8,12 @@ else
 fi
 autoload -U +X bashcompinit && bashcompinit
 
+# ============ Abbreviations (zsh-abbr) ============
+# パイプや ; && || の後（コマンド位置）でも regular 略語を展開する。引数位置では展開しない。
+# sheldon が zsh-abbr を読み込む前に設定する必要がある。
+# https://github.com/olets/zsh-abbr/issues/53
+export ABBR_EXPERIMENTAL_COMMAND_POSITION_REGULAR_ABBREVIATIONS=2
+
 # ============ Sheldon (plugin manager) ============
 eval "$(sheldon source)"
 
