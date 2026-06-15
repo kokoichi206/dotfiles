@@ -8,6 +8,10 @@
   "git_panel": {
     "tree_view": true
   },
+  // ファイルツリー(Project Panel)を左ドックに固定。クリックしたファイルは右のエディタに開く。
+  "project_panel": {
+    "dock": "left"
+  },
   "tab_size": 2,
   "format_on_save": "on",
   "ensure_final_newline_on_save": true,
