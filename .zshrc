@@ -405,3 +405,5 @@ codex-skill-list() {
         echo "No custom skills found"
     fi
 }
+
+alias vercel='npx vercel@latest'
