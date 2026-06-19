@@ -3,3 +3,4 @@
 
 ui-ux-pro-max@ui-ux-pro-max-skill
 vercel-labs/agent-skills
+skill-creator@awesome-claude-skills
