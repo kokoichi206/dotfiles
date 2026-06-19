@@ -219,6 +219,14 @@ eval "$(mise activate zsh)"
 eval "$(zoxide init zsh --cmd cd)"
 eval "$(starship init zsh)"
 
+# WezTerm: OSC 7 で cwd を通知する。Pane Finder（leader+f）が各 pane の cwd を
+# 正確に追跡するために必要。WezTerm 上でのみ有効化し、他端末には影響させない。
+if [[ "$TERM_PROGRAM" == "WezTerm" ]]; then
+  _wezterm_osc7() { printf '\033]7;file://%s%s\033\\' "${HOST}" "${PWD}" }
+  autoload -Uz add-zsh-hook
+  add-zsh-hook precmd _wezterm_osc7
+fi
+
 # ============ Claude Code skill management ============
 DOTFILES_DIR="$HOME/ghq/github.com/kokoichi206/dotfiles"
 

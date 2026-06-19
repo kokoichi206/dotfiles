@@ -1,5 +1,6 @@
 local wezterm = require("wezterm")
 local act = wezterm.action
+local finder = require("finder")
 
 -- 前回アクティブだったタブのインデックスを記録（ウィンドウごと）
 local prev_tab_idx = {}
@@ -55,6 +56,13 @@ return {
             key = "w",
             mods = "LEADER",
             action = act.ShowLauncherArgs({ flags = "WORKSPACES", title = "Select workspace" }),
+        },
+        {
+            -- 統合ファインダー: 開いてる pane（cwd+プロセス）と zoxide dir を横断 fuzzy →
+            -- 既存ならジャンプ・無ければ workspace 作成
+            key = "f",
+            mods = "LEADER",
+            action = finder.jump_action(),
         },
         {
             --workspaceの名前変更
