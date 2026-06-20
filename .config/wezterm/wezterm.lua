@@ -6,8 +6,8 @@ config.audible_bell = "SystemBeep"
 config.automatically_reload_config = true
 config.font_size = 18.0
 config.font = wezterm.font_with_fallback({
-    { family = "Cica" },
-    { family = "Cica", assume_emoji_presentation = true },
+	{ family = "Cica" },
+	{ family = "Cica", assume_emoji_presentation = true },
 })
 config.use_ime = true
 config.window_background_opacity = 0.75
@@ -16,9 +16,9 @@ config.macos_window_background_blur = 20
 -- 背景画像の設定
 config.window_background_image = wezterm.config_dir .. "/background.png"
 config.window_background_image_hsb = {
-    brightness = 0.05, -- テキストの可読性を保つために暗めに設定（0.0-1.0、低いほど暗い）
-    hue = 1.0,
-    saturation = 1.0,
+	brightness = 0.05, -- テキストの可読性を保つために暗めに設定（0.0-1.0、低いほど暗い）
+	hue = 1.0,
+	saturation = 1.0,
 }
 
 -- ウィンドウサイズの設定（起動時のサイズを記憶）
@@ -35,19 +35,19 @@ for _, rule in ipairs(wezterm.default_hyperlink_rules()) do
 end
 -- ファイルパス:行番号 の形式を検出（例: src/main.rs:123）
 table.insert(config.hyperlink_rules, {
-    regex = [[["]?([\w\d]{1}[\w\d\.\-\_/]+):(\d+):?(\d+)?["]?]],
-    format = "$1:$2:$3",
+	regex = [[["]?([\w\d]{1}[\w\d\.\-\_/]+):(\d+):?(\d+)?["]?]],
+	format = "$1:$2:$3",
 })
 -- 絶対パスを検出
 table.insert(config.hyperlink_rules, {
-    regex = [[/[\w\d\.\-\_/]+]],
-    format = "$0",
+	regex = [[/[\w\d\.\-\_/]+]],
+	format = "$0",
 })
 
 -- 非アクティブペインを暗くして区別しやすくする
 config.inactive_pane_hsb = {
-    saturation = 0.3,
-    brightness = 0.2,
+	saturation = 0.3,
+	brightness = 0.2,
 }
 
 -- ペイン選択時の表示設定
@@ -69,8 +69,8 @@ config.hide_tab_bar_if_only_one_tab = true
 
 -- タブバーの透過
 config.window_frame = {
-    inactive_titlebar_bg = "rgba(13, 13, 13, 0.75)",
-    active_titlebar_bg = "rgba(13, 13, 13, 0.75)",
+	inactive_titlebar_bg = "rgba(13, 13, 13, 0.75)",
+	active_titlebar_bg = "rgba(13, 13, 13, 0.75)",
 }
 
 -- タブバーを背景色に合わせる
@@ -87,12 +87,12 @@ config.show_close_tab_button_in_tabs = false
 
 -- タブ同士の境界線を非表示
 config.colors = {
-    tab_bar = {
-        background = "#5c6d74",
-        inactive_tab_edge = "none",
-    },
-    -- ペイン間の区切り線の色を変更。
-    split = "#F19DB5",
+	tab_bar = {
+		background = "#5c6d74",
+		inactive_tab_edge = "none",
+	},
+	-- ペイン間の区切り線の色を変更。
+	split = "#F19DB5",
 }
 
 -- タブの形をカスタマイズ
@@ -102,37 +102,37 @@ local SOLID_LEFT_ARROW = wezterm.nerdfonts.ple_lower_right_triangle
 local SOLID_RIGHT_ARROW = wezterm.nerdfonts.ple_upper_left_triangle
 
 wezterm.on("format-tab-title", function(tab, tabs, panes, config, hover, max_width)
-    local background = "#5c6d74"
-    local foreground = "#FFFFFF"
-    local edge_background = "none"
-    if tab.is_active then
-        background = "#ae8b2d"
-        foreground = "#FFFFFF"
-    end
-    local edge_foreground = background
-    local title = "   " .. wezterm.truncate_right(tab.active_pane.title, max_width - 1) .. "   "
-    return {
-        { Background = { Color = edge_background } },
-        { Foreground = { Color = edge_foreground } },
-        { Text = SOLID_LEFT_ARROW },
-        { Background = { Color = background } },
-        { Foreground = { Color = foreground } },
-        { Text = title },
-        { Background = { Color = edge_background } },
-        { Foreground = { Color = edge_foreground } },
-        { Text = SOLID_RIGHT_ARROW },
-    }
+	local background = "#5c6d74"
+	local foreground = "#FFFFFF"
+	local edge_background = "none"
+	if tab.is_active then
+		background = "#ae8b2d"
+		foreground = "#FFFFFF"
+	end
+	local edge_foreground = background
+	local title = "   " .. wezterm.truncate_right(tab.active_pane.title, max_width - 1) .. "   "
+	return {
+		{ Background = { Color = edge_background } },
+		{ Foreground = { Color = edge_foreground } },
+		{ Text = SOLID_LEFT_ARROW },
+		{ Background = { Color = background } },
+		{ Foreground = { Color = foreground } },
+		{ Text = title },
+		{ Background = { Color = edge_background } },
+		{ Foreground = { Color = edge_foreground } },
+		{ Text = SOLID_RIGHT_ARROW },
+	}
 end)
 
 ----------------------------------------------------
 -- Claude Code 完了時にフォーカスを戻す
 ----------------------------------------------------
 wezterm.on("user-var-changed", function(window, pane, name, value)
-    if name == "claude_code_stop" then
-        pane:tab():activate()
-        pane:activate()
-        window:focus()
-    end
+	if name == "claude_code_stop" then
+		pane:tab():activate()
+		pane:activate()
+		window:focus()
+	end
 end)
 
 ----------------------------------------------------
@@ -144,4 +144,3 @@ config.key_tables = require("keybinds").key_tables
 config.leader = { key = "q", mods = "CTRL", timeout_milliseconds = 2000 }
 
 return config
-
