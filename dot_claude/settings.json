@@ -1,23 +1,92 @@
 {
   "$schema": "https://json.schemastore.org/claude-code-settings.json",
+  "awaySummaryEnabled": true,
   "cleanupPeriodDays": 9999,
-  "env": {
-    "CLAUDE_CODE_ENABLE_TELEMETRY": "0",
-    "DISABLE_TELEMETRY": "1",
-    "DISABLE_ERROR_REPORTING": "1",
-    "DISABLE_COST_WARNINGS": "0",
-    "BASH_DEFAULT_TIMEOUT_MS": "300000",
-    "BASH_MAX_TIMEOUT_MS": "1200000",
-    "BASH_MAX_OUTPUT_LENGTH": "50000",
-    "CLAUDE_CODE_SHELL": "/bin/zsh",
-    "CLAUDE_CODE_ENABLE_TASKS": "true",
-    "CLAUDE_CODE_DISABLE_TERMINAL_TITLE": "0",
-    "CLAUDE_CODE_EXPERIMENTAL_AGENT_TEAMS": "1",
-    "ENABLE_TOOL_SEARCH": "true",
-    "USE_BUILTIN_RIPGREP": "1",
-    "CLAUDE_CODE_DISABLE_BACKGROUND_TASKS": "1",
-    "CLAUDE_CODE_DISABLE_ADAPTIVE_THINKING": "1"
+  "effortLevel": "xhigh",
+  "enabledPlugins": {
+    "code-simplifier@claude-plugins-official": true,
+    "commit-commands@claude-plugins-official": true,
+    "feature-dev@claude-plugins-official": true,
+    "gopls-lsp@claude-plugins-official": true,
+    "kk-dev@cc-plugins": true,
+    "playwright-skill@playwright-skill": true,
+    "rust-analyzer-lsp@claude-plugins-official": true,
+    "security-guidance@claude-plugins-official": true,
+    "ui-ux-pro-max@ui-ux-pro-max-skill": true
   },
+  "env": {
+    "BASH_DEFAULT_TIMEOUT_MS": "300000",
+    "BASH_MAX_OUTPUT_LENGTH": "50000",
+    "BASH_MAX_TIMEOUT_MS": "1200000",
+    "CLAUDE_CODE_DISABLE_ADAPTIVE_THINKING": "1",
+    "CLAUDE_CODE_DISABLE_BACKGROUND_TASKS": "1",
+    "CLAUDE_CODE_DISABLE_TERMINAL_TITLE": "0",
+    "CLAUDE_CODE_ENABLE_TASKS": "true",
+    "CLAUDE_CODE_ENABLE_TELEMETRY": "0",
+    "CLAUDE_CODE_EXPERIMENTAL_AGENT_TEAMS": "1",
+    "CLAUDE_CODE_SHELL": "/bin/zsh",
+    "DISABLE_COST_WARNINGS": "0",
+    "DISABLE_ERROR_REPORTING": "1",
+    "DISABLE_TELEMETRY": "1",
+    "ENABLE_TOOL_SEARCH": "true",
+    "USE_BUILTIN_RIPGREP": "1"
+  },
+  "extraKnownMarketplaces": {
+    "kokoichi-cc-plugins": {
+      "source": {
+        "repo": "kokoichi206/cc-plugins",
+        "source": "github"
+      }
+    },
+    "ui-ux-pro-max-skill": {
+      "source": {
+        "repo": "nextlevelbuilder/ui-ux-pro-max-skill",
+        "source": "github"
+      }
+    }
+  },
+  "feedbackSurveyRate": 0,
+  "hooks": {
+    "Notification": [
+      {
+        "hooks": [
+          {
+            "command": "\"$HOME/.claude/hooks/focus-wezterm.sh\"",
+            "type": "command"
+          }
+        ]
+      }
+    ],
+    "Stop": [
+      {
+        "hooks": [
+          {
+            "command": "python3 \"$HOME/.claude/hooks/check-tentative-language.py\"",
+            "type": "command"
+          }
+        ]
+      },
+      {
+        "hooks": [
+          {
+            "command": "\"$HOME/.claude/hooks/focus-wezterm.sh\"",
+            "type": "command"
+          }
+        ]
+      }
+    ]
+  },
+  "language": "japanese",
+  "mcpServers": {
+    "context7": {
+      "args": [
+        "-y",
+        "@upstash/context7-mcp@latest"
+      ],
+      "command": "npx"
+    }
+  },
+  "outputStyle": "Explanatory",
   "permissions": {
     "allow": [
       "Skill",
@@ -242,8 +311,10 @@
       "NotebookEdit(./**)",
       "Bash(./gradlew:*)",
       "Bash(source:*)",
-      "Bash(codex:*)"
+      "Bash(codex:*)",
+      "mcp__pencil"
     ],
+    "defaultMode": "auto",
     "deny": [
       "Bash(rm -rf /)",
       "Bash(rm -rf ~)",
@@ -311,71 +382,10 @@
       "Write(/etc/passwd)",
       "Write(/etc/shadow)",
       "Write(/etc/sudoers)"
-    ],
-    "defaultMode": "bypassPermissions"
-  },
-  "hooks": {
-    "Stop": [
-      {
-        "hooks": [
-          {
-            "type": "command",
-            "command": "python3 \"$HOME/.claude/hooks/check-tentative-language.py\""
-          }
-        ]
-      },
-      {
-        "hooks": [
-          {
-            "type": "command",
-            "command": "\"$HOME/.claude/hooks/focus-wezterm.sh\""
-          }
-        ]
-      }
-    ],
-    "Notification": [
-      {
-        "hooks": [
-          {
-            "type": "command",
-            "command": "\"$HOME/.claude/hooks/focus-wezterm.sh\""
-          }
-        ]
-      }
     ]
   },
-  "statusLine": {
-    "type": "command",
-    "command": "cc-sakura-line",
-    "padding": 0
-  },
-  "enabledPlugins": {
-    "rust-analyzer-lsp@claude-plugins-official": true,
-    "playwright-skill@playwright-skill": true,
-    "code-simplifier@claude-plugins-official": true,
-    "gopls-lsp@claude-plugins-official": true,
-    "ui-ux-pro-max@ui-ux-pro-max-skill": true,
-    "security-guidance@claude-plugins-official": true,
-    "feature-dev@claude-plugins-official": true,
-    "kk-dev@cc-plugins": true
-  },
-  "extraKnownMarketplaces": {
-    "ui-ux-pro-max-skill": {
-      "source": {
-        "source": "github",
-        "repo": "nextlevelbuilder/ui-ux-pro-max-skill"
-      }
-    },
-    "kokoichi-cc-plugins": {
-      "source": {
-        "source": "github",
-        "repo": "kokoichi206/cc-plugins"
-      }
-    }
-  },
-  "outputStyle": "Explanatory",
-  "language": "japanese",
-  "feedbackSurveyRate": 0,
+  "showThinkingSummaries": true,
+  "skipDangerousModePermissionPrompt": true,
   "spinnerVerbs": {
     "mode": "replace",
     "verbs": [
@@ -395,18 +405,10 @@
       "良い夢を〜"
     ]
   },
-  "effortLevel": "xhigh",
-  "awaySummaryEnabled": true,
-  "showThinkingSummaries": true,
-  "skipDangerousModePermissionPrompt": true,
-  "theme": "light-daltonized",
-  "mcpServers": {
-    "context7": {
-      "command": "npx",
-      "args": [
-        "-y",
-        "@upstash/context7-mcp@latest"
-      ]
-    }
-  }
+  "statusLine": {
+    "command": "cc-sakura-line",
+    "padding": 0,
+    "type": "command"
+  },
+  "theme": "light-daltonized"
 }

@@ -54,10 +54,20 @@ setup_claude() {
 
     # Symlink configuration files
     create_symlink "$SCRIPT_DIR/dot_claude/CLAUDE.md" "$CLAUDE_DIR/CLAUDE.md"
-    create_symlink "$SCRIPT_DIR/dot_claude/settings.json" "$CLAUDE_DIR/settings.json"
     create_symlink "$SCRIPT_DIR/dot_claude/hooks" "$CLAUDE_DIR/hooks"
     create_symlink "$SCRIPT_DIR/dot_claude/commands" "$CLAUDE_DIR/commands"
     create_symlink "$SCRIPT_DIR/dot_claude/rules" "$CLAUDE_DIR/rules"
+
+    # settings.json は Claude Code 自身が rename 書き込みで symlink を壊すため、
+    # symlink ではなくコピーで配置する。以後の同期は make claude-apply / claude-pull。
+    if [ -L "$CLAUDE_DIR/settings.json" ]; then
+        rm "$CLAUDE_DIR/settings.json"
+    elif [ -e "$CLAUDE_DIR/settings.json" ]; then
+        log_warn "Backing up existing settings.json"
+        cp "$CLAUDE_DIR/settings.json" "$CLAUDE_DIR/settings.json.backup"
+    fi
+    cp "$SCRIPT_DIR/dot_claude/settings.json" "$CLAUDE_DIR/settings.json"
+    log_info "Copied settings.json (not symlinked): $CLAUDE_DIR/settings.json"
 
     # Symlink custom skills (not marketplace skills)
     if [ -d "$SCRIPT_DIR/dot_claude/skills" ]; then

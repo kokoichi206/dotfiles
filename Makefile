@@ -13,14 +13,22 @@ update-brewfile:	## Update Brewfile from current brew packages
 	brew bundle dump --force
 	@echo "Brewfile updated successfully!"
 
-.PHONY: update-claude-settings
-update-claude-settings:	## Update .claude settings from ~/.claude
-	@echo "Updating Claude Code settings..."
-	@mkdir -p .claude/commands
-	@cp ~/.claude/CLAUDE.md .claude/
-	@cp ~/.claude/settings.json .claude/
-	@cp ~/.claude/commands/pr.md .claude/commands/
-	@echo "Claude Code settings updated successfully!"
+# settings.json は Claude Code 自身が rename 書き込みで symlink を壊すため、
+# symlink ではなくコピーで管理し、repo <-> ~/.claude を双方向に同期する。
+# jq -S を経由させることで (1)キー順を CC の出力に合わせて正規化し diff を最小化し
+# (2)不正な JSON を書き込む前に弾く。
+DOT_CLAUDE_SETTINGS  := dot_claude/settings.json
+LIVE_CLAUDE_SETTINGS := $(HOME)/.claude/settings.json
+
+.PHONY: claude-pull
+claude-pull:	## ~/.claude/settings.json の変更を repo に取り込む (要 git diff レビュー)
+	jq -S . "$(LIVE_CLAUDE_SETTINGS)" > "$(DOT_CLAUDE_SETTINGS)"
+	@echo "pulled live -> repo. review: git diff -- $(DOT_CLAUDE_SETTINGS)"
+
+.PHONY: claude-apply
+claude-apply:	## repo の settings.json を ~/.claude へ反映 (要 claude 再起動)
+	jq -S . "$(DOT_CLAUDE_SETTINGS)" > "$(LIVE_CLAUDE_SETTINGS)"
+	@echo "applied repo -> live. restart claude to take effect."
 
 .PHONY: nix-check
 nix-check:	## Check flake outputs
