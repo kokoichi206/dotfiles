@@ -78,6 +78,19 @@ return {
             }),
         },
         {
+            -- タブ名を固定で設定（空入力で動的タイトルに戻す）
+            key = ",",
+            mods = "LEADER",
+            action = act.PromptInputLine({
+                description = "(wezterm) Set tab title:",
+                action = wezterm.action_callback(function(window, pane, line)
+                    if line then
+                        window:active_tab():set_title(line)
+                    end
+                end),
+            }),
+        },
+        {
             key = "W",
             mods = "LEADER|SHIFT",
             action = act.PromptInputLine({
