@@ -5,3 +5,6 @@ nix/local/identity.nix
 
 .DS_Store
 __pycache__/
+
+# mitmdump キャプチャ(大容量バイナリ)。手順は mobile-traffic-analysis skill 参照
+flows
