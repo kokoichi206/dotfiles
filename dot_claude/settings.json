@@ -47,29 +47,11 @@
   },
   "feedbackSurveyRate": 0,
   "hooks": {
-    "Notification": [
-      {
-        "hooks": [
-          {
-            "command": "\"$HOME/.claude/hooks/focus-wezterm.sh\"",
-            "type": "command"
-          }
-        ]
-      }
-    ],
     "Stop": [
       {
         "hooks": [
           {
             "command": "python3 \"$HOME/.claude/hooks/check-tentative-language.py\"",
-            "type": "command"
-          }
-        ]
-      },
-      {
-        "hooks": [
-          {
-            "command": "\"$HOME/.claude/hooks/focus-wezterm.sh\"",
             "type": "command"
           }
         ]
