@@ -8,12 +8,25 @@ GitHub Project の期日超過タスクを取得し、アクション化した�
 2. `[Done]` を除外する（完了済みは対応不要）。Done 以外が 0 件なら、本文を「対応が必要なタスクはありません」としてそのまま送信に進む。
 3. Done 以外の各タスクについて、issue 本文・コメントを読んで判断材料を補い、「次に取るべき具体的な一手」に変換する。優先度は経過日数の長さではなく不可逆リスクの大きさで並べる（自動課金・解約期限 > 申込・エントリー締切 > 外部締切のない調査）。private リンク（アクセス不可なもの）は推測で埋めず「リンク先を要確認」と残す。
 4. プレーンテキストのダイジェストを `/tmp/next-todo-digest.txt` に書き出す。各タスクに `期日 / 経過日数 / Status / タスク / 次の一手 / Issue URL` を含める。
-5. 送信先を認証情報から実行時に導出し、Gmail に送信する（アドレスをこのファイルに書かない）。
+5. 送信先を認証情報から実行時に導出し、Gmail に送信する（アドレスをこのファイルに書かない）。送信結果は次のステップで必ずログに残すので、`rm` の前に出力と終了コードを捕捉する。
    ```bash
    to=$(gog auth list -j | jq -r '.accounts[0].email')
-   gog send --to "$to" --subject "next-todo digest $(date +%F)" --body-file /tmp/next-todo-digest.txt --no-input
+   send_out=$(gog send --to "$to" --subject "next-todo digest $(date +%F)" --body-file /tmp/next-todo-digest.txt --no-input 2>&1)
+   send_rc=$?
    rm -f /tmp/next-todo-digest.txt
    ```
-6. 返ってきた `message_id` を確認し、送信成功を報告する。送信が失敗した場合（`invalid_grant` 等）は握りつぶさず、`gog auth doctor` の結果とともに原因を報告する。トークン失効なら `gog auth add <account>` での再認証が必要なことを伝える。
+6. **送信結果（成功/失敗 + 件数）をログと標準出力の両方に残す。** `/loop` の無人実行では会話上の報告が読まれず「届いてない」で気づく事故が起きるため、可視性を必ずファイルに落とす。`count` は step 2〜3 の Done 以外の件数（0 件ならその旨）。
+   ```bash
+   count=<Done 以外の件数>
+   log="$HOME/.claude/logs/next-todo-mail.log"
+   mkdir -p "$(dirname "$log")"
+   if [ "$send_rc" -eq 0 ]; then
+     mid=$(printf '%s' "$send_out" | jq -r '.message_id // empty' 2>/dev/null)
+     printf '%s\tSUCCESS\tcount=%s\tmessage_id=%s\n' "$(date +%FT%T%z)" "$count" "${mid:-?}"
+   else
+     printf '%s\tFAILURE\tcount=%s\terror=%s\n' "$(date +%FT%T%z)" "$count" "$(printf '%s' "$send_out" | head -1)"
+   fi | tee -a "$log"
+   ```
+7. ログ行の内容（成功/失敗・件数・message_id）を報告する。送信が失敗した場合（`invalid_grant` 等）は握りつぶさず、`gog auth doctor` の結果とともに原因を報告する。トークン失効なら `gog auth add <account>` での再認証が必要なことを伝える。
 
 追加指示: $ARGUMENTS
