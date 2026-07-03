@@ -47,6 +47,26 @@
   },
   "feedbackSurveyRate": 0,
   "hooks": {
+    "PreToolUse": [
+      {
+        "matcher": "Bash",
+        "hooks": [
+          {
+            "command": "$HOME/.claude/hooks/block-pr-merge.sh",
+            "type": "command"
+          }
+        ]
+      },
+      {
+        "matcher": "mcp__github__merge_pull_request",
+        "hooks": [
+          {
+            "command": "$HOME/.claude/hooks/block-pr-merge.sh",
+            "type": "command"
+          }
+        ]
+      }
+    ],
     "Stop": [
       {
         "hooks": [
