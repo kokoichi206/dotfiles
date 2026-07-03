@@ -36,6 +36,8 @@ brew "btop"
 brew "glib"
 # Vector graphics library with cross-device output support
 brew "cairo"
+# Cloudflare Tunnel client (formerly Argo Tunnel)
+brew "cloudflared"
 # GNU File, Shell, and Text utilities
 brew "coreutils"
 # Pack, ship and run any application as a lightweight container
@@ -210,6 +212,8 @@ brew "zlib"
 brew "zoxide"
 # Fish-like fast/unobtrusive autosuggestions for zsh
 brew "zsh-autosuggestions"
+# Google CLI for Gmail, Calendar, Drive, Docs, Sheets, and more
+brew "openclaw/tap/gogcli", trusted: true
 # GPU-accelerated terminal emulator
 cask "alacritty"
 # Enable Windows-like alt-tab
@@ -435,6 +439,7 @@ cargo "rainfrog"
 cargo "rtk"
 cargo "similarity-ts"
 npm "@browserbasehq/browse-cli"
+npm "@getpaseo/cli"
 npm "@pencil.dev/cli"
 npm "cc-connect"
 npm "corepack"
