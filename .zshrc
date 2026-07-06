@@ -1,3 +1,7 @@
+# ============ Shell behavior ============
+# 貼り付けた shell snippet のコメント行を対話シェルでも無視する
+setopt INTERACTIVE_COMMENTS
+
 # ============ Completion ============
 autoload -Uz compinit
 # compinit の再生成は1日1回に抑える
