@@ -22,8 +22,8 @@ LIVE_CLAUDE_SETTINGS := $(HOME)/.claude/settings.json
 
 .PHONY: claude-pull
 claude-pull:	## ~/.claude/settings.json の変更を repo に取り込む (要 git diff レビュー)
-	jq -S . "$(LIVE_CLAUDE_SETTINGS)" > "$(DOT_CLAUDE_SETTINGS)"
-	@echo "pulled live -> repo. review: git diff -- $(DOT_CLAUDE_SETTINGS)"
+	jq -S . "$(LIVE_CLAUDE_SETTINGS)" | ./claude-normalize-home.sh | jq -S . > "$(DOT_CLAUDE_SETTINGS)"
+	@echo "pulled live -> repo (\$$HOME normalized). review: git diff -- $(DOT_CLAUDE_SETTINGS)"
 
 .PHONY: claude-apply
 claude-apply:	## repo の settings.json を ~/.claude へ反映 (要 claude 再起動)

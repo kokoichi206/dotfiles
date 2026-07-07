@@ -49,10 +49,9 @@
   "hooks": {
     "PreToolUse": [
       {
-        "matcher": "Bash",
         "hooks": [
           {
-            "command": "$HOME/.claude/hooks/block-pr-merge.sh",
+            "command": "\"$HOME/Library/Application Support/CCStatusBar/bin/CCStatusBar\" hook PreToolUse",
             "type": "command"
           }
         ]
@@ -61,7 +60,7 @@
         "matcher": "mcp__github__merge_pull_request",
         "hooks": [
           {
-            "command": "$HOME/.claude/hooks/block-pr-merge.sh",
+            "command": "\"$HOME/Library/Application Support/CCStatusBar/bin/CCStatusBar\" hook SessionStart",
             "type": "command"
           }
         ]
