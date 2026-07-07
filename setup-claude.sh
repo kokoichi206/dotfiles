@@ -82,6 +82,21 @@ setup_claude() {
         done
     fi
 
+    # Symlink custom agents.
+    # skills と同様、ディレクトリごと symlink せず個別エントリを symlink して
+    # marketplace 由来のエントリと同一ディレクトリで共存できるようにする。
+    if [ -d "$SCRIPT_DIR/dot_claude/agents" ]; then
+        log_info "Setting up custom agents..."
+        mkdir -p "$CLAUDE_DIR/agents"
+
+        for agent_file in "$SCRIPT_DIR/dot_claude/agents"/*; do
+            if [ -e "$agent_file" ]; then
+                agent_name=$(basename "$agent_file")
+                create_symlink "$agent_file" "$CLAUDE_DIR/agents/$agent_name"
+            fi
+        done
+    fi
+
     # Install marketplace plugins
     if [ -f "$SCRIPT_DIR/dot_claude/marketplace-plugins.txt" ]; then
         log_info "Installing Claude Code plugins..."
