@@ -1,6 +1,6 @@
 ---
 name: multi-reviewer
-description: codex, gemini cli, coderabbit を用いてローカルと default ブランチの差分を並列レビューし、必要に応じて修正を行うスキル。
+description: codex, gemini cli, coderabbit を用いてローカルと default ブランチの差分を並列レビューし、必要に応じて修正を行うスキル。トリガー - レビューして, Fable5 にレビューしてもらって, fable のレビュー, サブエージェントにレビューさせて, 問題なくなるまで修正とレビュー, レビューループ
 ---
 
 # Multi-Reviewer
