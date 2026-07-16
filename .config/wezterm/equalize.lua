@@ -279,5 +279,49 @@ local function split_and_equalize(direction)
 	end)
 end
 
+-- Close the current pane (with confirmation) and equalize the remaining panes.
+-- CloseCurrentPane's confirmation dialog is asynchronous, so equalizing
+-- immediately after perform_action would rebalance the pre-close layout.
+-- Instead we poll for the pane-count drop; if the user cancels the dialog,
+-- polling times out and the layout is left untouched.
+local function close_and_equalize()
+	return wezterm.action_callback(function(window, pane)
+		local tab = pane:tab()
+		local before = #tab:panes()
+		window:perform_action(action.CloseCurrentPane({ confirm = true }), pane)
+		-- With 2 panes the survivor fills the tab by itself; with 1 the tab closes.
+		if before <= 2 then
+			return
+		end
+
+		local tries = 0
+		local function poll()
+			-- pcall: the tab/window may be gone by the time the timer fires.
+			local ok, state = pcall(function()
+				return {
+					remaining = #tab:panes(),
+					is_active_tab = window:active_tab():tab_id() == tab:tab_id(),
+				}
+			end)
+			if not ok or state.remaining == 0 then
+				return
+			end
+			if state.remaining < before then
+				-- equalize_tab operates on the active tab only;
+				-- if the user switched tabs during confirmation, skip (LEADER+= remains).
+				if state.is_active_tab then
+					equalize_tab(window)
+				end
+				return
+			end
+			if tries < 40 then
+				tries = tries + 1
+				wezterm.time.call_after(0.25, poll)
+			end
+		end
+		wezterm.time.call_after(0.1, poll)
+	end)
+end
+
 -- 実際のキー割り当ては keybinds.lua 側で行う。
-return { equalize_tab = equalize_tab, split_and_equalize = split_and_equalize }
+return { equalize_tab = equalize_tab, split_and_equalize = split_and_equalize, close_and_equalize = close_and_equalize }

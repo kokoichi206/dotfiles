@@ -158,8 +158,8 @@ return {
 				equalize.equalize_tab(window)
 			end),
 		},
-		-- Paneを閉じる leader + x
-		{ key = "x", mods = "LEADER", action = act({ CloseCurrentPane = { confirm = true } }) },
+		-- Paneを閉じる leader + x（close 後にタブ全体を均等化）
+		{ key = "x", mods = "LEADER", action = equalize.close_and_equalize() },
 		-- Pane移動 leader + hlkj
 		{ key = "h", mods = "LEADER", action = act.ActivatePaneDirection("Left") },
 		{ key = "l", mods = "LEADER", action = act.ActivatePaneDirection("Right") },
