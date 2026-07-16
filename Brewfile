@@ -2,9 +2,12 @@ tap "android/tap", trusted: true
 tap "charmbracelet/tap"
 tap "getsentry/tools"
 tap "homebrew/services"
+tap "lycorp-jp/tap"
+tap "mobile-dev-inc/tap"
 tap "ngrok/ngrok"
 tap "openclaw/tap"
 tap "proshunsuke/colmsg"
+tap "shaharia-lab/tap"
 tap "steipete/tap"
 tap "stripe/stripe-cli"
 tap "supabase/tap"
@@ -36,6 +39,12 @@ brew "btop"
 brew "glib"
 # Vector graphics library with cross-device output support
 brew "cairo"
+# OpenType text shaping engine
+brew "harfbuzz"
+# Command-line tool to manipulate Android App Bundles
+brew "bundletool"
+# Tool for emulating mouse and keyboard events
+brew "cliclick"
 # Cloudflare Tunnel client (formerly Argo Tunnel)
 brew "cloudflared"
 # GNU File, Shell, and Text utilities
@@ -62,8 +71,6 @@ brew "gcc"
 brew "gemini-cli"
 # GitHub command-line tool
 brew "gh"
-# OpenType text shaping engine
-brew "harfbuzz"
 # Framework for layout and rendering of i18n text
 brew "pango"
 # OCR (Optical Character Recognition) engine
@@ -196,6 +203,8 @@ brew "tlrc"
 brew "tmux"
 # Display directories as trees (with optional color/HTML output)
 brew "tree"
+# Parser generator tool
+brew "tree-sitter-cli"
 # Source code spell checker
 brew "typos-cli"
 # Executes a program periodically, showing output fullscreen
@@ -212,8 +221,14 @@ brew "zlib"
 brew "zoxide"
 # Fish-like fast/unobtrusive autosuggestions for zsh
 brew "zsh-autosuggestions"
+# Give AI agents eyes and hands on iOS Simulator and Android devices
+brew "lycorp-jp/tap/sim-use", trusted: true
 # Google CLI for Gmail, Calendar, Drive, Docs, Sheets, and more
 brew "openclaw/tap/gogcli", trusted: true
+# Slack CLI - Interact with Slack from command line
+brew "shaharia-lab/tap/slackcli", trusted: true
+# Command-line interface for 1Password
+cask "1password-cli"
 # GPU-accelerated terminal emulator
 cask "alacritty"
 # Enable Windows-like alt-tab
@@ -422,10 +437,14 @@ vscode "ziyasal.vscode-open-in-github"
 go "github.com/air-verse/air"
 go "github.com/daixiang0/gci"
 go "golang.org/dl/go1.24.0"
+go "golang.org/dl/go1.26.0"
+go "golang.org/dl/go1.26.4"
+go "golang.org/dl/go1.26.5"
 go "mvdan.cc/gofumpt"
 go "golang.org/x/tools/cmd/goimports"
 go "github.com/golangci/golangci-lint/v2/cmd/golangci-lint"
 go "golang.org/x/tools/gopls"
+go "github.com/goreleaser/goreleaser/v2"
 go "go.uber.org/mock/mockgen"
 go "github.com/aarondl/sqlboiler/v4"
 go "github.com/aarondl/sqlboiler/v4/drivers/sqlboiler-psql"
@@ -438,9 +457,4 @@ cargo "pueue"
 cargo "rainfrog"
 cargo "rtk"
 cargo "similarity-ts"
-npm "@browserbasehq/browse-cli"
-npm "@getpaseo/cli"
-npm "@pencil.dev/cli"
-npm "cc-connect"
 npm "corepack"
-npm "openrouter-cli"

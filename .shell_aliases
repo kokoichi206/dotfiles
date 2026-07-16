@@ -1,7 +1,5 @@
 #!/usr/bin/env bash
 
-alias dc="docker compose"
-alias dce="docker compose exec"
 alias rr="echo $?"
 
 # cd and ls
@@ -24,7 +22,6 @@ alias -- -="cd -"
 alias d="cd ~/Documents/Dropbox"
 alias dl="cd ~/Downloads"
 alias dt="cd ~/Desktop"
-alias g="git"
 
 if ls --color > /dev/null 2>&1; then # GNU `ls`
 	colorflag="--color"
@@ -63,12 +60,10 @@ alias emptytrash=" \
 "
 
 # pbcopy command
-if [[ $(uname -a | grep microsoft) -eq 0 ]]; then
+if [[ "$(uname -r)" == *microsoft* ]]; then
     # WSL2
-    echo "wsl2"
-    # alias pbcopy='clip.exe'
-elif [[ $(uname) == "Linux" ]]; then
+    alias pbcopy='clip.exe'
+elif [[ "$(uname)" == "Linux" ]]; then
     # Linux
-    echo "linux"
-    # alias pbcopy='xsel --clipboard --input'
+    alias pbcopy='xsel --clipboard --input'
 fi
