@@ -2,7 +2,6 @@
 bottom = "latest"
 bun = "latest"
 ecspresso = "2.6"
-neovim = "latest"
 node = "24"
 pnpm = "latest"
 python = "3.13"
