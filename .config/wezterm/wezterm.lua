@@ -1,4 +1,5 @@
 local wezterm = require("wezterm")
+local act = wezterm.action
 local config = wezterm.config_builder()
 
 config.audible_bell = "SystemBeep"
@@ -43,6 +44,35 @@ table.insert(config.hyperlink_rules, {
 	regex = [[/[\w\d\.\-\_/]+]],
 	format = "$0",
 })
+
+-- マウス操作: 素のクリックはリンクを開かず選択のみ（パス/URL をダブルクリックでコピーしやすくする）。
+-- リンクを開くのは CMD+クリックに隔離する。
+config.mouse_bindings = {
+	-- 素の左クリック/ドラッグ選択はリンク上でも開かず、選択をクリップボードへコピーする。
+	{
+		event = { Up = { streak = 1, button = "Left" } },
+		mods = "NONE",
+		action = act.CompleteSelection("ClipboardAndPrimarySelection"),
+	},
+	-- ダブルクリックの単語選択もクリップボードへコピーする。
+	{
+		event = { Up = { streak = 2, button = "Left" } },
+		mods = "NONE",
+		action = act.CompleteSelection("ClipboardAndPrimarySelection"),
+	},
+	-- CMD+左クリックでカーソル位置のリンクを開く（従来の挙動）。
+	{
+		event = { Up = { streak = 1, button = "Left" } },
+		mods = "CMD",
+		action = act.OpenLinkAtMouseCursor,
+	},
+	-- CMD+クリックの Down を無効化し、開くときに選択が始まる誤動作を防ぐ。
+	{
+		event = { Down = { streak = 1, button = "Left" } },
+		mods = "CMD",
+		action = act.Nop,
+	},
+}
 
 -- 非アクティブペインを暗くして区別しやすくする
 config.inactive_pane_hsb = {
