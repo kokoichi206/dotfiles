@@ -1,6 +1,7 @@
 local wezterm = require("wezterm")
 local act = wezterm.action
 local finder = require("finder")
+local equalize = require("equalize")
 
 -- 前回アクティブだったタブのインデックスを記録（ウィンドウごと）
 local prev_tab_idx = {}
@@ -146,9 +147,17 @@ return {
         -- 貼り付け
         { key = "v", mods = "SUPER", action = act.PasteFrom("Clipboard") },
 
-        -- Pane作成 leader + r or d
-        { key = "d", mods = "LEADER", action = act.SplitVertical({ domain = "CurrentPaneDomain" }) },
-        { key = "r", mods = "LEADER", action = act.SplitHorizontal({ domain = "CurrentPaneDomain" }) },
+        -- Pane作成 leader + r or d（分割後にタブ全体を均等化: 列は等幅・列内は等高）
+        { key = "d", mods = "LEADER", action = equalize.split_and_equalize("vertical") },
+        { key = "r", mods = "LEADER", action = equalize.split_and_equalize("horizontal") },
+        -- タブ全体を均等化（分割が崩れた時の手動リバランス）
+        {
+            key = "=",
+            mods = "LEADER",
+            action = wezterm.action_callback(function(window)
+                equalize.equalize_tab(window)
+            end),
+        },
         -- Paneを閉じる leader + x
         { key = "x", mods = "LEADER", action = act({ CloseCurrentPane = { confirm = true } }) },
         -- Pane移動 leader + hlkj
