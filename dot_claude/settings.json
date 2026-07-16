@@ -1,5 +1,6 @@
 {
   "$schema": "https://json.schemastore.org/claude-code-settings.json",
+  "autoCompactEnabled": true,
   "awaySummaryEnabled": true,
   "cleanupPeriodDays": 9999,
   "effortLevel": "xhigh",
@@ -18,10 +19,9 @@
     "BASH_DEFAULT_TIMEOUT_MS": "300000",
     "BASH_MAX_OUTPUT_LENGTH": "50000",
     "BASH_MAX_TIMEOUT_MS": "1200000",
-    "CLAUDE_CODE_DISABLE_ADAPTIVE_THINKING": "1",
     "CLAUDE_CODE_DISABLE_BACKGROUND_TASKS": "1",
     "CLAUDE_CODE_DISABLE_TERMINAL_TITLE": "0",
-    "CLAUDE_CODE_ENABLE_TASKS": "true",
+    "CLAUDE_CODE_ENABLE_TASKS": "1",
     "CLAUDE_CODE_ENABLE_TELEMETRY": "0",
     "CLAUDE_CODE_EXPERIMENTAL_AGENT_TEAMS": "1",
     "CLAUDE_CODE_SHELL": "/bin/zsh",
@@ -47,6 +47,52 @@
   },
   "feedbackSurveyRate": 0,
   "hooks": {
+    "Notification": [
+      {
+        "hooks": [
+          {
+            "command": "\"$HOME/Library/Application Support/CCStatusBar/bin/CCStatusBar\" hook Notification",
+            "type": "command"
+          }
+        ]
+      }
+    ],
+    "PermissionRequest": [
+      {
+        "hooks": [
+          {
+            "command": "if [ -f \"$HOME/.orca/agent-hooks/claude-hook.sh\" ] && [ -r \"$HOME/.orca/agent-hooks/claude-hook.sh\" ] && [ -x \"$HOME/.orca/agent-hooks/claude-hook.sh\" ]; then /bin/sh \"$HOME/.orca/agent-hooks/claude-hook.sh\"; else cat >/dev/null 2>&1 || :; fi",
+            "timeout": 10,
+            "type": "command"
+          }
+        ],
+        "matcher": "*"
+      }
+    ],
+    "PostToolUse": [
+      {
+        "hooks": [
+          {
+            "command": "if [ -f \"$HOME/.orca/agent-hooks/claude-hook.sh\" ] && [ -r \"$HOME/.orca/agent-hooks/claude-hook.sh\" ] && [ -x \"$HOME/.orca/agent-hooks/claude-hook.sh\" ]; then /bin/sh \"$HOME/.orca/agent-hooks/claude-hook.sh\"; else cat >/dev/null 2>&1 || :; fi",
+            "timeout": 10,
+            "type": "command"
+          }
+        ],
+        "matcher": "*"
+      }
+    ],
+    "PostToolUseFailure": [
+      {
+        "hooks": [
+          {
+            "command": "if [ -f \"$HOME/.orca/agent-hooks/claude-hook.sh\" ] && [ -r \"$HOME/.orca/agent-hooks/claude-hook.sh\" ] && [ -x \"$HOME/.orca/agent-hooks/claude-hook.sh\" ]; then /bin/sh \"$HOME/.orca/agent-hooks/claude-hook.sh\"; else cat >/dev/null 2>&1 || :; fi",
+            "timeout": 10,
+            "type": "command"
+          }
+        ],
+        "matcher": "*"
+      }
+    ],
     "PreToolUse": [
       {
         "hooks": [
@@ -57,7 +103,28 @@
         ]
       },
       {
-        "matcher": "mcp__github__merge_pull_request",
+        "hooks": [
+          {
+            "command": "if [ -f \"$HOME/.orca/agent-hooks/claude-hook.sh\" ] && [ -r \"$HOME/.orca/agent-hooks/claude-hook.sh\" ] && [ -x \"$HOME/.orca/agent-hooks/claude-hook.sh\" ]; then /bin/sh \"$HOME/.orca/agent-hooks/claude-hook.sh\"; else cat >/dev/null 2>&1 || :; fi",
+            "timeout": 10,
+            "type": "command"
+          }
+        ],
+        "matcher": "*"
+      }
+    ],
+    "SessionEnd": [
+      {
+        "hooks": [
+          {
+            "command": "\"$HOME/Library/Application Support/CCStatusBar/bin/CCStatusBar\" hook SessionEnd",
+            "type": "command"
+          }
+        ]
+      }
+    ],
+    "SessionStart": [
+      {
         "hooks": [
           {
             "command": "\"$HOME/Library/Application Support/CCStatusBar/bin/CCStatusBar\" hook SessionStart",
@@ -72,14 +139,54 @@
           {
             "command": "python3 \"$HOME/.claude/hooks/check-tentative-language.py\"",
             "type": "command"
+          },
+          {
+            "command": "if [ -x \"$CLAUDE_PROJECT_DIR/.claude/hooks/verify-before-stop.sh\" ] && ! grep -q verify-before-stop \"$CLAUDE_PROJECT_DIR/.claude/settings.json\" 2>/dev/null; then bash \"$CLAUDE_PROJECT_DIR/.claude/hooks/verify-before-stop.sh\"; fi",
+            "timeout": 600,
+            "type": "command"
+          },
+          {
+            "command": "\"$HOME/Library/Application Support/CCStatusBar/bin/CCStatusBar\" hook Stop",
+            "type": "command"
           }
         ]
       },
       {
         "hooks": [
           {
-            "type": "command",
-            "command": "$HOME/.claude/hooks/detect-toolcall-leak.sh"
+            "command": "$HOME/.claude/hooks/detect-toolcall-leak.sh",
+            "type": "command"
+          }
+        ]
+      },
+      {
+        "hooks": [
+          {
+            "command": "if [ -f \"$HOME/.orca/agent-hooks/claude-hook.sh\" ] && [ -r \"$HOME/.orca/agent-hooks/claude-hook.sh\" ] && [ -x \"$HOME/.orca/agent-hooks/claude-hook.sh\" ]; then /bin/sh \"$HOME/.orca/agent-hooks/claude-hook.sh\"; else cat >/dev/null 2>&1 || :; fi",
+            "timeout": 10,
+            "type": "command"
+          }
+        ]
+      }
+    ],
+    "StopFailure": [
+      {
+        "hooks": [
+          {
+            "command": "if [ -f \"$HOME/.orca/agent-hooks/claude-hook.sh\" ] && [ -r \"$HOME/.orca/agent-hooks/claude-hook.sh\" ] && [ -x \"$HOME/.orca/agent-hooks/claude-hook.sh\" ]; then /bin/sh \"$HOME/.orca/agent-hooks/claude-hook.sh\"; else cat >/dev/null 2>&1 || :; fi",
+            "timeout": 10,
+            "type": "command"
+          }
+        ]
+      }
+    ],
+    "SubagentStart": [
+      {
+        "hooks": [
+          {
+            "command": "if [ -f \"$HOME/.orca/agent-hooks/claude-hook.sh\" ] && [ -r \"$HOME/.orca/agent-hooks/claude-hook.sh\" ] && [ -x \"$HOME/.orca/agent-hooks/claude-hook.sh\" ]; then /bin/sh \"$HOME/.orca/agent-hooks/claude-hook.sh\"; else cat >/dev/null 2>&1 || :; fi",
+            "timeout": 10,
+            "type": "command"
           }
         ]
       }
@@ -88,8 +195,47 @@
       {
         "hooks": [
           {
-            "type": "command",
-            "command": "$HOME/.claude/hooks/detect-toolcall-leak.sh"
+            "command": "$HOME/.claude/hooks/detect-toolcall-leak.sh",
+            "type": "command"
+          }
+        ]
+      },
+      {
+        "hooks": [
+          {
+            "command": "if [ -f \"$HOME/.orca/agent-hooks/claude-hook.sh\" ] && [ -r \"$HOME/.orca/agent-hooks/claude-hook.sh\" ] && [ -x \"$HOME/.orca/agent-hooks/claude-hook.sh\" ]; then /bin/sh \"$HOME/.orca/agent-hooks/claude-hook.sh\"; else cat >/dev/null 2>&1 || :; fi",
+            "timeout": 10,
+            "type": "command"
+          }
+        ]
+      }
+    ],
+    "TeammateIdle": [
+      {
+        "hooks": [
+          {
+            "command": "if [ -f \"$HOME/.orca/agent-hooks/claude-hook.sh\" ] && [ -r \"$HOME/.orca/agent-hooks/claude-hook.sh\" ] && [ -x \"$HOME/.orca/agent-hooks/claude-hook.sh\" ]; then /bin/sh \"$HOME/.orca/agent-hooks/claude-hook.sh\"; else cat >/dev/null 2>&1 || :; fi",
+            "timeout": 10,
+            "type": "command"
+          }
+        ]
+      }
+    ],
+    "UserPromptSubmit": [
+      {
+        "hooks": [
+          {
+            "command": "\"$HOME/Library/Application Support/CCStatusBar/bin/CCStatusBar\" hook UserPromptSubmit",
+            "type": "command"
+          }
+        ]
+      },
+      {
+        "hooks": [
+          {
+            "command": "if [ -f \"$HOME/.orca/agent-hooks/claude-hook.sh\" ] && [ -r \"$HOME/.orca/agent-hooks/claude-hook.sh\" ] && [ -x \"$HOME/.orca/agent-hooks/claude-hook.sh\" ]; then /bin/sh \"$HOME/.orca/agent-hooks/claude-hook.sh\"; else cat >/dev/null 2>&1 || :; fi",
+            "timeout": 10,
+            "type": "command"
           }
         ]
       }
@@ -236,10 +382,6 @@
       "Bash(jq:*)",
       "Bash(yq:*)",
       "Bash(fx:*)",
-      "Bash(curl:*)",
-      "Bash(wget:*)",
-      "Bash(httpie:*)",
-      "Bash(http:*)",
       "Bash(unzip:*)",
       "Bash(tar:*)",
       "Bash(gzip:*)",
@@ -268,9 +410,6 @@
       "Bash(ping:*)",
       "Bash(nslookup:*)",
       "Bash(dig:*)",
-      "Bash(ssh:*)",
-      "Bash(scp:*)",
-      "Bash(rsync:*)",
       "Bash(chmod:*)",
       "Bash(chown:*)",
       "Bash(ln:*)",
@@ -305,33 +444,20 @@
       "Edit(~/.config/**)",
       "Grep",
       "Glob",
-      "WebFetch(domain:*)",
       "WebSearch",
-      "Write(~/projects/**)",
-      "Write(~/work/**)",
-      "Write(~/dev/**)",
-      "Write(~/src/**)",
-      "Write(./**)",
-      "Write(!.git/**)",
-      "Write(!node_modules/**)",
-      "Write(!vendor/**)",
-      "Write(!.venv/**)",
-      "Write(!venv/**)",
-      "Write(!__pycache__/**)",
-      "Write(!target/**)",
-      "Write(!dist/**)",
-      "Write(!build/**)",
-      "Write(!.next/**)",
-      "Write(!coverage/**)",
-      "NotebookEdit(~/projects/**)",
-      "NotebookEdit(~/work/**)",
-      "NotebookEdit(~/dev/**)",
-      "NotebookEdit(~/src/**)",
-      "NotebookEdit(./**)",
       "Bash(./gradlew:*)",
       "Bash(source:*)",
       "Bash(codex:*)",
       "mcp__pencil"
+    ],
+    "ask": [
+      "Bash(curl:*)",
+      "Bash(wget:*)",
+      "Bash(httpie:*)",
+      "Bash(http:*)",
+      "Bash(ssh:*)",
+      "Bash(scp:*)",
+      "Bash(rsync:*)"
     ],
     "defaultMode": "auto",
     "deny": [
@@ -363,6 +489,14 @@
       "Bash(npm publish:*)",
       "Bash(cargo publish:*)",
       "Bash(deno publish:*)",
+      "Read(~/.ssh/**)",
+      "Read(~/.aws/**)",
+      "Read(~/.gnupg/**)",
+      "Read(~/.netrc)",
+      "Read(~/.config/gh/**)",
+      "Read(~/.claude/.credentials.json)",
+      "Read(**/.env)",
+      "Read(**/.env.*)",
       "Edit(/etc/**)",
       "Edit(/usr/**)",
       "Edit(/var/**)",
@@ -381,30 +515,84 @@
       "Edit(~/.ssh/*_ed25519)",
       "Edit(/etc/passwd)",
       "Edit(/etc/shadow)",
-      "Edit(/etc/sudoers)",
-      "Write(/etc/**)",
-      "Write(/usr/**)",
-      "Write(/var/**)",
-      "Write(/opt/**)",
-      "Write(/bin/**)",
-      "Write(/sbin/**)",
-      "Write(/lib/**)",
-      "Write(/lib64/**)",
-      "Write(/boot/**)",
-      "Write(/proc/**)",
-      "Write(/sys/**)",
-      "Write(/dev/**)",
-      "Write(~/.ssh/id_*)",
-      "Write(~/.ssh/*_rsa)",
-      "Write(~/.ssh/*_ecdsa)",
-      "Write(~/.ssh/*_ed25519)",
-      "Write(/etc/passwd)",
-      "Write(/etc/shadow)",
-      "Write(/etc/sudoers)"
+      "Edit(/etc/sudoers)"
     ]
+  },
+  "sandbox": {
+    "credentials": {
+      "envVars": [
+        {
+          "mode": "deny",
+          "name": "ANTHROPIC_API_KEY"
+        },
+        {
+          "mode": "deny",
+          "name": "AWS_ACCESS_KEY_ID"
+        },
+        {
+          "mode": "deny",
+          "name": "AWS_SECRET_ACCESS_KEY"
+        },
+        {
+          "mode": "deny",
+          "name": "AWS_SESSION_TOKEN"
+        },
+        {
+          "mode": "deny",
+          "name": "GH_TOKEN"
+        },
+        {
+          "mode": "deny",
+          "name": "GITHUB_TOKEN"
+        },
+        {
+          "mode": "deny",
+          "name": "NPM_TOKEN"
+        },
+        {
+          "mode": "deny",
+          "name": "OPENAI_API_KEY"
+        }
+      ]
+    },
+    "enabled": true,
+    "excludedCommands": [
+      "afplay",
+      "docker",
+      "docker-compose",
+      "gh",
+      "git",
+      "open",
+      "rsync",
+      "scp",
+      "ssh",
+      "terraform"
+    ],
+    "filesystem": {
+      "allowWrite": [
+        "//private/tmp",
+        "~/.cache",
+        "~/.cargo/git",
+        "~/.cargo/registry",
+        "~/.npm",
+        "~/.pnpm-store",
+        "~/Library/Caches",
+        "~/Library/pnpm/store",
+        "~/go/pkg/mod"
+      ],
+      "denyRead": [
+        "~/.aws",
+        "~/.claude/.credentials.json",
+        "~/.config/gh",
+        "~/.gnupg",
+        "~/.netrc",
+        "~/.ssh"
+      ]
+    }
   },
   "showThinkingSummaries": true,
   "skipDangerousModePermissionPrompt": true,
+  "skipWorkflowUsageWarning": true,
   "spinnerVerbs": {
     "mode": "replace",
     "verbs": [
@@ -429,5 +617,10 @@
     "padding": 0,
     "type": "command"
   },
-  "theme": "light-daltonized"
+  "theme": "light-daltonized",
+  "voice": {
+    "enabled": true,
+    "mode": "hold"
+  },
+  "voiceEnabled": true
 }
