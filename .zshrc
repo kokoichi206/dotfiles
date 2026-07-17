@@ -220,6 +220,9 @@ fi
 eval "$(mise activate zsh)"
 
 # zoxide と starship は末尾で初期化（precmd hooks の順序のため）
+# Claude Code 等のスナップショット再生シェルでは chpwd hook が復元されず
+# zoxide doctor が誤検知して cd のたびに警告を出すため、doctor を無効化する
+export _ZO_DOCTOR=0
 eval "$(zoxide init zsh --cmd cd)"
 eval "$(starship init zsh)"
 
