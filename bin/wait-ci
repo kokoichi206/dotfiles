@@ -1,0 +1,41 @@
+#!/bin/sh
+#
+# Description:
+#   PR の CI checks が完了するまでポーリングし、最終結果だけを 1 回出力する。
+#   `sleep N && gh pr checks` の手組み連鎖を 1 コマンドに置き換える。
+#
+# usage: wait-ci [<pr-number|url|branch>] [--timeout <sec>] [--interval <sec>]
+#   PR 指定を省略すると current branch の PR を対象にする (gh pr checks の仕様)。
+#
+# exit code: gh pr checks の最終 exit code をそのまま返す (0=pass)。timeout 時は 124。
+set -eu
+
+PR=""
+TIMEOUT=1800
+INTERVAL=30
+
+while [ $# -gt 0 ]; do
+  case "$1" in
+    --timeout)  TIMEOUT="$2";  shift 2 ;;
+    --interval) INTERVAL="$2"; shift 2 ;;
+    *) PR="$1"; shift ;;
+  esac
+done
+
+deadline=$(( $(date +%s) + TIMEOUT ))
+
+while :; do
+  status=0
+  out="$(gh pr checks ${PR:+"$PR"} 2>&1)" || status=$?
+  # gh pr checks は checks pending のとき exit 8 を返す。それ以外は確定結果
+  if [ "$status" -ne 8 ]; then
+    printf '%s\n' "$out"
+    exit "$status"
+  fi
+  if [ "$(date +%s)" -ge "$deadline" ]; then
+    printf '%s\n' "$out"
+    echo "wait-ci: timeout after ${TIMEOUT}s (checks still pending)" >&2
+    exit 124
+  fi
+  sleep "$INTERVAL"
+done

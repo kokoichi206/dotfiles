@@ -33,6 +33,7 @@ export ABBR_USER_ABBREVIATIONS_FILE="${XDG_CONFIG_HOME}/zsh-abbr/user-abbreviati
 # ============ PATH ============
 export PATH="$HOME/.cargo/bin:$PATH"
 export PATH="$HOME/.local/bin:$PATH"
+export PATH="$HOME/ghq/github.com/kokoichi206/dotfiles/bin:$PATH"
 export PATH="$HOME/.istio/istio-1.20.0/bin:$PATH"
 export PATH="$HOME/Library/Android/sdk/platform-tools:$PATH"
 export PATH="$HOME/flutter/bin:$PATH"
