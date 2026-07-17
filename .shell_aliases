@@ -67,3 +67,7 @@ elif [[ "$(uname)" == "Linux" ]]; then
     # Linux
     alias pbcopy='xsel --clipboard --input'
 fi
+
+# 常駐プロセスの一括停止 (-i: 大文字小文字無視, -f: コマンドライン全体にマッチ)
+alias kill-leawo='pkill -if leawo'
+alias kill-chrome='pkill -if "google chrome"'

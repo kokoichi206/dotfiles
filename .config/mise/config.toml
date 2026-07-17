@@ -1,3 +1,8 @@
+# ghq 配下は自リポジトリ・業務リポジトリのみを置く運用のため一括で信頼し、
+# リポジトリごとの `mise trust` 手動実行を不要にする
+[settings]
+trusted_config_paths = ["~/ghq"]
+
 [tools]
 bottom = "latest"
 bun = "latest"
