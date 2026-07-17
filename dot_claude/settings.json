@@ -111,6 +111,16 @@
           }
         ],
         "matcher": "*"
+      },
+      {
+        "matcher": "Write",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "command -v python3 >/dev/null 2>&1 && python3 \"$HOME/.claude/hooks/inject-rules-on-write.py\" || true",
+            "timeout": 5
+          }
+        ]
       }
     ],
     "SessionEnd": [

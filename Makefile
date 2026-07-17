@@ -34,6 +34,10 @@ claude-apply:	## repo の settings.json を ~/.claude へ反映 (要 claude 再�
 	jq -S . "$(DOT_CLAUDE_SETTINGS)" > "$(LIVE_CLAUDE_SETTINGS)"
 	@echo "applied repo -> live. restart claude to take effect."
 
+.PHONY: test-claude-hooks
+test-claude-hooks:	## dot_claude/hooks の単体テストを実行
+	python3 dot_claude/hooks/inject-rules-on-write.test.py
+
 .PHONY: claude-lint
 claude-lint:	## settings.json の hook 配線を検査
 	./claude-lint-settings.sh
