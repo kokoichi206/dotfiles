@@ -557,16 +557,30 @@
     },
     "enabled": true,
     "excludedCommands": [
+      "adb",
+      "adb *",
       "afplay",
+      "afplay *",
       "docker",
+      "docker *",
       "docker-compose",
+      "docker-compose *",
       "gh",
+      "gh *",
       "git",
+      "git *",
       "open",
+      "open *",
       "rsync",
+      "rsync *",
       "scp",
+      "scp *",
+      "sim-use",
+      "sim-use *",
       "ssh",
-      "terraform"
+      "ssh *",
+      "terraform",
+      "terraform *"
     ],
     "filesystem": {
       "allowWrite": [
