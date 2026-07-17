@@ -20,15 +20,23 @@ update-brewfile:	## Update Brewfile from current brew packages
 DOT_CLAUDE_SETTINGS  := dot_claude/settings.json
 LIVE_CLAUDE_SETTINGS := $(HOME)/.claude/settings.json
 
+# live 側で未配線の hook は pull で repo からも消えるため、pull 直後に配線を検査する。
+# lint が落ちたら repo の配線を復元してから commit すること。
 .PHONY: claude-pull
 claude-pull:	## ~/.claude/settings.json の変更を repo に取り込む (要 git diff レビュー)
 	jq -S . "$(LIVE_CLAUDE_SETTINGS)" | ./claude-normalize-home.sh | jq -S . > "$(DOT_CLAUDE_SETTINGS)"
+	@./claude-lint-settings.sh || { echo "hook wiring was dropped by pull. restore it in $(DOT_CLAUDE_SETTINGS) before committing."; exit 1; }
 	@echo "pulled live -> repo (\$$HOME normalized). review: git diff -- $(DOT_CLAUDE_SETTINGS)"
 
 .PHONY: claude-apply
 claude-apply:	## repo の settings.json を ~/.claude へ反映 (要 claude 再起動)
+	./claude-lint-settings.sh
 	jq -S . "$(DOT_CLAUDE_SETTINGS)" > "$(LIVE_CLAUDE_SETTINGS)"
 	@echo "applied repo -> live. restart claude to take effect."
+
+.PHONY: claude-lint
+claude-lint:	## settings.json の hook 配線を検査
+	./claude-lint-settings.sh
 
 .PHONY: nix-check
 nix-check:	## Check flake outputs
