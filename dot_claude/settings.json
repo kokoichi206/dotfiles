@@ -129,6 +129,15 @@
           }
         ],
         "matcher": "mcp__github__merge_pull_request"
+      },
+      {
+        "hooks": [
+          {
+            "command": "python3 \"$HOME/.claude/hooks/check-pr-title-lang.py\"",
+            "type": "command"
+          }
+        ],
+        "matcher": "Bash"
       }
     ],
     "SessionEnd": [
