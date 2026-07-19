@@ -8,3 +8,6 @@ __pycache__/
 
 # mitmdump キャプチャ(大容量バイナリ)。手順は mobile-traffic-analysis skill 参照
 flows
+
+# 週次エージェントニュースの成果物。実測に業務リポ名・トークン数を含むため commit しない (agent-news-weekly skill)
+news/agent-weekly/

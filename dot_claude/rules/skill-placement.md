@@ -29,5 +29,7 @@ skill / command を新規作成するときに、置き場所とスコープを�
 
 ## 補足
 
+- そもそも rule（paths 注入 / 常時注入）にするか skill（オンデマンド）にするかの判断は
+  `authoring-rules.md` の「発火頻度 × 常時コスト」基準に従う。
 - 試作は `~/.claude/skills/` で作って試し、良ければ `dot_claude/skills/` へ昇格する
   （詳細は `dot_claude/README.md`）。
