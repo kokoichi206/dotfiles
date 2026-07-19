@@ -1,6 +1,6 @@
 ---
 name: audit-sessions
-description: 過去の Claude Code セッションログ（対象オーナー限定）から人間発話を抽出し、改善を決定論的な仕組み（skill/設定・ルール/lint/プロンプト）へ移せる箇所を並列分析する監査。期間指定で定期実行し、/audit-sessions で能動的に呼び出したときのみ動く（自動発火しない）。
+description: 過去の Claude Code セッションログ（対象オーナー限定）から人間発話を抽出し、改善を決定論的な仕組み（skill/設定・ルール/lint/プロンプト）へ移せる箇所を並列分析する監査。/audit-sessions で能動的に呼び出したときのみ動く（自動発火しない）。
 disable-model-invocation: true
 ---
 
@@ -177,18 +177,3 @@ jq -r '
    コード規約の lint ルールは対象リポそれぞれに作る。
 4. PR はリポジトリの規約に従う（base ブランチ、PR タイトルの言語）。**マージはしない**（作成のみ）。
 5. 作成した PR / issue のリンクと、重複でスキップしたものを一覧で報告する。
-
-## 定期実行の登録（Orca automation）
-
-週次で直近 1 週間を提案のみ回す automation を CLI で登録する（要 Orca 起動）。
-
-```bash
-orca automations create \
-  --name "weekly-session-audit" \
-  --trigger weekly --day 1 --time 09:00 --timezone Asia/Tokyo \
-  --provider claude --repo name:dotfiles --workspace-mode new-per-run \
-  --prompt "/audit-sessions 1w" --enabled
-```
-
-- automation は `/audit-sessions 1w`（ステージ1）だけを回す。PR 化は結果を見て手動で apply する。
-- `--prompt` の slash 呼び出しは能動発火に当たるため `disable-model-invocation: true` でも動く。
