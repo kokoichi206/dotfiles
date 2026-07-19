@@ -21,7 +21,7 @@ Anthropic が Write 対応したら hook を settings.json から外すだけで
 - **`paths` frontmatter で対象を絞る**: YAML frontmatter に `paths` を書く。
   省略すると全セッションに常時注入される（CLAUDE.md と同等になる）。
 - **`paths` を省略する前に skill を検討する**: 判断軸は「当てはまるか」でなく「発火頻度 × 常時コスト」。
-  常に当てはまるが行動を変えるのが稀な知識（例: E2BIG 回避の手順）は rule でなく skill にする。
+  常に当てはまるが行動を変えるのが稀な知識は rule でなく skill にする。
   skill なら常時載るのは description 1 行だけの段階的開示になり、
   エラー起点で引く知識は description にエラー文字列を入れれば検索できる。
   paths 省略の rule にしてよいのは、ほぼ毎セッションの判断に効く普遍ルールだけ。
