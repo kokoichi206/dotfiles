@@ -1,6 +1,6 @@
 ---
 name: audit-sessions
-description: 過去の Claude Code セッションログ（対象オーナー限定）から人間発話を抽出し、改善を決定論的な仕組み（skill/設定・ルール/lint/プロンプト）へ移せる箇所を並列分析する。ステージ1=提案のみ、ステージ2(apply)=既存 issue/PR をトリアージして PR/issue 化。期間指定で定期実行する。/audit-sessions で能動的に呼び出したときのみ動く（自動発火しない）。
+description: 過去の Claude Code セッションログ（対象オーナー限定）から人間発話を抽出し、改善を決定論的な仕組み（skill/設定・ルール/lint/プロンプト）へ移せる箇所を並列分析する監査。期間指定で定期実行し、/audit-sessions で能動的に呼び出したときのみ動く（自動発火しない）。
 disable-model-invocation: true
 ---
 
