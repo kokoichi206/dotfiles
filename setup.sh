@@ -40,8 +40,8 @@ backup_and_alias "$PWD/.zshenv" ~/.zshenv
 backup_and_alias "$PWD/.zprofile" ~/.zprofile
 backup_and_alias "$PWD/.zshrc" ~/.zshrc
 backup_and_alias "$PWD/.vimrc" ~/.vimrc
-backup_and_alias "$PWD/.shell_aliases" ~/.shell_aliases
 
+backup_and_alias "$PWD/.config/zsh" ~/.config/zsh
 backup_and_alias "$PWD/.config/zsh-abbr" ~/.config/zsh-abbr
 backup_and_alias "$PWD/.config/sheldon" ~/.config/sheldon
 backup_and_alias "$PWD/.config/starship.toml" ~/.config/starship.toml
