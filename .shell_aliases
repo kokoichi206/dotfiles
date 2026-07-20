@@ -1,15 +1,6 @@
-#!/usr/bin/env bash
-
-alias rr="echo $?"
+alias rr='echo $?'
 
 # cd and ls
-function custom_cd()
-{
-  # \cd $@ && clear && ls
-  \cd "$@" && ls
-}
-alias cd='custom_cd'
-
 # Easier navigation: .., ..., ...., ....., ~ and -
 alias ..="cd .."
 alias ...="cd ../.."
@@ -48,16 +39,7 @@ command -v sha1sum > /dev/null || alias sha1sum="shasum"
 # Trim new lines and copy to clipboard
 alias c="tr -d '\n' | pbcopy"
 
-alias path='echo -e ${PATH//:/\\n}'
-
-# Empty the Trash on all mounted volumes and the main HDD. then clear the useless sleepimage
-alias emptytrash=" \
-    sudo rm -rfv /Volumes/*/.Trashes; \
-    rm -rfv ~/.Trash/*; \
-    sudo rm -v /private/var/vm/sleepimage; \
-    rm -rv \"/Users/paulirish/Library/Application Support/stremio/Cache\";  \
-    rm -rv \"/Users/paulirish/Library/Application Support/stremio/stremio-cache\" \
-"
+alias path='print -l -- $path'
 
 # pbcopy command
 if [[ "$(uname -r)" == *microsoft* ]]; then

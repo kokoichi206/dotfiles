@@ -13,8 +13,16 @@ fi
 
 # from $2 to $1
 backup_and_alias() {
+    if [ -L "$2" ] && [ "$(readlink "$2")" = "$1" ]; then
+        return
+    fi
+
     # Backup existing file, directory, or symlink
     if [ -e "$2" ] || [ -L "$2" ]; then
+        if [ -e "$2.backup" ] || [ -L "$2.backup" ]; then
+            echo "Backup already exists: $2.backup" >&2
+            return 1
+        fi
         mv "$2" "$2.backup"
     fi
     # When creating symbolic links, relative paths are not allowed.
@@ -28,6 +36,8 @@ backup_and_alias "$PWD/.config/nvim" ~/.config/nvim
 
 backup_and_alias "$PWD/.gitconfig" ~/.gitconfig
 backup_and_alias "$PWD/.git-templates" ~/.git-templates
+backup_and_alias "$PWD/.zshenv" ~/.zshenv
+backup_and_alias "$PWD/.zprofile" ~/.zprofile
 backup_and_alias "$PWD/.zshrc" ~/.zshrc
 backup_and_alias "$PWD/.vimrc" ~/.vimrc
 backup_and_alias "$PWD/.shell_aliases" ~/.shell_aliases
@@ -69,9 +79,5 @@ elif [[ $(uname) == "Darwin" ]]; then
         backup_and_alias "$PWD/.config/vscode/snippets" "$WINDSURF_USER_DIR/snippets"
     fi
 fi
-
-# Install oh-my-zsh
-# https://ohmyz.sh/#install
-sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
 
 echo "finished setup environmtent."

@@ -14,8 +14,8 @@ cd ~/ghq/github.com/kokoichi206/dotfiles
 bash setup.sh
 ```
 
-`setup.sh` symlinks the configs (wezterm, mise, neovim, git, zsh, lazygit, VSCode/Windsurf, …),
-runs `brew.sh` to install everything from the `Brewfile`, and installs oh-my-zsh.
+`setup.sh` symlinks the configs (wezterm, mise, neovim, git, zsh, lazygit, VSCode/Windsurf, …)
+and runs `brew.sh` to install everything from the `Brewfile`.
 
 ## nix-darwin + home-manager
 

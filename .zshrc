@@ -2,7 +2,19 @@
 # 貼り付けた shell snippet のコメント行を対話シェルでも無視する
 setopt INTERACTIVE_COMMENTS
 
+# ============ Abbreviations (zsh-abbr) ============
+# パイプや ; && || の後（コマンド位置）でも regular 略語を展開する。引数位置では展開しない。
+# sheldon が zsh-abbr を読み込む前に設定する必要がある。
+# https://github.com/olets/zsh-abbr/issues/53
+export ABBR_EXPERIMENTAL_COMMAND_POSITION_REGULAR_ABBREVIATIONS=2
+export ABBR_USER_ABBREVIATIONS_FILE="${XDG_CONFIG_HOME}/zsh-abbr/user-abbreviations"
+
+# ============ Sheldon (plugin manager) ============
+eval "$(sheldon source)"
+
 # ============ Completion ============
+# completionを追加するツールはcompinitより前にfpathへ登録する。
+fpath=("$HOME/.grok/completions/zsh" $fpath)
 autoload -Uz compinit
 # compinit の再生成は1日1回に抑える
 if [[ -n ${ZDOTDIR:-$HOME}/.zcompdump(#qN.mh+24) ]]; then
@@ -11,57 +23,6 @@ else
   compinit -C
 fi
 autoload -U +X bashcompinit && bashcompinit
-
-# ============ Abbreviations (zsh-abbr) ============
-# パイプや ; && || の後（コマンド位置）でも regular 略語を展開する。引数位置では展開しない。
-# sheldon が zsh-abbr を読み込む前に設定する必要がある。
-# https://github.com/olets/zsh-abbr/issues/53
-export ABBR_EXPERIMENTAL_COMMAND_POSITION_REGULAR_ABBREVIATIONS=2
-
-# ============ Sheldon (plugin manager) ============
-eval "$(sheldon source)"
-
-# ============ Default Editor ============
-export EDITOR="nvim"
-
-# ============ XDG Base Directory ============
-export XDG_CONFIG_HOME="$HOME/.config"
-
-# ============ Abbreviations ============
-export ABBR_USER_ABBREVIATIONS_FILE="${XDG_CONFIG_HOME}/zsh-abbr/user-abbreviations"
-
-# ============ PATH ============
-export PATH="$HOME/.cargo/bin:$PATH"
-export PATH="$HOME/.local/bin:$PATH"
-export PATH="$HOME/.istio/istio-1.20.0/bin:$PATH"
-export PATH="$HOME/Library/Android/sdk/platform-tools:$PATH"
-export PATH="$HOME/flutter/bin:$PATH"
-export PATH="$HOME/go/bin:$PATH"
-export PATH="/opt/homebrew/opt/openssl@3/bin:$PATH"
-export PATH="/opt/homebrew/opt/postgresql@16/bin:$PATH"
-export PATH="/opt/homebrew/opt/pueue/bin/pueue:$PATH"
-export PATH="~/.codeium/windsurf/bin:$PATH"
-
-export GOPATH="$HOME/go"
-
-# pnpm
-export PNPM_HOME="~/Library/pnpm"
-case ":$PATH:" in
-    *":$PNPM_HOME:"*) ;;
-    *) export PATH="$PNPM_HOME:$PATH" ;;
-esac
-
-# ============ Environment ============
-source $HOME/.zshenv
-
-export LANG=en_US.UTF-8
-export LC_ALL=en_US.UTF-8
-
-# asdf/mise で ruby を build するため
-export LDFLAGS="-L/opt/homebrew/opt/libffi/lib"
-export CPPFLAGS="-I/opt/homebrew/opt/libffi/include"
-export PKG_CONFIG_PATH="/opt/homebrew/opt/libffi/lib/pkgconfig"
-export RUBY_CONFIGURE_OPTS="--with-openssl-dir=/opt/homebrew/opt/openssl@3"
 
 # ============ Alias definitions ============
 if [ -f ~/.shell_aliases ]; then
@@ -91,15 +52,6 @@ HISTSIZE=50000
 SAVEHIST=10000
 
 HISTORY_IGNORE="(vz|sz|cz|ls|cd|pwd|exit|cd ..|last_command=*|grep -vxF*|sed '$d' $HISTFILE*)"
-
-# 失敗コマンドを履歴から削除
-_remove_failed_command() {
-    if [[ $? != 0 ]]; then
-        fc -W
-        sed '$d' $HISTFILE > temp_histfile && mv temp_histfile $HISTFILE
-    fi
-}
-precmd_functions+=(_remove_failed_command)
 
 select-history() {
     fc -R $HISTFILE
@@ -185,27 +137,8 @@ update_iterm2_badge() {
     printf "\033]1337;SetBadgeFormat=%s\007" "$(echo -n "$badge_text" | base64)"
 }
 
-if type custom_cd > /dev/null 2>&1; then
-    eval "original_$(declare -f custom_cd)"
-    custom_cd() {
-        original_custom_cd "$@"
-        update_iterm2_badge
-    }
-else
-    custom_cd() {
-        builtin cd "$@" && update_iterm2_badge
-    }
-    alias cd='custom_cd'
-fi
-
-pushd() {
-    builtin pushd "$@" && update_iterm2_badge
-}
-
-popd() {
-    builtin popd "$@" && update_iterm2_badge
-}
-
+autoload -Uz add-zsh-hook
+add-zsh-hook chpwd update_iterm2_badge
 update_iterm2_badge
 
 # ============ Tool initialization ============
@@ -230,7 +163,6 @@ eval "$(starship init zsh)"
 # 正確に追跡するために必要。WezTerm 上でのみ有効化し、他端末には影響させない。
 if [[ "$TERM_PROGRAM" == "WezTerm" ]]; then
   _wezterm_osc7() { printf '\033]7;file://%s%s\033\\' "${HOST}" "${PWD}" }
-  autoload -Uz add-zsh-hook
   add-zsh-hook precmd _wezterm_osc7
 fi
 
@@ -437,11 +369,3 @@ codex-skill-list() {
 }
 
 alias vercel='npx vercel@latest'
-
-# >>> grok installer >>>
-export PATH="$HOME/.grok/bin:$PATH"
-fpath=(~/.grok/completions/zsh $fpath)
-autoload -Uz compinit && compinit -C
-# <<< grok installer <<<
-
-export PATH=$PATH:$HOME/.maestro/bin
