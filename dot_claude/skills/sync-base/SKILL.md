@@ -1,6 +1,6 @@
 ---
 name: sync-base
-description: PR マージ後に最新 base から次の作業ブランチを切って開始する手順。detached HEAD を作らない。トリガー - merge した次, fetch して develop から, base 同期, 次のブランチ, マージ後の同期
+description: PR マージ後に最新 base から次の作業ブランチを切って開始する手順。detached HEAD を作らない。トリガー - merge した, merge した次, merge したので次, マージした, マージしちゃった, fetch して develop から, fetch して main から, base 同期, 次のブランチ, マージ後の同期
 ---
 
 # base 同期・次ブランチ開始

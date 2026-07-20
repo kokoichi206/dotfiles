@@ -1,6 +1,6 @@
 ---
 name: resolve-pr-conflict
-description: PR がコンフリクトしたときに base を取り込んで解消する定型手順。rebase ではなく merge で履歴を保持する。トリガー - pr conflict, コンフリクト解消, マージできない, conflict してる, mergeable false
+description: PR がコンフリクトしたときに base を取り込んで解消する定型手順。rebase ではなく merge で履歴を保持する。トリガー - pr conflict, pr conflict してる, コンフリクト解消, conflict 解消して, マージできない, conflict してる, conflict しちゃった, mergeable false
 ---
 
 # PR コンフリクト解消
