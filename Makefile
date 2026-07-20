@@ -29,9 +29,10 @@ claude-pull:	## ~/.claude/settings.json の変更を repo に取り込む (要 g
 	@echo "pulled live -> repo (\$$HOME normalized). review: git diff -- $(DOT_CLAUDE_SETTINGS)"
 
 .PHONY: claude-apply
-claude-apply:	## repo の settings.json を ~/.claude へ反映 (要 claude 再起動)
+claude-apply:	## repo の settings.json と skills/agents symlink を ~/.claude へ反映 (要 claude 再起動)
 	./claude-lint-settings.sh
 	jq -S . "$(DOT_CLAUDE_SETTINGS)" > "$(LIVE_CLAUDE_SETTINGS)"
+	./setup-claude.sh link
 	@echo "applied repo -> live. restart claude to take effect."
 
 .PHONY: test-claude-hooks

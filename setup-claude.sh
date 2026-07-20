@@ -3,6 +3,10 @@
 # Description
 #   Setup of Claude Code and Codex CLI configuration.
 #   Installs marketplace plugins/skills and creates symlinks.
+#
+# Usage
+#   ./setup-claude.sh        # full setup (new machine)
+#   ./setup-claude.sh link   # symlink repo skills/agents into ~/.claude only
 set -euo pipefail
 
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
@@ -46,6 +50,36 @@ create_symlink() {
     log_info "Created symlink: $target -> $source"
 }
 
+# Symlink custom skills and agents (not marketplace ones).
+# ディレクトリごと symlink せず個別エントリを symlink して
+# marketplace 由来のエントリと同一ディレクトリで共存できるようにする。
+# スキル追加のたびに再実行が必要なため、make claude-apply からも呼ばれる。
+link_claude_skills_and_agents() {
+    if [ -d "$SCRIPT_DIR/dot_claude/skills" ]; then
+        log_info "Setting up custom skills..."
+        mkdir -p "$CLAUDE_DIR/skills"
+
+        for skill_dir in "$SCRIPT_DIR/dot_claude/skills"/*; do
+            if [ -d "$skill_dir" ]; then
+                skill_name=$(basename "$skill_dir")
+                create_symlink "$skill_dir" "$CLAUDE_DIR/skills/$skill_name"
+            fi
+        done
+    fi
+
+    if [ -d "$SCRIPT_DIR/dot_claude/agents" ]; then
+        log_info "Setting up custom agents..."
+        mkdir -p "$CLAUDE_DIR/agents"
+
+        for agent_file in "$SCRIPT_DIR/dot_claude/agents"/*; do
+            if [ -e "$agent_file" ]; then
+                agent_name=$(basename "$agent_file")
+                create_symlink "$agent_file" "$CLAUDE_DIR/agents/$agent_name"
+            fi
+        done
+    fi
+}
+
 # Setup Claude Code
 setup_claude() {
     log_info "Setting up Claude Code..."
@@ -69,33 +103,7 @@ setup_claude() {
     cp "$SCRIPT_DIR/dot_claude/settings.json" "$CLAUDE_DIR/settings.json"
     log_info "Copied settings.json (not symlinked): $CLAUDE_DIR/settings.json"
 
-    # Symlink custom skills (not marketplace skills)
-    if [ -d "$SCRIPT_DIR/dot_claude/skills" ]; then
-        log_info "Setting up custom skills..."
-        mkdir -p "$CLAUDE_DIR/skills"
-
-        for skill_dir in "$SCRIPT_DIR/dot_claude/skills"/*; do
-            if [ -d "$skill_dir" ]; then
-                skill_name=$(basename "$skill_dir")
-                create_symlink "$skill_dir" "$CLAUDE_DIR/skills/$skill_name"
-            fi
-        done
-    fi
-
-    # Symlink custom agents.
-    # skills と同様、ディレクトリごと symlink せず個別エントリを symlink して
-    # marketplace 由来のエントリと同一ディレクトリで共存できるようにする。
-    if [ -d "$SCRIPT_DIR/dot_claude/agents" ]; then
-        log_info "Setting up custom agents..."
-        mkdir -p "$CLAUDE_DIR/agents"
-
-        for agent_file in "$SCRIPT_DIR/dot_claude/agents"/*; do
-            if [ -e "$agent_file" ]; then
-                agent_name=$(basename "$agent_file")
-                create_symlink "$agent_file" "$CLAUDE_DIR/agents/$agent_name"
-            fi
-        done
-    fi
+    link_claude_skills_and_agents
 
     # Install marketplace plugins
     if [ -f "$SCRIPT_DIR/dot_claude/marketplace-plugins.txt" ]; then
@@ -166,6 +174,19 @@ EOF
 
 # Main execution
 main() {
+    case "${1:-}" in
+        link)
+            link_claude_skills_and_agents
+            return
+            ;;
+        "")
+            ;;
+        *)
+            log_error "Unknown argument: $1 (usage: ./setup-claude.sh [link])"
+            exit 1
+            ;;
+    esac
+
     log_info "Starting Claude Code and Codex CLI setup..."
 
     # Check if Claude Code is installed
