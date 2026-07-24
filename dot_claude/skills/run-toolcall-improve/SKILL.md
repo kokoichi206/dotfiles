@@ -23,7 +23,7 @@ run-toolcall-recover が notes.md に積んだインシデント記録を読み�
 - `~/.claude/skills/run-toolcall-recover/SKILL.md` — 復旧の行動規律
 - `~/.claude/skills/run-toolcall-recover/notes.md` — インシデント記録（読み取りのみ）
 - `~/.claude/hooks/detect-toolcall-leak.sh` — 検知署名・block ロジック
-- `~/.claude/hooks/test-detect-toolcall-leak.sh` — hook の回帰テスト（署名変更時にケース追加）
+- `~/.claude/hooks/detect-toolcall-leak.test.sh` — hook の回帰テスト（署名変更時にケース追加）
 - `history.md`（このスキル内）— 改善履歴（読み取り＋追記）
 - この SKILL.md 自身（手順の改善が必要なとき）
 
@@ -71,7 +71,7 @@ Task tool（subagent_type: general-purpose）に、**具体的な編集指示**�
 
 ## hook の回帰テスト（テスト時の罠・必読）
 
-既存の回帰テストスクリプト `~/.claude/hooks/test-detect-toolcall-leak.sh` をまず実行する
+既存の回帰テストスクリプト `~/.claude/hooks/detect-toolcall-leak.test.sh` をまず実行する
 （6パターン: leak/clean/fenced/単独court/文中court/単独タグ）。署名を追加・変更したら
 このスクリプトにケースを追加してから回す。
 

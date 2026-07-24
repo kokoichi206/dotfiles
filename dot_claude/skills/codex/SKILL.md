@@ -17,6 +17,18 @@ codex exec --full-auto --sandbox read-only --cd <project_directory> "<request>"
 
 > 「確認や質問は不要です。具体的な提案・修正案・コード例まで自主的に出力してください。」
 
+## 出力の扱い
+
+- exec の出力は必ずファイルへ tee して全文を残す。tail だけで読むと先頭の指摘が切れて取りこぼす。
+
+  ```bash
+  codex exec ... 2>&1 | tee /path/to/scratchpad/codex-review.txt | tail -40
+  ```
+
+- 全文の回収を `~/.codex/sessions/` からやらない。並行する他セッションの rollout と混ざって
+  無関係なログを誤読しやすく、exec の transcript はそもそも残らないことがある。
+- 長考でハングすることがあるため `timeout` を付けて実行し、タイムアウトしたら観点を絞って再実行する。
+
 ## パラメータ
 
 | パラメータ | 説明 |
