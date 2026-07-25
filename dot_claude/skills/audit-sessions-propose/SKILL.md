@@ -74,8 +74,11 @@ OWNERS='github-com-kokoichi206|github-com-Wareware-PJ'
 
 ```bash
 # START / END は §0 で解決した値。全期間のときは -newermt "$START" を外す。
+# mtime は事前絞り込みにすぎない（START 以降に更新のないファイルは対象発話を含み得ない）。
+# 上限は付けない: 期間指定監査でも書き込み継続中のセッションを取りこぼさないため。
+# 期間の確定は §2 の発話 timestamp フィルタで行う。
 find ~/.claude/projects -maxdepth 2 -name '*.jsonl' \
-  -newermt "$START" ! -newermt "$END" \
+  -newermt "$START" \
   | grep -E "$OWNERS" | sort
 ```
 
@@ -83,15 +86,20 @@ find ~/.claude/projects -maxdepth 2 -name '*.jsonl' \
 
 ## 2. 人間発話のみを抽出する
 
-- 抽出条件: `.type == "user"` かつ sidechain でない。
+- 抽出条件: `.type == "user"` かつ sidechain でない、**かつ発話 `.timestamp` が期間内**。
+  長寿セッション（数週間書き込みが続く jsonl）は mtime が新しくても古い発話を含むため、
+  timestamp で絞らないと期間外の摩擦を「直近」と誤認する（経費精算スキルで実際に誤検出した）。
+  timestamp は UTC の ISO8601 なので START/END（ローカル日付）との比較は文字列比較でよいが、
+  日界は最大 9 時間ずれる。境界日の数件のずれは許容する。
   `content` は string または block 配列（配列は `.type == "text"` のみ採用。`tool_result` は除外される）。
 - ノイズ除去: スキル展開（`<command-name>` / `<local-command-stdout>`）、`Caveat:` で始まる注記、
   `<system-reminder>` ブロックを除去する。
 - 1 発話 600 字に切り詰める（長大な diff 貼り付け等で分析用コーパスが溢れるのを防ぐ）。
 
 ```bash
-jq -r '
+jq -r --arg start "$START" --arg end "$END" '
   select(.type == "user" and ((.isSidechain // false) | not))
+  | select((.timestamp // "") >= $start and (.timestamp // "") < $end)
   | .message.content
   | if type == "string" then . else (map(select(.type == "text") | .text // empty) | join("\n")) end
   | select(length > 0)
@@ -105,6 +113,8 @@ jq -r '
 ```
 
 - ファイルごとにヘッダ（プロジェクト名・session-id・日付）を付けて 1 コーパスに連結する。
+  日付はファイル mtime でなく**フィルタ後の発話 timestamp の範囲**（最初と最後）を使う。
+- timestamp フィルタ後に発話が 0 件になったファイルはコーパスに含めない。
 - lint ルール化候補はプロジェクトと言語に紐づくため、
   **どの発話がどのプロジェクトのものか**（ヘッダのプロジェクト名）を分析まで保持する。
 

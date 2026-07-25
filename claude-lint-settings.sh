@@ -23,14 +23,25 @@ for path in "$HOOKS_DIR"/*.sh "$HOOKS_DIR"/*.py; do
   [ -e "$path" ] || continue
   f="$(basename "$path")"
   case " $UNWIRED " in *" $f "*) continue ;; esac
-  case "$f" in test-*) continue ;; esac
+  case "$f" in *.test.sh|*.test.py) continue ;; esac
   if ! grep -q "hooks/$f" "$SETTINGS"; then
     echo "ERROR: $HOOKS_DIR/$f is not wired in $SETTINGS" >&2
     fail=1
   fi
 done
 
-# 2. settings.json が参照する $HOME/.claude/hooks/ 配下のスクリプトが repo に実在すること
+# 2. permissions に Write(path) ルールがないこと
+#    path ベースの file permission は Edit(path) だけが評価され、Write(path) は無効な死にルールになる
+#    (Claude Code 起動時警告: "Write(...) is not matched by file permission checks")
+while IFS= read -r rule; do
+  [ -n "$rule" ] || continue
+  echo "ERROR: $SETTINGS permissions: '$rule' is dead — use Edit(path) instead" >&2
+  fail=1
+done <<EOF
+$(jq -r '.permissions // {} | to_entries[] | .value[]? // empty' "$SETTINGS" | grep '^Write(' || true)
+EOF
+
+# 3. settings.json が参照する $HOME/.claude/hooks/ 配下のスクリプトが repo に実在すること
 #    ($CLAUDE_PROJECT_DIR 配下などプロジェクトスコープの hook は対象外)
 for f in $(jq -r '[.hooks[][]? | .hooks[]?.command] | join("\n")' "$SETTINGS" \
   | grep -oE '\$HOME/\.claude/hooks/[A-Za-z0-9._-]+' | sed 's#.*/##' | sort -u); do
