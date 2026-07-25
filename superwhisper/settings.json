@@ -429,6 +429,186 @@
       "id": "7BF1446A-9DD0-4315-A96B-15841E8401CA",
       "original": "ゼン",
       "with": "Zenn"
+    },
+    {
+      "id": "9CFEA865-781C-46DA-9395-E37BBA99E886",
+      "original": "クローム",
+      "with": "Chrome"
+    },
+    {
+      "id": "FA851E48-33C8-4DAA-A2FC-8C89B612DB26",
+      "original": "グーグルクローム",
+      "with": "Chrome"
+    },
+    {
+      "id": "2AD5197E-4CAD-4F83-B39B-55144AE1796A",
+      "original": "グーグル クローム",
+      "with": "Chrome"
+    },
+    {
+      "id": "E27F40E7-3EAA-4F0F-B2B8-EC0B53548742",
+      "original": "ブイエスコード",
+      "with": "VS Code"
+    },
+    {
+      "id": "219BC295-211D-4CD5-B405-F5010ACF9EB4",
+      "original": "ブイエス コード",
+      "with": "VS Code"
+    },
+    {
+      "id": "15F8BE58-017C-401C-BAAD-6F6B4171BD39",
+      "original": "ビジュアルスタジオコード",
+      "with": "VS Code"
+    },
+    {
+      "id": "AC960372-A675-414F-BCCA-23B4CA0B4133",
+      "original": "ビジュアル スタジオ コード",
+      "with": "VS Code"
+    },
+    {
+      "id": "C3884E52-1EB4-4BA0-B200-EDA0DAB49F9E",
+      "original": "VSコード",
+      "with": "VS Code"
+    },
+    {
+      "id": "4F266BDA-94B5-436C-B799-D0FDE1809147",
+      "original": "VS コード",
+      "with": "VS Code"
+    },
+    {
+      "id": "6C82E5A7-BAB7-416C-81ED-C658F9E71C6D",
+      "original": "ウェズターム",
+      "with": "WezTerm"
+    },
+    {
+      "id": "7BDF0292-6B70-4A0D-AA2C-00BA1835F6F2",
+      "original": "ウェスターム",
+      "with": "WezTerm"
+    },
+    {
+      "id": "6625997B-CF6B-47FD-9270-0A780EA453EC",
+      "original": "ウェズ ターム",
+      "with": "WezTerm"
+    },
+    {
+      "id": "6C383956-49BB-4688-AF0C-E2393EF57AED",
+      "original": "ゴースティ",
+      "with": "Ghostty"
+    },
+    {
+      "id": "DDCE87DC-CC71-482C-8A4D-77BA2672BFED",
+      "original": "ゴースティー",
+      "with": "Ghostty"
+    },
+    {
+      "id": "AE55D27E-016E-4BB6-B594-FECE0C3E424B",
+      "original": "レイキャスト",
+      "with": "Raycast"
+    },
+    {
+      "id": "3C374E29-1975-4FDC-B9A1-4DBAD7700A97",
+      "original": "ゼッド",
+      "with": "Zed"
+    },
+    {
+      "id": "DE5FE3CA-514A-4DF2-8658-EED2E27A64EC",
+      "original": "ゼット",
+      "with": "Zed"
+    },
+    {
+      "id": "C35898E6-2770-43FB-9092-E146A7972341",
+      "original": "フィグマ",
+      "with": "Figma"
+    },
+    {
+      "id": "5D341252-DB96-4905-90EB-069CEF9C7E2F",
+      "original": "ディスコード",
+      "with": "Discord"
+    },
+    {
+      "id": "776DF976-39F0-4EC0-9E18-A0AA7B23892C",
+      "original": "クリーンショット",
+      "with": "CleanShot X"
+    },
+    {
+      "id": "E3A7461A-DD35-464B-8B9D-0940E80A9566",
+      "original": "クリーンショットエックス",
+      "with": "CleanShot X"
+    },
+    {
+      "id": "105CC164-09BB-444F-97C5-3567FCF3EA16",
+      "original": "クリーン ショット",
+      "with": "CleanShot X"
+    },
+    {
+      "id": "62E1C071-CBB1-493F-9565-B4522B97AEB8",
+      "original": "ワンパスワード",
+      "with": "1Password"
+    },
+    {
+      "id": "F05FAB61-4994-4D3A-8A19-B32235A02E6E",
+      "original": "ワン パスワード",
+      "with": "1Password"
+    },
+    {
+      "id": "C3F5F8E9-CF9B-432D-B81F-BC97E61F2BB5",
+      "original": "チャットGPT",
+      "with": "ChatGPT"
+    },
+    {
+      "id": "6C82E374-89A0-4C96-90BF-727A531A4924",
+      "original": "チャットジーピーティー",
+      "with": "ChatGPT"
+    },
+    {
+      "id": "9C95992E-ED75-41BB-B436-2D578A22A08B",
+      "original": "チャット ジーピーティー",
+      "with": "ChatGPT"
+    },
+    {
+      "id": "6AD6F1E9-B8B8-4EFF-843D-9169C0E83BB0",
+      "original": "ポストマン",
+      "with": "Postman"
+    },
+    {
+      "id": "0FF807D3-2357-41C0-B125-81C1ABDB231C",
+      "original": "アンドロイドスタジオ",
+      "with": "Android Studio"
+    },
+    {
+      "id": "CB50C848-DC43-4147-B799-1BC1920245B7",
+      "original": "アンドロイド スタジオ",
+      "with": "Android Studio"
+    },
+    {
+      "id": "1CF921B0-23FD-414D-9A5E-9EB1D44D1669",
+      "original": "テールスケール",
+      "with": "Tailscale"
+    },
+    {
+      "id": "084118F9-BF78-4EBE-95EA-0C1023BA442F",
+      "original": "テール スケール",
+      "with": "Tailscale"
+    },
+    {
+      "id": "BC785006-8AE2-4670-8EF5-219EBB1B5104",
+      "original": "アラクリッティ",
+      "with": "Alacritty"
+    },
+    {
+      "id": "5E2FE061-7F69-410C-9D27-AE48FD52AB0E",
+      "original": "アラクリティ",
+      "with": "Alacritty"
+    },
+    {
+      "id": "FD8266F9-717B-44D8-B608-21D16B945A72",
+      "original": "ているスケール",
+      "with": "Tailscale"
+    },
+    {
+      "id": "FFE882A5-2ADB-4974-8ECC-055C12CD60EE",
+      "original": "ている スケール",
+      "with": "Tailscale"
     }
   ],
   "vocabulary": [
@@ -491,6 +671,21 @@
     "Emulator",
     "Computer Use",
     "computer use",
-    "Fable"
+    "Fable",
+    "Chrome",
+    "VS Code",
+    "WezTerm",
+    "Ghostty",
+    "Raycast",
+    "Zed",
+    "Figma",
+    "Discord",
+    "CleanShot X",
+    "1Password",
+    "ChatGPT",
+    "Postman",
+    "Android Studio",
+    "Tailscale",
+    "Alacritty"
   ]
 }
