@@ -14,8 +14,10 @@ cd ~/ghq/github.com/kokoichi206/dotfiles
 bash setup.sh
 ```
 
-`setup.sh` symlinks the configs (wezterm, mise, neovim, git, zsh, lazygit, VSCode/Windsurf, …)
+`setup.sh` symlinks the configs (wezterm, mise, neovim, git, zsh, lazygit, VSCode/Windsurf, SuperWhisper vocabulary, …)
 and runs `brew.sh` to install everything from the `Brewfile`.
+
+SuperWhisper details: [`superwhisper/README.md`](./superwhisper/README.md).
 
 ## nix-darwin + home-manager
 

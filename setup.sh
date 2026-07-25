@@ -78,6 +78,16 @@ elif [[ $(uname) == "Darwin" ]]; then
         backup_and_alias "$PWD/.config/vscode/keybindings.json" "$WINDSURF_USER_DIR/keybindings.json"
         backup_and_alias "$PWD/.config/vscode/snippets" "$WINDSURF_USER_DIR/snippets"
     fi
+
+    # SuperWhisper: vocabulary / replacements only.
+    # New installs default to ~/superwhisper; older installs use ~/Documents/superwhisper.
+    # Link into whichever data dirs already exist (do not create empty trees).
+    for SUPERWHISPER_DIR in "$HOME/superwhisper" "$HOME/Documents/superwhisper"; do
+        if [ -d "$SUPERWHISPER_DIR" ]; then
+            mkdir -p "$SUPERWHISPER_DIR/settings"
+            backup_and_alias "$PWD/superwhisper/settings.json" "$SUPERWHISPER_DIR/settings/settings.json"
+        fi
+    done
 fi
 
 echo "finished setup environmtent."

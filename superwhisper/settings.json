@@ -1,0 +1,496 @@
+{
+  "replacements": [
+    {
+      "id": "4DB3E431-74D1-4FC5-B730-B83BF5860E2F",
+      "original": "computer use",
+      "with": "Computer Use"
+    },
+    {
+      "id": "636369D2-C817-4393-940E-02B0D6DE9AC0",
+      "original": "コンピューター ユース",
+      "with": "Computer Use"
+    },
+    {
+      "id": "6296D54F-6AA9-4200-BCBF-E495D1CC3069",
+      "original": "スーパーwhisper",
+      "with": "SuperWhisper"
+    },
+    {
+      "id": "94779626-15AC-467E-9DFD-89101E42AF8D",
+      "original": "コンピュータ ユース",
+      "with": "Computer Use"
+    },
+    {
+      "id": "638DAA32-62D4-4B82-A5D3-72111E48BE77",
+      "original": "コンピューターuse",
+      "with": "Computer Use"
+    },
+    {
+      "id": "091B6CFA-166A-46B1-84B9-400DEE8FE81A",
+      "original": "コンピューターユース",
+      "with": "Computer Use"
+    },
+    {
+      "id": "F2D289C5-DBCF-4E15-B764-D939C91048C9",
+      "original": "コンピューターユーズ",
+      "with": "Computer Use"
+    },
+    {
+      "id": "9AFB6BE7-D3D4-46D1-99C0-539DBE8593C0",
+      "original": "ウィスパー フロー",
+      "with": "Wispr Flow"
+    },
+    {
+      "id": "9775A9C2-487D-44C5-B8B1-D5D9A5C8A1D4",
+      "original": "エーダブリューエス",
+      "with": "AWS"
+    },
+    {
+      "id": "CF82851E-1424-47AA-A7D1-099783F4FAFA",
+      "original": "コンピュターユース",
+      "with": "Computer Use"
+    },
+    {
+      "id": "37DEE229-BCA2-467A-A636-3C5DBF84F57C",
+      "original": "コンピュータuse",
+      "with": "Computer Use"
+    },
+    {
+      "id": "3AF05A2D-2596-4DE7-B990-C3EC4C64315B",
+      "original": "コンピュータユース",
+      "with": "Computer Use"
+    },
+    {
+      "id": "F40B0F7D-1096-489D-8E8A-EEB187AADFD4",
+      "original": "コンピュータユーズ",
+      "with": "Computer Use"
+    },
+    {
+      "id": "301CD87B-A580-4616-AB1A-46ABF10BBF03",
+      "original": "ジーアールピーシー",
+      "with": "gRPC"
+    },
+    {
+      "id": "8A8CDC17-A34B-4534-9B46-D1835A92DB75",
+      "original": "スーパーウィスパー",
+      "with": "SuperWhisper"
+    },
+    {
+      "id": "463EB13A-E55A-4359-9F66-4648807E4150",
+      "original": "スーパーウイスパー",
+      "with": "SuperWhisper"
+    },
+    {
+      "id": "E1065A6E-598F-4AB1-9A39-C2747509AAD8",
+      "original": "ネクストジェイエス",
+      "with": "Next.js"
+    },
+    {
+      "id": "6DBCE531-9DA0-46C4-A294-F47E0B0C93A5",
+      "original": "ネクストジェーエス",
+      "with": "Next.js"
+    },
+    {
+      "id": "4212B850-5FA7-49C7-ACA1-B01E7ABA3C96",
+      "original": "アップルシリコン",
+      "with": "Apple Silicon"
+    },
+    {
+      "id": "E75CCA32-6FA0-48F6-806B-D0F89AC155B4",
+      "original": "ウィスパーフロー",
+      "with": "Wispr Flow"
+    },
+    {
+      "id": "CD2CB547-5E79-478A-A852-4A0658AF2EE8",
+      "original": "オープンエーアイ",
+      "with": "OpenAI"
+    },
+    {
+      "id": "B101A7CB-D478-4608-BF98-AD34D6C96FC7",
+      "original": "オープンルーター",
+      "with": "OpenRouter"
+    },
+    {
+      "id": "F1D7DCB6-8F2C-4171-8531-6D66944B85FC",
+      "original": "オーペンエーアイ",
+      "with": "OpenAI"
+    },
+    {
+      "id": "A5B121BF-0587-4C81-BC25-E328024FB24D",
+      "original": "クラウド コード",
+      "with": "Claude Code"
+    },
+    {
+      "id": "7968413F-E735-4C06-A5E7-07EF47E85A05",
+      "original": "クロード コード",
+      "with": "Claude Code"
+    },
+    {
+      "id": "456A2C3C-9E5A-4181-A18E-3D28AC8D22CC",
+      "original": "グラフキューエル",
+      "with": "GraphQL"
+    },
+    {
+      "id": "D6AE799F-5C15-4EC3-A31F-7771FC3BDF9B",
+      "original": "ジャバスクリプト",
+      "with": "JavaScript"
+    },
+    {
+      "id": "767D53E1-653F-444A-B1F3-D658F00E7090",
+      "original": "ジーアールピーシ",
+      "with": "gRPC"
+    },
+    {
+      "id": "68FB0B42-35C8-46A3-823F-F044159596F2",
+      "original": "ジーエイチキュー",
+      "with": "ghq"
+    },
+    {
+      "id": "84E7A29C-77BB-4A52-B369-02D7783B1612",
+      "original": "スーパーウィスパ",
+      "with": "SuperWhisper"
+    },
+    {
+      "id": "19B412CB-EF54-4AAF-88E1-42E2DA45A48D",
+      "original": "タイプスクリプト",
+      "with": "TypeScript"
+    },
+    {
+      "id": "7F5BAA04-EF46-40C5-A3A2-E8CF15C6758E",
+      "original": "ピーエヌピーエム",
+      "with": "pnpm"
+    },
+    {
+      "id": "B5C0B608-7221-430B-8107-CD088EC0AF43",
+      "original": "ルビオンレイルズ",
+      "with": "Ruby on Rails"
+    },
+    {
+      "id": "E410F33D-7D3B-4DF6-B0A2-1EA102FFF9B2",
+      "original": "アップ ストア",
+      "with": "App Store"
+    },
+    {
+      "id": "0769A2B8-C8A7-40B0-B85F-7A0F279335BF",
+      "original": "ウィスプフロー",
+      "with": "Wispr Flow"
+    },
+    {
+      "id": "41601BDD-4F1A-4197-8481-15F8668CE8EA",
+      "original": "ウィンドサーフ",
+      "with": "Windsurf"
+    },
+    {
+      "id": "A7DCD5A6-2EBB-4BFB-AD47-A358C0128D8A",
+      "original": "ウインドサーフ",
+      "with": "Windsurf"
+    },
+    {
+      "id": "9A4A2291-6388-4A4B-A13D-B73B66218D18",
+      "original": "エックスコード",
+      "with": "Xcode"
+    },
+    {
+      "id": "5BB24A96-7E00-4A77-B579-118894090D37",
+      "original": "オーブスタック",
+      "with": "OrbStack"
+    },
+    {
+      "id": "AF597AAB-5881-4D64-9B1F-4204F75FE5EB",
+      "original": "オープンサーチ",
+      "with": "OpenSearch"
+    },
+    {
+      "id": "32351DE9-E05F-4F04-A06C-A2152A91D407",
+      "original": "クラウド ラン",
+      "with": "Cloud Run"
+    },
+    {
+      "id": "B7E063C5-E26A-41DB-993F-1F8A742BA3C1",
+      "original": "クラウドコード",
+      "with": "Claude Code"
+    },
+    {
+      "id": "7CB8B6B4-5054-4DEC-AD3E-A3A1E7A88CCA",
+      "original": "クロードコード",
+      "with": "Claude Code"
+    },
+    {
+      "id": "FDB0F1FA-7FF9-4F48-B866-A317FA1E846E",
+      "original": "クーバネティス",
+      "with": "Kubernetes"
+    },
+    {
+      "id": "221A8C82-0DE9-4CBE-B719-CB12F2B99362",
+      "original": "ケーエイトエス",
+      "with": "k8s"
+    },
+    {
+      "id": "19D846A9-4FCD-43E9-AA53-29BDBB8E4627",
+      "original": "ネクスト.js",
+      "with": "Next.js"
+    },
+    {
+      "id": "B3F984DF-39EF-4247-BFD9-54DDE57350F0",
+      "original": "ビッグ クエリ",
+      "with": "BigQuery"
+    },
+    {
+      "id": "36893ED9-EF6D-43E1-95A2-3EF6709555B7",
+      "original": "アイオーエス",
+      "with": "iOS"
+    },
+    {
+      "id": "6A54B8BA-591E-44D4-86F3-E0BCB7A7F7B1",
+      "original": "アップストア",
+      "with": "App Store"
+    },
+    {
+      "id": "9C7173BA-9755-4E2F-B65A-C87B67634818",
+      "original": "アンドロイド",
+      "with": "Android"
+    },
+    {
+      "id": "C72E424A-6981-4F7E-BFA4-E4070474052A",
+      "original": "クバネティス",
+      "with": "Kubernetes"
+    },
+    {
+      "id": "78AE3CA5-FF89-44BE-BE6A-3E7CC22D50BE",
+      "original": "クラウドラン",
+      "with": "Cloud Run"
+    },
+    {
+      "id": "7DCC2275-3787-4863-8DA0-3EBBB1D343D9",
+      "original": "コーデックス",
+      "with": "Codex"
+    },
+    {
+      "id": "D1436DE6-C49A-4A36-96D8-25CEC0481064",
+      "original": "ジーシーピー",
+      "with": "GCP"
+    },
+    {
+      "id": "519120A0-E3FB-4D01-9E08-61C9CCE04476",
+      "original": "タイプレスト",
+      "with": "Typeless"
+    },
+    {
+      "id": "F11321BD-D20A-4DEC-A6CE-DA54AF65099A",
+      "original": "テラフォーム",
+      "with": "Terraform"
+    },
+    {
+      "id": "C6780DEA-3A7D-40FB-8AA3-D4962131ACCE",
+      "original": "ビッグクエリ",
+      "with": "BigQuery"
+    },
+    {
+      "id": "FF7C80C4-08A3-468E-A03E-A5B79BE731EF",
+      "original": "ポストグレス",
+      "with": "PostgreSQL"
+    },
+    {
+      "id": "8FEAC54A-4A86-4F9B-88A0-B394266535D2",
+      "original": "ふぇーぶる",
+      "with": "Fable"
+    },
+    {
+      "id": "B2C3D4E5-F6A7-8901-BCDE-F12345678901",
+      "original": "ギットハブ",
+      "with": "GitHub"
+    },
+    {
+      "id": "838A147D-2DA3-4A2C-A165-12FC4A934D18",
+      "original": "グラフQL",
+      "with": "GraphQL"
+    },
+    {
+      "id": "C3D4E5F6-A7B8-9012-CDEF-123456789012",
+      "original": "ジットハブ",
+      "with": "GitHub"
+    },
+    {
+      "id": "3EF050EC-C95E-4033-93F0-5EE35F129E54",
+      "original": "ジーエイチ",
+      "with": "gh"
+    },
+    {
+      "id": "4370B4D6-C879-4A79-B5C5-7A66CCBEC851",
+      "original": "スウィフト",
+      "with": "Swift"
+    },
+    {
+      "id": "27CBB25C-38AF-4331-9809-2E0C30777D49",
+      "original": "タイプレス",
+      "with": "Typeless"
+    },
+    {
+      "id": "A1B2C3D4-E5F6-7890-ABCD-EF1234567890",
+      "original": "ビットハブ",
+      "with": "GitHub"
+    },
+    {
+      "id": "73BBF9FC-5CFC-4CA6-8100-EC83EF17F9A0",
+      "original": "フィーブル",
+      "with": "Fable"
+    },
+    {
+      "id": "FD23A382-3036-4303-B2F8-0C769E060213",
+      "original": "フェーブル",
+      "with": "Fable"
+    },
+    {
+      "id": "3CE7A067-1E31-4226-A820-8994C775305E",
+      "original": "ポストグレ",
+      "with": "PostgreSQL"
+    },
+    {
+      "id": "67D50E6F-084B-4AAA-8C57-7CB69B3B8A80",
+      "original": "アイオス",
+      "with": "iOS"
+    },
+    {
+      "id": "C72E5B12-6E1B-42DD-AA91-B64F35876C91",
+      "original": "オーパス",
+      "with": "Opus"
+    },
+    {
+      "id": "AF3D476F-EBB9-4222-9CB7-74A62452070F",
+      "original": "グラフル",
+      "with": "GraphQL"
+    },
+    {
+      "id": "31F2988B-8A7C-4508-8581-7244DA884D73",
+      "original": "グロック",
+      "with": "Grok"
+    },
+    {
+      "id": "16847598-3888-4FD0-B88A-9ECE8465A107",
+      "original": "スイフト",
+      "with": "Swift"
+    },
+    {
+      "id": "F079F134-39A5-477B-B052-D6D4FBE2C944",
+      "original": "ソネット",
+      "with": "Sonnet"
+    },
+    {
+      "id": "C8883586-543A-40E6-B291-E288E4D40EB6",
+      "original": "ドッカー",
+      "with": "Docker"
+    },
+    {
+      "id": "634A216F-B83D-42FA-AD32-89F64D3E016E",
+      "original": "フェブル",
+      "with": "Fable"
+    },
+    {
+      "id": "1E52C196-C7CB-474F-99D6-18E53BEB2B67",
+      "original": "プルリク",
+      "with": "PR"
+    },
+    {
+      "id": "B0FD126C-ACF2-4107-B142-3C8E4A57D25E",
+      "original": "ポスグレ",
+      "with": "PostgreSQL"
+    },
+    {
+      "id": "71CF82D7-F9A4-4161-A709-929B82832D47",
+      "original": "リアクト",
+      "with": "React"
+    },
+    {
+      "id": "4DAF6DAF-AA60-4F3E-A51C-993BEDE0354F",
+      "original": "レイルズ",
+      "with": "Rails"
+    },
+    {
+      "id": "FBBB7DCC-5A09-4885-8CBD-F9FAEE36F859",
+      "original": "オルカ",
+      "with": "Orca"
+    },
+    {
+      "id": "7EFA1D74-5245-4A2F-BAD3-E004ABC67AC0",
+      "original": "ツムギ",
+      "with": "tsumugi"
+    },
+    {
+      "id": "A90A5B80-11ED-46C0-89F0-0AA3D8A79B68",
+      "original": "ミッセ",
+      "with": "mise"
+    },
+    {
+      "id": "0F4185F9-4E0A-44C9-A624-94091D45B561",
+      "original": "ミーズ",
+      "with": "mise"
+    },
+    {
+      "id": "7BF1446A-9DD0-4315-A96B-15841E8401CA",
+      "original": "ゼン",
+      "with": "Zenn"
+    }
+  ],
+  "vocabulary": [
+    "claude code",
+    "Claude Code",
+    "Grok",
+    "Codex",
+    "GitHub",
+    "SuperWhisper",
+    "TypeScript",
+    "JavaScript",
+    "Next.js",
+    "React",
+    "Vue",
+    "Go",
+    "Golang",
+    "Rails",
+    "Ruby on Rails",
+    "Android",
+    "GCP",
+    "AWS",
+    "PostgreSQL",
+    "Kubernetes",
+    "k8s",
+    "Docker",
+    "OpenSearch",
+    "Cursor",
+    "Claude",
+    "OpenAI",
+    "OpenRouter",
+    "Typeless",
+    "pnpm",
+    "Node.js",
+    "GraphQL",
+    "gRPC",
+    "Terraform",
+    "Cloud Run",
+    "BigQuery",
+    "tsumugi",
+    "Wispr Flow",
+    "Opus",
+    "Sonnet",
+    "mise",
+    "gh",
+    "ghq",
+    "PR",
+    "main",
+    "freee",
+    "OrbStack",
+    "Orca",
+    "Zenn",
+    "Windsurf",
+    "iOS",
+    "Swift",
+    "Xcode",
+    "Apple",
+    "Apple Silicon",
+    "App Store",
+    "Simulator",
+    "Emulator",
+    "Computer Use",
+    "computer use",
+    "Fable"
+  ]
+}
