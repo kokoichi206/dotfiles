@@ -12,10 +12,10 @@ audit-sessions-propose が書いた「セッション監査」issue のタスク
 ## 0. 対象 issue の解決
 
 引数（`$ARGUMENTS`）はレポートパス or issue 番号。省略時は
-dotfiles の最新のオープンな「セッション監査」issue を対象にする:
+`kokoichi206/tasks` の最新のオープンな「セッション監査」issue を対象にする:
 
 ```bash
-gh issue list -R kokoichi206/dotfiles --state open \
+gh issue list -R kokoichi206/tasks --state open \
   --search "セッション監査 in:title" --json number,title --jq '.[0]'
 ```
 
