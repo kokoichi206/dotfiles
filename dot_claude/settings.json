@@ -97,6 +97,16 @@
       {
         "hooks": [
           {
+            "command": "command -v python3 >/dev/null 2>&1 && python3 \"$HOME/.claude/hooks/inject-rules-on-write.py\" || true",
+            "timeout": 5,
+            "type": "command"
+          }
+        ],
+        "matcher": "Write"
+      },
+      {
+        "hooks": [
+          {
             "command": "\"$HOME/Library/Application Support/CCStatusBar/bin/CCStatusBar\" hook PreToolUse",
             "type": "command"
           }
@@ -111,16 +121,6 @@
           }
         ],
         "matcher": "*"
-      },
-      {
-        "hooks": [
-          {
-            "command": "command -v python3 >/dev/null 2>&1 && python3 \"$HOME/.claude/hooks/inject-rules-on-write.py\" || true",
-            "timeout": 5,
-            "type": "command"
-          }
-        ],
-        "matcher": "Write"
       }
     ],
     "SessionEnd": [
@@ -461,7 +461,6 @@
       "mcp__pencil"
     ],
     "ask": [
-      "Bash(curl:*)",
       "Bash(wget:*)",
       "Bash(httpie:*)",
       "Bash(http:*)",
@@ -567,30 +566,16 @@
     },
     "enabled": true,
     "excludedCommands": [
-      "adb",
-      "adb *",
       "afplay",
-      "afplay *",
       "docker",
-      "docker *",
       "docker-compose",
-      "docker-compose *",
       "gh",
-      "gh *",
       "git",
-      "git *",
       "open",
-      "open *",
       "rsync",
-      "rsync *",
       "scp",
-      "scp *",
-      "sim-use",
-      "sim-use *",
       "ssh",
-      "ssh *",
-      "terraform",
-      "terraform *"
+      "terraform"
     ],
     "filesystem": {
       "allowWrite": [
