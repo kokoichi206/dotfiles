@@ -1,0 +1,4 @@
+interface:
+  display_name: "Read Communications"
+  short_description: "Gmail・Slack・Chatwork を各専用 CLI で読み取る"
+  default_prompt: "$read-communications を使って、このメッセージを読み取ってください。"
