@@ -16,6 +16,7 @@
     beam.packages.erlang_28.elixir
     beam.packages.erlang_28.rebar3
 
+    deno
     rainfrog
     maven
     bat
