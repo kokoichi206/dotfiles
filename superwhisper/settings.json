@@ -609,6 +609,56 @@
       "id": "FFE882A5-2ADB-4974-8ECC-055C12CD60EE",
       "original": "ている スケール",
       "with": "Tailscale"
+    },
+    {
+      "id": "0566B0C2-FC1E-4A35-BDAF-D04B8F38CF21",
+      "original": "イシュー",
+      "with": "issue"
+    },
+    {
+      "id": "C036418B-A7D3-44E3-A7A7-9BA54FB03295",
+      "original": "イッシュー",
+      "with": "issue"
+    },
+    {
+      "id": "103DF50E-BF98-4A3F-A7FC-63D7EB1CA219",
+      "original": "GitHubの1週。",
+      "with": "GitHub の issue。"
+    },
+    {
+      "id": "0C05E3CF-8103-410F-8F27-E28DE7640227",
+      "original": "GitHub の1週。",
+      "with": "GitHub の issue。"
+    },
+    {
+      "id": "608A18F2-E4D6-4B8D-92C7-89EF835F2CF3",
+      "original": "GitHubの 1週。",
+      "with": "GitHub の issue。"
+    },
+    {
+      "id": "0F03CF2E-82A6-46ED-A1AC-874C92E50139",
+      "original": "GitHub の 1週。",
+      "with": "GitHub の issue。"
+    },
+    {
+      "id": "D2004C5A-EEB1-459B-9836-565D41943749",
+      "original": "GitHubの一周。",
+      "with": "GitHub の issue。"
+    },
+    {
+      "id": "D8C4C6EF-FEEB-4DDC-81B1-94FFE7566901",
+      "original": "GitHub の一周。",
+      "with": "GitHub の issue。"
+    },
+    {
+      "id": "D8E3911E-705E-41A0-BD06-626288DC30F4",
+      "original": "GitHubの 一周。",
+      "with": "GitHub の issue。"
+    },
+    {
+      "id": "C5BD2282-0225-4D64-8658-1058F1674496",
+      "original": "GitHub の 一周。",
+      "with": "GitHub の issue。"
     }
   ],
   "vocabulary": [
@@ -686,6 +736,8 @@
     "Postman",
     "Android Studio",
     "Tailscale",
-    "Alacritty"
+    "Alacritty",
+    "issue",
+    "GitHub issue"
   ]
 }
