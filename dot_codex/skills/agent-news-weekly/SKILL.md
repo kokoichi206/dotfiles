@@ -7,7 +7,7 @@ metadata:
 
 # agent-news-weekly (codex)
 
-対象期間は実行日を含む過去 7 日。実行日は `date +%F` で確定する。
+対象期間は対象日を含む過去 7 日。対象日は呼び出し側指定があればそれ、無ければ実行日 (`date +%F`)。
 
 Claude Code 版 (`dot_claude/skills/agent-news-weekly`) と併走する独立調査ドラフト。
 `references/` と `scripts/` は Claude 版への symlink で共有しており、ソース定義・出力契約・実測スクリプトの変更は両版へ同時に反映される。
@@ -28,8 +28,11 @@ Claude Code 版 (`dot_claude/skills/agent-news-weekly`) と併走する独立調
 └── actions.md    # 押さえどころチェックリスト (スキーマは references/output-contract.md)
 ```
 
-- `<YYYY-MM-DD>` は突合対象の日付ディレクトリ (通常は news/agent-weekly/ 配下の最新)。
-  対象ディレクトリが存在しない単独実行では実行日を使う。
+- `<YYYY-MM-DD>` は呼び出し側が指定した突合対象の日付ディレクトリ。
+  呼び出し側指定が無い単独実行でのみ実行日 (`date +%F`) を使う。
+  `news/agent-weekly/` 配下の最新ディレクトリへの fallback は禁止。
+  指定した日付ディレクトリが無いときは、別の週の成果物を編集せず停止する
+  (`news/agent-weekly/<YYYY-MM-DD>/codex/FAILED.md` に理由と再実行手順を書いて終了する)。
 - report.html は作らない (人間閲覧用 HTML は Claude 版の担当)。
 - codex/ の外 (Claude 版の report.* / actions.md / runs.jsonl) には書き込まない。
   runs.jsonl への記録は突合まで終えた呼び出し側フローが 1 行で行う (二重記録を防ぐ)。
@@ -39,7 +42,7 @@ Claude Code 版 (`dot_claude/skills/agent-news-weekly`) と併走する独立調
 
 ## 手順
 
-1. **期間確定**: 実行日と 7 日前の日付を出す。
+1. **期間確定**: 対象日 (呼び出し側指定があればそれ、無ければ実行日) と、その 6 日前を出す。
 2. **調査**: [references/sources.md](references/sources.md) のソース一覧・取得方法・403 時の fallback に従い、
    ①Claude Code/Anthropic ②OpenAI/Codex ③xAI/Grok ④その他 coding agent・モデル・画像・動画 を順に調査する。
    fetch した内容のみを報告に使い、取得失敗・制限は必ず記録する。
@@ -66,5 +69,6 @@ Claude Code 版 (`dot_claude/skills/agent-news-weekly`) と併走する独立調
 ## やらないこと (境界)
 
 - Claude 版成果物の閲覧・編集・統合 (呼び出し側フローの担当)。
+- 指定した日付以外の週の成果物の閲覧・編集。
 - runs.jsonl への追記 (呼び出し側フローの担当)。
 - issue / PR の作成、設定ファイルの変更、ツール・skill の導入、git commit。
