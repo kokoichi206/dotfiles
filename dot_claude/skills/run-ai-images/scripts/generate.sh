@@ -184,7 +184,7 @@ EOF
 
   local codex_args=(
     exec
-    --full-auto
+    --sandbox workspace-write
     --skip-git-repo-check
     -C "$REPO_ROOT"
     -c model="gpt-5.4"

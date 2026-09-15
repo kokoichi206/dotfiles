@@ -8,6 +8,10 @@
 # Done は対応不要のため取得段階でサーバー側フィルタ（items の query 引数）で除外する。
 # query の field slug は field 名を小文字化したもの（DueDate → duedate）。
 # ハイフン区切り（due-date）は何にも一致せず 0 件になるので使わない。
+#
+# jq への入力は here-string ではなくパイプで渡すこと。
+# bash 5.3 の here-string は読み手を exec する前に内容をパイプへ書き込むため、
+# 入力が macOS のパイプ容量を超えると読み手不在のままブロックしデッドロックする。
 
 USER="${1:-kokoichi206}"
 PROJECT="${2:-4}"
@@ -56,15 +60,15 @@ while :; do
     }
   }
 }") || exit 1
-  title=$(jq -r '.data.user.projectV2.title' <<<"$resp")
-  nodes=$(jq --argjson acc "$nodes" '$acc + .data.user.projectV2.items.nodes' <<<"$resp")
-  [ "$(jq -r '.data.user.projectV2.items.pageInfo.hasNextPage' <<<"$resp")" = "true" ] || break
-  cursor="\"$(jq -r '.data.user.projectV2.items.pageInfo.endCursor' <<<"$resp")\""
+  title=$(printf '%s' "$resp" | jq -r '.data.user.projectV2.title')
+  nodes=$(printf '%s' "$resp" | jq --argjson acc "$nodes" '$acc + .data.user.projectV2.items.nodes')
+  [ "$(printf '%s' "$resp" | jq -r '.data.user.projectV2.items.pageInfo.hasNextPage')" = "true" ] || break
+  cursor="\"$(printf '%s' "$resp" | jq -r '.data.user.projectV2.items.pageInfo.endCursor')\""
 done
 
 # 期日・Status の抽出と整形。期日条件はサーバー側と同じ述語を表示前にも適用する
 # （query が構文変更等で素通しになった場合に期日超過以外が混ざるのを防ぐ）。
-jq -r --arg date "$DATE" --arg title "$title" '
+printf '%s' "$nodes" | jq -r --arg date "$DATE" --arg title "$title" '
   "\($title) — 期日が \($date) 以前の未完了タスク\n",
   (.[]
     | . as $item
@@ -75,4 +79,4 @@ jq -r --arg date "$DATE" --arg title "$title" '
     | "\($due)  [\($status)]  \($item.content.title // "(draft)")  \($item.content.url // "")"
   )
   | split("\n") | sort | reverse | .[]
-' <<<"$nodes"
+'

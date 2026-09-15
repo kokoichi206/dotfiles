@@ -1,0 +1,154 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="icon" href="data:,">
+<title>図解の書庫</title>
+<style>
+:root { color-scheme: light; --paper: #faf9f6; --ink: #252522; --muted: #6b6861; --line: #dedbd5; --accent: #215d79; }
+* { box-sizing: border-box; }
+body { margin: 0; background: var(--paper); color: var(--ink); font-family: -apple-system, BlinkMacSystemFont, "Hiragino Sans", sans-serif; line-height: 1.7; }
+main { max-width: 1220px; padding: 42px 28px; margin: auto; }
+header { display: flex; justify-content: space-between; gap: 24px; align-items: center; padding-bottom: 24px; border-bottom: 1px solid var(--line); }
+h1 { font-size: 30px; margin: 0; } h2 { font-size: 20px; } p { color: var(--muted); }
+.eyebrow, .hint { font-size: 12px; color: var(--muted); }
+button, input, select { font: inherit; color: inherit; border: 1px solid var(--line); background: white; border-radius: 7px; padding: 9px 12px; }
+button { cursor: pointer; } input { width: 100%; min-width: 0; }
+button[aria-pressed="true"] { background: var(--accent); color: white; border-color: var(--accent); }
+:focus-visible { outline: 3px solid var(--accent); outline-offset: 3px; }
+a { color: var(--accent); text-underline-offset: 4px; }
+.filters { display: grid; grid-template-columns: minmax(220px, 1fr) 180px 170px 210px; gap: 12px; margin: 25px 0 18px; }
+label > span { display: block; font-size: 12px; color: var(--muted); margin-bottom: 5px; }
+select { width: 100%; }
+.tag-panel { border: 1px solid var(--line); border-radius: 10px; padding: 18px; background: white; }
+.tag-tools { display: flex; align-items: end; flex-wrap: wrap; gap: 12px; }
+.tag-tools label:first-child { flex: 1; max-width: 360px; min-width: 180px; }
+.tag-tools select { width: auto; } .tag-tools button { padding: 8px 12px; }
+.tags, .document-tags { display: flex; flex-wrap: wrap; gap: 8px; margin: 14px 0 0; }
+.tags button, .document-tags button { font-size: 12px; padding: 5px 11px; border-radius: 20px; }
+.tags button small { margin-left: 6px; opacity: .75; }
+.count-row { display: flex; gap: 15px; justify-content: space-between; align-items: center; margin: 16px 0; }
+#result-count { font-size: 13px; }
+.project h2 { margin: 26px 0 14px; font-size: 17px; }
+.cards { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 18px; }
+.card { background: white; border: 1px solid var(--line); border-radius: 12px; padding: 24px; display: flex; flex-direction: column; min-height: 280px; }
+.card h3 { font-size: 19px; line-height: 1.6; margin: 12px 0 6px; }
+.card h3 a { text-decoration: none; color: var(--ink); }.card h3 a:hover { text-decoration: underline; }
+.card p { font-size: 14px; margin: 8px 0; }.card footer { font-size: 11px; color: var(--muted); padding-top: 22px; margin-top: auto; }
+#empty { padding: 35px 0; }
+details { border-top: 1px solid var(--line); padding-top: 22px; margin-top: 40px; }
+summary { cursor: pointer; font-weight: 600; }.registry { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 14px; }
+.registry article { padding: 16px; border: 1px solid var(--line); border-radius: 8px; background: white; }
+.registry p { font-size: 13px; margin: 6px 0; }.registry code { color: var(--muted); overflow-wrap: anywhere; }
+.note { font-size: 12px; border-top: 1px solid var(--line); padding-top: 20px; margin-top: 36px; }
+[hidden] { display: none !important; }
+@media (max-width: 1000px) { .filters { grid-template-columns: 1fr 1fr; }.cards, .registry { grid-template-columns: 1fr 1fr; } }
+@media (max-width: 650px) { main { padding: 24px 18px; }header { align-items: start; flex-direction: column; gap: 4px; }.filters, .cards, .registry { grid-template-columns: 1fr; }.tag-tools { align-items: stretch; }.tag-tools label:first-child { max-width: none; flex-basis: 100%; }.card { min-height: 240px; }.count-row { align-items: start; flex-direction: column; gap: 0; } }
+@media print { .filters, .tag-panel, details, #reset { display: none; }.cards { grid-template-columns: 1fr; }.card { break-inside: avoid; } }
+</style>
+</head>
+<body><main>
+<header><div><div class="eyebrow">設計・調査・後から読み返す説明</div><h1>図解の書庫</h1></div><p id="total" class="hint"></p></header>
+<div class="filters">
+<label><span>資料を検索</span><input id="query" type="search" placeholder="タイトル・本文・タグの別名" autocomplete="off"></label>
+<label><span>プロジェクト</span><select id="project"><option value="">すべて</option></select></label>
+<label><span>状態</span><select id="status"><option value="">廃止を除く</option><option>検討中</option><option>採用</option><option>参考</option><option>廃止</option><option value="all">すべて</option></select></label>
+<label><span>並び順</span><select id="sort"><option value="new">登録・更新が新しい順</option><option value="old">登録・更新が古い順</option><option value="title">タイトル順</option></select></label>
+</div>
+<section class="tag-panel" aria-label="タグで絞り込み">
+<div class="tag-tools">
+<label><span>タグを探す</span><input id="tag-query" type="search" placeholder="正式名・別名から探す"></label>
+<label><span>複数タグの条件</span><select id="tag-mode"><option value="all">すべて含む（AND）</option><option value="any">いずれか含む（OR）</option></select></label>
+<button id="clear-tags">タグ選択を解除</button>
+</div>
+<div id="tags" class="tags"></div><p id="no-tags" class="hint" hidden>該当するタグはありません。</p>
+<p id="selected-tags" class="hint" aria-live="polite"></p>
+</section>
+<div class="count-row"><span id="result-count" aria-live="polite"></span><button id="reset">条件をすべて解除</button></div>
+<div id="projects"></div><p id="empty" hidden>一致する資料がありません。検索語やタグの条件を変えてください。</p>
+<details id="tag-registry"><summary>タグ台帳・整理の目安</summary>
+<p class="hint">正式名に別名をまとめ、同じ意味のタグを増やさない運用です。1 件のみのタグは見直し候補で、自動削除はしません。登録・別名追加・統合は Agent が行います。</p>
+<div id="registry" class="registry"></div></details>
+<p class="note">登録・更新日は書庫の管理日時です。内容の正しさや最新性を確認した日ではありません。タグ変更後は Agent が一覧を再生成します。検索条件は URL に残るので、ブックマークして再利用できます。</p>
+<noscript>検索と一覧の表示には JavaScript が必要です。</noscript>
+</main>
+<script>
+const library = __LIBRARY_DATA__;
+const byId = new Map(library.tags.map(tag => [tag.id, tag]));
+const controls = Object.fromEntries(['query','project','status','sort','tag-query','tag-mode'].map(id => [id, document.getElementById(id)]));
+const selected = new Set();
+const counts = new Map(library.tags.map(tag => [tag.id, library.documents.filter(doc => doc.tags.includes(tag.id)).length]));
+function norm(value) { return value.normalize('NFKC').toLocaleLowerCase().replace(/[\s_-]+/g, ''); }
+function tagNames(tag) { return [tag.id, tag.label, ...tag.aliases]; }
+function element(tag, text, className) { const node = document.createElement(tag); if (text !== undefined) node.textContent = text; if (className) node.className = className; return node; }
+const projectNames = [...new Set(library.documents.map(doc => doc.project))].sort();
+for (const project of projectNames) { const option = element('option', project); option.value = project; controls.project.append(option); }
+document.getElementById('total').textContent = `${projectNames.length} プロジェクト / ${library.documents.length} 件 / ${library.tags.length} タグ`;
+function toggleTag(id) { selected.has(id) ? selected.delete(id) : selected.add(id); render(); }
+function restore() {
+ const params = new URLSearchParams(location.hash.slice(1));
+ for (const [id, input] of Object.entries(controls)) {
+  input.value = params.get(id) ?? (id === 'sort' ? 'new' : id === 'tag-mode' ? 'all' : '');
+ }
+ selected.clear();
+ for (const value of params.getAll('tag')) { const tag = library.tags.find(t => tagNames(t).some(name => norm(name) === norm(value))); if (tag) selected.add(tag.id); }
+ render(false);
+}
+function remember() {
+ const params = new URLSearchParams();
+ for (const [id, input] of Object.entries(controls)) if (input.value) params.set(id, input.value);
+ for (const id of selected) params.append('tag', id);
+ history.replaceState(null, '', '#' + params.toString());
+}
+function render(save = true) {
+ const focusedTag = document.activeElement.dataset.tagId;
+ const tagContainer = document.getElementById('tags'); tagContainer.replaceChildren();
+ const tagTerm = norm(controls['tag-query'].value);
+ const orderedTags = [...library.tags].sort((a,b) => counts.get(b.id) - counts.get(a.id) || a.label.localeCompare(b.label,'ja'));
+ for (const tag of orderedTags) {
+  if (!selected.has(tag.id) && !tagNames(tag).some(name => norm(name).includes(tagTerm))) continue;
+  const button = element('button', tag.label); button.dataset.tagId = tag.id; button.setAttribute('aria-pressed', String(selected.has(tag.id)));
+  button.setAttribute('aria-label', `${tag.label} (${counts.get(tag.id)} 件)`);
+  button.append(element('small', String(counts.get(tag.id)))); button.addEventListener('click', () => toggleTag(tag.id)); tagContainer.append(button);
+ }
+ document.getElementById('no-tags').hidden = tagContainer.childElementCount !== 0;
+ document.getElementById('selected-tags').textContent = selected.size ? '選択中: ' + [...selected].map(id => byId.get(id).label).join(' / ') : 'タグを複数選べます。数字は書庫全体の使用件数です。';
+ const terms = controls.query.value.normalize('NFKC').trim().toLocaleLowerCase().split(/\s+/).filter(Boolean);
+ const docs = library.documents.filter(doc => {
+  const search = [doc.title,doc.summary,doc.project,doc.text,...doc.tags.flatMap(id => tagNames(byId.get(id)))].join(' ').normalize('NFKC').toLocaleLowerCase();
+  const tagMatch = !selected.size || (controls['tag-mode'].value === 'any' ? [...selected].some(id => doc.tags.includes(id)) : [...selected].every(id => doc.tags.includes(id)));
+  return terms.every(term => search.includes(term) || doc.tags.some(id => tagNames(byId.get(id)).some(name => norm(name).includes(norm(term))))) && tagMatch && (!controls.project.value || doc.project === controls.project.value) && (controls.status.value === 'all' || (controls.status.value ? doc.status === controls.status.value : doc.status !== '廃止'));
+ }).sort((a,b) => controls.sort.value === 'title' ? a.title.localeCompare(b.title,'ja') : controls.sort.value === 'old' ? a.updated.localeCompare(b.updated) : b.updated.localeCompare(a.updated));
+ const projects = document.getElementById('projects'); projects.replaceChildren();
+ for (const project of projectNames) {
+  const members = docs.filter(doc => doc.project === project); if (!members.length) continue;
+  const section = element('section', undefined, 'project'); section.append(element('h2', `${project} / ${members.length} 件`));
+  const cards = element('div', undefined, 'cards');
+  for (const doc of members) {
+   const card = element('article', undefined, 'card'); card.append(element('div', doc.status, 'eyebrow'));
+   const title = element('h3'); const link = element('a',doc.title); link.href = doc.href; link.target = '_blank'; link.rel = 'noopener'; title.append(link); card.append(title,element('p',doc.summary));
+   const tags = element('div',undefined,'document-tags');
+   for (const id of doc.tags) { const button = element('button',byId.get(id).label); button.dataset.tagId = id; button.setAttribute('aria-pressed',String(selected.has(id))); button.addEventListener('click',()=>toggleTag(id)); tags.append(button); }
+   card.append(tags,element('footer',`登録 ${doc.registered.slice(0,10)} / 更新 ${doc.updated.slice(0,10)}`)); cards.append(card);
+  }
+  section.append(cards); projects.append(section);
+ }
+ document.getElementById('result-count').textContent = `${docs.length} / ${library.documents.length} 件`;
+ document.getElementById('empty').hidden = docs.length !== 0;
+ if (focusedTag) [...tagContainer.children].find(button => button.dataset.tagId === focusedTag)?.focus({preventScroll:true});
+ if (save) remember();
+}
+for (const tag of library.tags) {
+ const entry = element('article'); const count = counts.get(tag.id);
+ entry.append(element('strong',tag.label),element('p',tag.description),element('p',`別名: ${tag.aliases.join(' / ') || 'なし'}`),element('p',`${count} 件${count === 0 ? ' / 未使用' : count === 1 ? ' / 1 件のみ' : ''}`),element('code',tag.id));
+ document.getElementById('registry').append(entry);
+}
+for (const input of Object.values(controls)) input.addEventListener(input.tagName === 'INPUT' ? 'input' : 'change',()=>render());
+document.getElementById('clear-tags').addEventListener('click',()=>{selected.clear();render();});
+document.getElementById('reset').addEventListener('click',()=>{history.replaceState(null,'',location.pathname);restore();});
+window.addEventListener('hashchange',restore);
+restore();
+</script>
+</body>
+</html>

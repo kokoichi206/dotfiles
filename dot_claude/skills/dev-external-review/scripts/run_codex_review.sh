@@ -48,7 +48,7 @@ fi
 DIFF_FILE=$(mktemp /tmp/dev-loop-diff.XXXXXX)
 echo "$DIFF" > "$DIFF_FILE"
 
-codex exec --full-auto --sandbox read-only --cd "$PROJECT_DIR" "$(cat <<PROMPT
+codex exec --sandbox read-only --cd "$PROJECT_DIR" "$(cat <<PROMPT
 以下の変更差分をレビューしてください。
 
 ## 実装計画
