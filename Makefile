@@ -19,11 +19,24 @@ HOME_MANAGER_PACKAGES := bat eza fd ripgrep jq fzf zoxide gh ghq tree watch star
 .PHONY: update-brewfile
 update-brewfile:	## Update Brewfile from current brew packages
 	@echo "Updating Brewfile..."
-	brew bundle dump --force
-	@pattern="$$(echo '$(HOME_MANAGER_PACKAGES)' | tr ' ' '|')"; \
+	@backup="$$(mktemp)"; cp Brewfile "$$backup"; \
+		brew bundle dump --force; \
+		pattern="$$(echo '$(HOME_MANAGER_PACKAGES)' | tr ' ' '|')"; \
 		tmp="$$(mktemp)"; \
-		grep -vE "^(brew|cargo|go|npm) \"($$pattern)\"" Brewfile > "$$tmp" && mv "$$tmp" Brewfile
-	@echo "Brewfile updated (Home Manager 所有のパッケージは除外済み)"
+		grep -vE "^(brew|cargo|go|npm) \"($$pattern)\"" Brewfile > "$$tmp" && mv "$$tmp" Brewfile; \
+		before="$$(mktemp)"; after="$$(mktemp)"; \
+		grep -oE '^[a-z_]+ ' "$$backup" | tr -d ' ' | sort -u > "$$before"; \
+		grep -oE '^[a-z_]+ ' Brewfile   | tr -d ' ' | sort -u > "$$after"; \
+		lost="$$(comm -23 "$$before" "$$after" | tr '\n' ' ')"; \
+		rm -f "$$before" "$$after"; \
+		if [ -n "$$lost" ]; then \
+			cp "$$backup" Brewfile; rm -f "$$backup"; \
+			echo "brew bundle dump dropped every entry of type: $$lost"; \
+			echo "Brewfile was restored. Fix the dump before regenerating."; \
+			exit 1; \
+		fi; \
+		rm -f "$$backup"; \
+		echo "Brewfile updated (Home Manager 所有のパッケージは除外済み)"
 
 # settings.json は Claude Code 自身が rename 書き込みで symlink を壊すため、
 # symlink ではなくコピーで管理し、repo <-> ~/.claude を双方向に同期する。
