@@ -1,7 +1,6 @@
 tap "android/tap", trusted: true
 tap "charmbracelet/tap"
 tap "getsentry/tools"
-tap "homebrew/services"
 tap "lycorp-jp/tap"
 tap "mobile-dev-inc/tap"
 tap "ngrok/ngrok"
@@ -121,7 +120,6 @@ brew "pandoc"
 # Command-line and local web note-taking, bookmarking, and archiving
 brew "nb"
 # Fast, highly customisable system info script
-brew "neofetch"
 # Incremental parsing library
 brew "tree-sitter"
 # Ambitious Vim-fork focused on extensibility and agility
@@ -216,7 +214,6 @@ brew "shaharia-lab/tap/slackcli", trusted: true
 # Command-line interface for 1Password
 cask "1password-cli"
 # GPU-accelerated terminal emulator
-cask "alacritty"
 # Enable Windows-like alt-tab
 cask "alt-tab"
 # Android Developer command-line tools
@@ -257,8 +254,6 @@ vscode "1yib.svelte-bundle"
 vscode "42crunch.vscode-openapi"
 vscode "4ops.terraform"
 vscode "adam-bender.commit-message-editor"
-vscode "aki77.rails-db-schema"
-vscode "aldijav.golangwithdidi"
 vscode "alefragnani.project-manager"
 vscode "alexcvzz.vscode-sqlite"
 vscode "amiralizadeh9480.laravel-extra-intellisense"
@@ -280,7 +275,6 @@ vscode "clarkyu.vscode-sql-beautify"
 vscode "clemenspeters.format-json"
 vscode "codezombiech.gitignore"
 vscode "codingyu.laravel-goto-view"
-vscode "cognition.devin"
 vscode "cweijan.dbclient-jdbc"
 vscode "cweijan.vscode-database-client2"
 vscode "cymonk.sql-formatter"
