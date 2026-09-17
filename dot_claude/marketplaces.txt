@@ -1,0 +1,12 @@
+# Claude Code Marketplaces
+# marketplace-plugins.txt と marketplace-skills.txt の `<name>@<marketplace>` は
+# ここに登録された marketplace を参照する。登録が無いと install は
+# "not found in marketplace" で失敗する。
+# marketplace 名は repo 名になるため、両ファイルの `@` 以降と repo 名を揃えること。
+#
+# Install with: claude plugin marketplace add <owner>/<repo>
+
+anthropics/claude-plugins-official
+kokoichi206/cc-plugins
+nextlevelbuilder/ui-ux-pro-max-skill
+ComposioHQ/awesome-claude-skills

@@ -105,6 +105,18 @@ setup_claude() {
 
     link_claude_skills_and_agents
 
+    # plugin / skill の install は marketplace 名で解決するため、先に登録する。
+    if [ -f "$SCRIPT_DIR/dot_claude/marketplaces.txt" ]; then
+        log_info "Adding Claude Code marketplaces..."
+        while IFS= read -r marketplace || [ -n "$marketplace" ]; do
+            [[ "$marketplace" =~ ^[[:space:]]*# ]] && continue
+            [[ -z "$marketplace" ]] && continue
+
+            log_info "Adding marketplace: $marketplace"
+            claude plugin marketplace add "$marketplace" || log_warn "Failed to add: $marketplace"
+        done < "$SCRIPT_DIR/dot_claude/marketplaces.txt"
+    fi
+
     # Install marketplace plugins
     if [ -f "$SCRIPT_DIR/dot_claude/marketplace-plugins.txt" ]; then
         log_info "Installing Claude Code plugins..."
