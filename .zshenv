@@ -3,6 +3,14 @@ export XDG_CONFIG_HOME="$HOME/.config"
 export EDITOR="nvim"
 export LANG="en_US.UTF-8"
 
+# go install の出力先を go のバージョンから独立させる。
+# mise は GOBIN を toolchain 配下へ向けるため、そのままだとバージョンを
+# 切り替えた時点で入れたツールが PATH から消える。
+export GOBIN="$HOME/go/bin"
+# Homebrew の bundle は GOBIN を HOMEBREW_GOBIN から解決し直すため、
+# GOBIN を export するだけでは go エントリの列挙先が変わらない。
+export HOMEBREW_GOBIN="$HOME/go/bin"
+
 typeset -U path PATH
 path=(
   "$HOME/.local/bin"

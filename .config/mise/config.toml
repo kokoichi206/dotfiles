@@ -7,6 +7,9 @@ trusted_config_paths = ["~/ghq"]
 bottom = "latest"
 bun = "latest"
 ecspresso = "2.6"
+# go の切り替えは mise が担う。Brewfile の golang.org/dl スタブと併用すると
+# 実効バージョンが PATH 順で決まり、機械ごとに食い違う。
+go = "1.27"
 node = "24"
 pnpm = "latest"
 python = "3.13"
