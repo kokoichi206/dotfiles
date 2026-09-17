@@ -279,9 +279,12 @@ in
   # Dock・SystemUIServer は起動時に読み込んだ設定を使い続け、
   # targets.darwin.defaults の `defaults import` だけでは反映されない。
   # setDarwinDefaults の後に再読み込みさせる。
+  # activation スクリプトの PATH に /usr/bin は入らないため絶対パスで呼ぶ。
+  # GUI セッションが無ければ対象プロセスが存在せず killall は失敗するが、
+  # plist への書き込みは完了しているので続行してよい。
   home.activation.reloadDarwinDefaults = lib.hm.dag.entryAfter [ "setDarwinDefaults" ] ''
     run /System/Library/PrivateFrameworks/SystemAdministration.framework/Resources/activateSettings -u
-    run killall Dock || true
-    run killall SystemUIServer || true
+    run /usr/bin/killall Dock || true
+    run /usr/bin/killall SystemUIServer || true
   '';
 }
