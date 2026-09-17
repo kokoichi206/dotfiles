@@ -4,18 +4,44 @@ Personal dotfiles for macOS (zsh).
 
 ## Setup
 
+Nothing here needs `gh` or `ghq` to get started: macOS ships `git`, `curl` and `make`
+with the Xcode Command Line Tools, and that is the whole bootstrap toolchain.
+
+Run the steps in this order. **Nix comes before `setup.sh`** — home-manager owns
+`starship`, `zoxide` and 13 other CLI tools that the symlinked shell config calls on
+startup, so linking it first leaves you with a broken prompt until Nix is in place.
+
 ```sh
-# Clone (kept under ghq)
+# 1. Clone (kept under ghq; plain git is enough, ghq is not installed yet)
 git clone https://github.com/kokoichi206/dotfiles.git \
   ~/ghq/github.com/kokoichi206/dotfiles
 cd ~/ghq/github.com/kokoichi206/dotfiles
 
-# Symlink configs, install Homebrew packages, install oh-my-zsh
+# 2. Homebrew, if the machine does not have it yet
+/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+
+# 3. Nix (needs sudo; run it from a terminal that can prompt for a password)
+curl --proto '=https' --tlsv1.2 -sSf -L https://install.determinate.systems/nix | sh -s -- install
+
+# 4. Machine-local identity (username / hostname / system / keyboard remapping)
+cp nix/local/identity.example.nix nix/local/identity.nix
+$EDITOR nix/local/identity.nix
+
+# 5. User environment: CLI tools and user-scope macOS defaults
+make hm-bootstrap
+
+# 6. Symlink configs and install everything in the Brewfile
+#    (a few casks install a .pkg and will ask for a password)
 bash setup.sh
+
+# 7. Claude Code and Codex configuration
+./setup-claude.sh
 ```
 
 `setup.sh` symlinks the configs (wezterm, mise, neovim, git, zsh, lazygit, VSCode/Windsurf, SuperWhisper vocabulary, …)
-and runs `brew.sh` to install everything from the `Brewfile`.
+and runs `brew.sh` to install everything from the `Brewfile`. A package that is gone
+upstream makes `brew bundle` exit non-zero; the symlinks still run and the failure is
+reported at the end.
 
 SuperWhisper details: [`superwhisper/README.md`](./superwhisper/README.md).
 
