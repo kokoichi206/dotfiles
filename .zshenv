@@ -19,3 +19,8 @@ path=(
   $path
 )
 export PATH
+
+# nix-darwin の /etc/zshrc を読み込まない。
+# history・completion・prompt は本 dotfiles 側で定義しており、
+# /etc/zshrc の compinit と二重になる。keymap のみ .zshrc の bindkey -e で補う。
+export NOSYSZSHRC=1

@@ -1,6 +1,16 @@
+# `zsh -c` は PATH の取得だけを目的に呼ばれ、completion・prompt・hook を必要としない。
+# ここから先を読ませると 1 回あたり数秒かかり、呼び出し側の timeout を超える。
+if [[ -n $ZSH_EXECUTION_STRING ]]; then
+  return
+fi
+
 # ============ Shell behavior ============
 # 貼り付けた shell snippet のコメント行を対話シェルでも無視する
 setopt INTERACTIVE_COMMENTS
+
+# .zshenv で NOSYSZSHRC=1 を設定しており /etc/zshrc は読まれないため、
+# keymap はここで指定する。
+bindkey -e
 
 # `/` を除外して `origin/main` のようなパスを Ctrl+W / Option+Delete で
 # 一語ずつ消せるようにする。デフォルト値から差分だけを引く形で書く。
