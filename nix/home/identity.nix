@@ -11,7 +11,9 @@
     nix-direnv.enable = true;
   };
 
-  # Home Manager で入れるユーザー向けパッケージ。
+  # ユーザー向け CLI ツールの所有者は Home Manager。
+  # Brewfile には同じものを書かないこと。両方に置くと、どちらが使われるかが
+  # PATH 順に依存して機械ごとに変わる。
   home.packages = with pkgs; [
     # BEAM (Erlang/Elixir) — OTP バージョンの整合性を beam.packages で保証。
     beam.packages.erlang_28.erlang

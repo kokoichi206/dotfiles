@@ -1,19 +1,19 @@
 [ghq]
 	username = kokoichi206
 [user]
-	name = kokoichi206
-	email = 52474650+kokoichi206@users.noreply.github.com
-	# signingkey は GPG 鍵の指紋で、鍵への参照を指定。
-	# 鍵の実体は ~/.gnupg/ にあり、別 PC で署名するにはその PC のキーリングへ秘密鍵を import する必要がある:
-	#   旧PCでexport: gpg --export-secret-keys --armor F98180B6D8286AA0A40FB9FF315BE4660DC92770 > private.key
-	#   新PCでimport: gpg --import private.key && gpg --edit-key F98180B6D8286AA0A40FB9FF315BE4660DC92770 trust
-	signingkey = F98180B6D8286AA0A40FB9FF315BE4660DC92770
+	# 設定漏れを黙って埋めさせない。これが無いと git は OS アカウントから
+	# author を推測し、`Takahiro Tominaga <user@Host.local>` のような値で commit する。
+	useConfigOnly = true
+
+# identity と署名鍵はマシンごとに異なるため Git では管理しない。
+# 実体が無ければ commit は Author identity unknown で停止する。
 [include]
-	path = ~/.gitconfig-email
-# 指定された配下のリポジトリを操作する場合のみ、設定値を読み込む。
-# 後から設定された値が上書きされる。
-[includeIf "gitdir:~/src/company/**"]
-	path = ~/.gitconfig-company
+	path = ~/.gitconfig-identity
+# 個人リポジトリはどのマシンからでも個人 identity で commit する。
+# 業務機からの commit で業務アドレスが公開リポジトリの履歴に載るのを防ぐ。
+# gitdir は実パスで照合するため、~/ghq を symlink にすると一致しなくなる。
+[includeIf "gitdir:~/ghq/github.com/kokoichi206/"]
+	path = ~/.gitconfig-identity-personal
 [secrets]
 	providers = git secrets --aws-provider
 	patterns = (A3T[A-Z0-9]|AKIA|AGPA|AIDA|AROA|AIPA|ANPA|ANVA|ASIA)[A-Z0-9]{16}
@@ -40,9 +40,6 @@
 	smudge = git-lfs smudge -- %f
 	process = git-lfs filter-process
 	required = true
-[commit]
-	gpgsign = true
-
 [alias]
     find-merge = "!sh -c 'commit=$0 && branch=${1:-HEAD} && (git rev-list $commit..$branch --ancestry-path | cat -n; git rev-list $commit..$branch --first-parent | cat -n) | sort -k2 -s | uniq -f1 -d | sort -n | tail -1 | cut -f2'"
     show-merge = "!sh -c 'merge=$(git find-merge $0 $1) && [ -n \"$merge\" ] && git show $merge'"

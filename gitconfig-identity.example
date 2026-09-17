@@ -1,0 +1,24 @@
+# git の author と署名鍵。マシンごとに異なるため Git では管理しない。
+#
+# 配置先は 2 つ。.gitconfig の include / includeIf が両方を参照する。
+#
+#   ~/.gitconfig-identity           そのマシンの既定。全リポジトリに効く。
+#   ~/.gitconfig-identity-personal  ~/ghq/github.com/kokoichi206/ 配下だけに効く。
+#                                   既定を上書きするので、既定と同じ値なら書かなくてよい。
+#
+# .gitconfig は user.useConfigOnly = true を設定しているため、
+# ~/.gitconfig-identity が無いと commit は Author identity unknown で停止する。
+# OS アカウントからの推測で commit されることはない。
+#
+# email は Git ホスティング側に verified email として登録済みのものを使う。
+# 一致していないと GPG 署名しても Unverified 扱いになる。
+
+[user]
+	name = your-name
+	email = you@example.com
+	# 署名鍵の指紋。`gpg --list-secret-keys --keyid-format=long` で確認する。
+	signingkey = 0000000000000000000000000000000000000000
+
+[commit]
+	# 署名鍵を持たないマシン・スコープでは false にする。
+	gpgsign = true

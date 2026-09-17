@@ -28,7 +28,6 @@ brew "jpeg-xl"
 # Codec library for encoding and decoding AV1 video streams
 brew "aom"
 # Clone of cat(1) with syntax highlighting and Git integration
-brew "bat"
 # Memory upgrade for your coding agent
 brew "beads"
 # New way to see and navigate directory trees
@@ -58,19 +57,15 @@ brew "docker-compose"
 # Embeddable SQL OLAP Database Management System
 brew "duckdb"
 # Modern, maintained replacement for ls
-brew "eza"
 # Simple, fast and user-friendly alternative to find
-brew "fd"
 # Play, record, convert, and stream select audio and video codecs
 brew "ffmpeg"
 # Command-line fuzzy finder written in Go
-brew "fzf"
 # GNU compiler collection
 brew "gcc"
 # Interact with Google Gemini AI models from the command-line
 brew "gemini-cli"
 # GitHub command-line tool
-brew "gh"
 # Framework for layout and rendering of i18n text
 brew "pango"
 # OCR (Optical Character Recognition) engine
@@ -78,9 +73,7 @@ brew "tesseract"
 # Interpreter for PostScript and PDF
 brew "ghostscript"
 # Remote repository management made easy
-brew "ghq"
 # Syntax-highlighting pager for git and diff output
-brew "git-delta"
 # Git extension for versioning large files
 brew "git-lfs"
 # Blazing fast terminal-ui for git written in rust
@@ -102,7 +95,6 @@ brew "imagemagick"
 # Cost estimates for Terraform, Terragrunt, and CloudFormation
 brew "infracost"
 # Lightweight and flexible command-line JSON processor
-brew "jq"
 # Simple terminal UI for git commands
 brew "lazygit"
 # Subtitle renderer for the ASS/SSA subtitle format
@@ -126,7 +118,6 @@ brew "mise"
 # Swiss-army knife of markup format conversion
 brew "pandoc"
 # Search tool like grep and The Silver Searcher
-brew "ripgrep"
 # Command-line and local web note-taking, bookmarking, and archiving
 brew "nb"
 # Fast, highly customisable system info script
@@ -188,7 +179,6 @@ brew "sheldon"
 # Prettier way to inspect network connections
 brew "snitch"
 # Cross-shell prompt for astronauts
-brew "starship"
 # Tool to enforce Swift style and conventions
 brew "swiftlint"
 # Easiest, most secure way to use WireGuard and 2FA
@@ -198,17 +188,14 @@ brew "tesseract-lang"
 # Simplified and community-driven man pages
 brew "tldr", link: false
 # Official tldr client written in Rust
-brew "tlrc"
 # Terminal multiplexer
 brew "tmux"
 # Display directories as trees (with optional color/HTML output)
-brew "tree"
 # Parser generator tool
 brew "tree-sitter-cli"
 # Source code spell checker
 brew "typos-cli"
 # Executes a program periodically, showing output fullscreen
-brew "watch"
 # Blazing fast terminal file manager written in Rust, based on async I/O
 brew "yazi"
 # Pluggable terminal workspace, with terminal multiplexer as the base feature
@@ -218,7 +205,6 @@ brew "zig"
 # General-purpose lossless data-compression library
 brew "zlib"
 # Shell extension to navigate your filesystem faster
-brew "zoxide"
 # Fish-like fast/unobtrusive autosuggestions for zsh
 brew "zsh-autosuggestions"
 # Give AI agents eyes and hands on iOS Simulator and Android devices

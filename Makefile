@@ -7,11 +7,21 @@ help:	## https://postd.cc/auto-documented-makefile/
 	@grep -E '^[a-zA-Z_-]+:.*?## .*$$' $(MAKEFILE_LIST) | sort | \
 		awk 'BEGIN {FS = ":.*?## "}; {printf "\033[36m%-30s\033[0m %s\n", $$1, $$2}'
 
+# Home Manager が所有する CLI ツールの brew formula 名。
+# 実体の定義は nix/home/identity.nix の home.packages で、名前が異なるものを含む
+# (delta -> git-delta, tealdeer -> tlrc)。追加時は両方を揃えること。
+# brew bundle dump は依存として入っているだけの formula も書き出すため、
+# dump 後に除かないと Brewfile へ復活して二重管理に戻る。
+HOME_MANAGER_FORMULAE := bat eza fd ripgrep jq fzf zoxide gh ghq tree watch starship git-delta tlrc
+
 .PHONY: update-brewfile
 update-brewfile:	## Update Brewfile from current brew packages
 	@echo "Updating Brewfile..."
 	brew bundle dump --force
-	@echo "Brewfile updated successfully!"
+	@pattern="$$(echo '$(HOME_MANAGER_FORMULAE)' | tr ' ' '|')"; \
+		tmp="$$(mktemp)"; \
+		grep -vE "^brew \"($$pattern)\"" Brewfile > "$$tmp" && mv "$$tmp" Brewfile
+	@echo "Brewfile updated (Home Manager 所有の formula は除外済み)"
 
 # settings.json は Claude Code 自身が rename 書き込みで symlink を壊すため、
 # symlink ではなくコピーで管理し、repo <-> ~/.claude を双方向に同期する。

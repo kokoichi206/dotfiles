@@ -70,6 +70,10 @@ DARWIN_HOST=<hostname> make nix-switch   # or make hm-switch
 | nix-darwin | root-scope system settings — `/etc`, launchd, `pmset`, login window | `nix/darwin/configuration.nix` |
 | Homebrew | GUI apps & docker | `Brewfile` |
 
+CLI tools live in exactly one layer. A formula that home-manager owns must not appear
+in the `Brewfile`; `make update-brewfile` strips the list in `HOME_MANAGER_FORMULAE`
+after `brew bundle dump` so it cannot creep back in.
+
 ## Maintenance
 
 ```sh
