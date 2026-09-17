@@ -61,7 +61,11 @@ if [[ $(uname) == "Linux" ]]; then
     # TODO: Do something
 elif [[ $(uname) == "Darwin" ]]; then
     echo "MacOS"
-    bash brew.sh
+    # 以降の symlink は brew の成否に依存しないため、失敗しても続行して最後に伝える。
+    # brew bundle は上流から消えた 1 件でも非ゼロで終わるので、
+    # ここで即座に中断すると editor 設定の symlink が丸ごと飛ぶ。
+    brew_status=0
+    bash brew.sh || brew_status=$?
 
     # VSCode settings
     VSCODE_USER_DIR="$HOME/Library/Application Support/Code/User"
@@ -88,6 +92,11 @@ elif [[ $(uname) == "Darwin" ]]; then
             backup_and_alias "$PWD/superwhisper/settings.json" "$SUPERWHISPER_DIR/settings/settings.json"
         fi
     done
+
+    if [ "$brew_status" -ne 0 ]; then
+        echo "brew.sh failed (exit $brew_status). symlinks are done; see the output above for the packages that were not installed." >&2
+        exit "$brew_status"
+    fi
 fi
 
 echo "finished setup environmtent."

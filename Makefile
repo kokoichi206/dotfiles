@@ -10,33 +10,28 @@ help:	## https://postd.cc/auto-documented-makefile/
 # Home Manager が所有する CLI ツールの、Brewfile 側での名前。
 # 実体の定義は nix/home/identity.nix の home.packages で、名前が異なるものを含む
 # (delta -> git-delta, tealdeer -> tlrc)。追加時は両方を揃えること。
-# Brewfile は brew 以外に cargo / go / npm のエントリも持つため、同じ名前が
-# 別種別で現れうる (rainfrog は cargo エントリだった)。除外は種別をまたいで行う。
-# brew bundle dump は依存として入っているだけのものも書き出すため、
-# dump 後に除かないと Brewfile へ復活して二重管理に戻る。
+# brew-diff はこれらを「宣言に足すのではなく brew から消すもの」として印を付ける。
 HOME_MANAGER_PACKAGES := bat eza fd ripgrep jq fzf zoxide gh ghq tree watch starship git-delta tlrc rainfrog
 
-.PHONY: update-brewfile
-update-brewfile:	## Update Brewfile from current brew packages
-	@echo "Updating Brewfile..."
-	@backup="$$(mktemp)"; cp Brewfile "$$backup"; \
-		brew bundle dump --force; \
-		pattern="$$(echo '$(HOME_MANAGER_PACKAGES)' | tr ' ' '|')"; \
-		tmp="$$(mktemp)"; \
-		grep -vE "^(brew|cargo|go|npm) \"($$pattern)\"" Brewfile > "$$tmp" && mv "$$tmp" Brewfile; \
-		before="$$(mktemp)"; after="$$(mktemp)"; \
-		grep -oE '^[a-z_]+ ' "$$backup" | tr -d ' ' | sort -u > "$$before"; \
-		grep -oE '^[a-z_]+ ' Brewfile   | tr -d ' ' | sort -u > "$$after"; \
-		lost="$$(comm -23 "$$before" "$$after" | tr '\n' ' ')"; \
-		rm -f "$$before" "$$after"; \
-		if [ -n "$$lost" ]; then \
-			cp "$$backup" Brewfile; rm -f "$$backup"; \
-			echo "brew bundle dump dropped every entry of type: $$lost"; \
-			echo "Brewfile was restored. Fix the dump before regenerating."; \
-			exit 1; \
-		fi; \
-		rm -f "$$backup"; \
-		echo "Brewfile updated (Home Manager 所有のパッケージは除外済み)"
+# Brewfile は「入れたいものの宣言」であり、brew bundle dump が出す
+# 「いま入っているもののスナップショット」とは別の文書。dump で上書きすると
+# (1) その機械に入っていない宣言が消え (2) アドホックに入れたものが宣言へ昇格し
+# (3) 列挙に失敗した種別が丸ごと落ちる。差分を見て手で宣言を直す。
+#
+# brew bundle cleanup は --force を付けない限り一覧するだけで削除しない。
+# ここに --force を足さないこと。
+.PHONY: brew-diff
+brew-diff:	## Brewfile の宣言と実際の導入状況の差分を表示 (変更はしない)
+	@echo "== 宣言しているのに入っていない =="
+	@brew bundle check --verbose --file=Brewfile 2>/dev/null | grep -E '^→' || echo "  なし"
+	@echo
+	@echo "== 入っているのに宣言していない =="
+	@pattern="$$(echo '$(HOME_MANAGER_PACKAGES)' | tr ' ' '|')"; \
+		brew bundle cleanup --file=Brewfile 2>/dev/null \
+		| sed -n '/^Would uninstall/,$$p' \
+		| sed '/^Would `brew cleanup`/,$$d' \
+		| sed -E "s/^($$pattern)\$$/\1    <- Home Manager が所有。宣言せず brew から消す/" \
+		| grep . || echo "  なし"
 
 # settings.json は Claude Code 自身が rename 書き込みで symlink を壊すため、
 # symlink ではなくコピーで管理し、repo <-> ~/.claude を双方向に同期する。
