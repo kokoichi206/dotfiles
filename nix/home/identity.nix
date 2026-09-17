@@ -1,6 +1,9 @@
 { pkgs, ... }:
 {
-  imports = [ ./darwin-defaults.nix ];
+  imports = [
+    ./darwin-defaults.nix
+    ./darwin-modifier-keys.nix
+  ];
 
   # Home Manager の状態バージョン。更新時はリリースノート確認後に上げる。
   home.stateVersion = "24.11";
