@@ -47,16 +47,6 @@
   },
   "feedbackSurveyRate": 0,
   "hooks": {
-    "Notification": [
-      {
-        "hooks": [
-          {
-            "command": "\"$HOME/Library/Application Support/CCStatusBar/bin/CCStatusBar\" hook Notification",
-            "type": "command"
-          }
-        ]
-      }
-    ],
     "PermissionRequest": [
       {
         "hooks": [
@@ -107,40 +97,12 @@
       {
         "hooks": [
           {
-            "command": "\"$HOME/Library/Application Support/CCStatusBar/bin/CCStatusBar\" hook PreToolUse",
-            "type": "command"
-          }
-        ]
-      },
-      {
-        "hooks": [
-          {
             "command": "if [ -f \"$HOME/.orca/agent-hooks/claude-hook.sh\" ] && [ -r \"$HOME/.orca/agent-hooks/claude-hook.sh\" ] && [ -x \"$HOME/.orca/agent-hooks/claude-hook.sh\" ]; then /bin/sh \"$HOME/.orca/agent-hooks/claude-hook.sh\"; else cat >/dev/null 2>&1 || :; fi",
             "timeout": 10,
             "type": "command"
           }
         ],
         "matcher": "*"
-      }
-    ],
-    "SessionEnd": [
-      {
-        "hooks": [
-          {
-            "command": "\"$HOME/Library/Application Support/CCStatusBar/bin/CCStatusBar\" hook SessionEnd",
-            "type": "command"
-          }
-        ]
-      }
-    ],
-    "SessionStart": [
-      {
-        "hooks": [
-          {
-            "command": "\"$HOME/Library/Application Support/CCStatusBar/bin/CCStatusBar\" hook SessionStart",
-            "type": "command"
-          }
-        ]
       }
     ],
     "Stop": [
@@ -153,10 +115,6 @@
           {
             "command": "if [ -x \"$CLAUDE_PROJECT_DIR/.claude/hooks/verify-before-stop.sh\" ] && ! grep -q verify-before-stop \"$CLAUDE_PROJECT_DIR/.claude/settings.json\" 2>/dev/null; then bash \"$CLAUDE_PROJECT_DIR/.claude/hooks/verify-before-stop.sh\"; fi",
             "timeout": 600,
-            "type": "command"
-          },
-          {
-            "command": "\"$HOME/Library/Application Support/CCStatusBar/bin/CCStatusBar\" hook Stop",
             "type": "command"
           }
         ]
@@ -235,14 +193,6 @@
       {
         "hooks": [
           {
-            "command": "\"$HOME/Library/Application Support/CCStatusBar/bin/CCStatusBar\" hook UserPromptSubmit",
-            "type": "command"
-          }
-        ]
-      },
-      {
-        "hooks": [
-          {
             "command": "if [ -f \"$HOME/.orca/agent-hooks/claude-hook.sh\" ] && [ -r \"$HOME/.orca/agent-hooks/claude-hook.sh\" ] && [ -x \"$HOME/.orca/agent-hooks/claude-hook.sh\" ]; then /bin/sh \"$HOME/.orca/agent-hooks/claude-hook.sh\"; else cat >/dev/null 2>&1 || :; fi",
             "timeout": 10,
             "type": "command"
@@ -261,6 +211,7 @@
       "command": "npx"
     }
   },
+  "model": "opus[1m]",
   "outputStyle": "Explanatory",
   "permissions": {
     "allow": [
