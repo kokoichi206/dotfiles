@@ -58,6 +58,8 @@ claude-apply:	## repo の settings.json と skills/agents symlink を ~/.claude 
 .PHONY: test-claude-hooks
 test-claude-hooks:	## dot_claude/hooks の単体テストを実行
 	python3 dot_claude/hooks/inject-rules-on-write.test.py
+	python3 dot_claude/hooks/check-tentative-language.test.py
+	bash dot_claude/hooks/detect-toolcall-leak.test.sh
 
 .PHONY: claude-lint
 claude-lint:	## settings.json の hook 配線を検査
