@@ -16,7 +16,9 @@ let
     rightShift = hid 229; # 0xE5
     rightOption = hid 230; # 0xE6
     rightCommand = hid 231; # 0xE7
-    none = 1095216660483; # 0xFF_0000_0003 (割り当てなし)
+    # Fn は Keyboard ページではなく Apple のベンダーページにある。
+    fn = 280379760050179; # 0xFF01_0000_0003
+    none = 1095216660483; # 0x00FF_0000_0003 (割り当てなし)
   };
 
   toMapping =
