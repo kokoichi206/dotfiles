@@ -7,21 +7,23 @@ help:	## https://postd.cc/auto-documented-makefile/
 	@grep -E '^[a-zA-Z_-]+:.*?## .*$$' $(MAKEFILE_LIST) | sort | \
 		awk 'BEGIN {FS = ":.*?## "}; {printf "\033[36m%-30s\033[0m %s\n", $$1, $$2}'
 
-# Home Manager が所有する CLI ツールの brew formula 名。
+# Home Manager が所有する CLI ツールの、Brewfile 側での名前。
 # 実体の定義は nix/home/identity.nix の home.packages で、名前が異なるものを含む
 # (delta -> git-delta, tealdeer -> tlrc)。追加時は両方を揃えること。
-# brew bundle dump は依存として入っているだけの formula も書き出すため、
+# Brewfile は brew 以外に cargo / go / npm のエントリも持つため、同じ名前が
+# 別種別で現れうる (rainfrog は cargo エントリだった)。除外は種別をまたいで行う。
+# brew bundle dump は依存として入っているだけのものも書き出すため、
 # dump 後に除かないと Brewfile へ復活して二重管理に戻る。
-HOME_MANAGER_FORMULAE := bat eza fd ripgrep jq fzf zoxide gh ghq tree watch starship git-delta tlrc
+HOME_MANAGER_PACKAGES := bat eza fd ripgrep jq fzf zoxide gh ghq tree watch starship git-delta tlrc rainfrog
 
 .PHONY: update-brewfile
 update-brewfile:	## Update Brewfile from current brew packages
 	@echo "Updating Brewfile..."
 	brew bundle dump --force
-	@pattern="$$(echo '$(HOME_MANAGER_FORMULAE)' | tr ' ' '|')"; \
+	@pattern="$$(echo '$(HOME_MANAGER_PACKAGES)' | tr ' ' '|')"; \
 		tmp="$$(mktemp)"; \
-		grep -vE "^brew \"($$pattern)\"" Brewfile > "$$tmp" && mv "$$tmp" Brewfile
-	@echo "Brewfile updated (Home Manager 所有の formula は除外済み)"
+		grep -vE "^(brew|cargo|go|npm) \"($$pattern)\"" Brewfile > "$$tmp" && mv "$$tmp" Brewfile
+	@echo "Brewfile updated (Home Manager 所有のパッケージは除外済み)"
 
 # settings.json は Claude Code 自身が rename 書き込みで symlink を壊すため、
 # symlink ではなくコピーで管理し、repo <-> ~/.claude を双方向に同期する。

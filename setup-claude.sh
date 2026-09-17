@@ -143,18 +143,9 @@ setup_codex() {
     # Symlink AGENTS.md and skills
     create_symlink "$SCRIPT_DIR/dot_codex/AGENTS.md" "$CODEX_DIR/AGENTS.md"
     create_symlink "$SCRIPT_DIR/dot_codex/skills" "$CODEX_DIR/skills"
-    create_symlink "$SCRIPT_DIR/dot_codex/rules" "$CODEX_DIR/rules"
 
-    # Setup config.toml
-    if [ ! -f "$CODEX_DIR/config.toml" ]; then
-        log_info "Creating config.toml from common template..."
-        cp "$SCRIPT_DIR/dot_codex/config.common.toml" "$CODEX_DIR/config.toml"
-
-        log_warn "Please edit $CODEX_DIR/config.toml to add machine-specific [projects] settings"
-    else
-        log_info "config.toml already exists, skipping..."
-        log_warn "Consider merging settings from: $SCRIPT_DIR/dot_codex/config.common.toml"
-    fi
+    # config.toml は MCP サーバーの認証情報とマシン固有の絶対パスを含むため
+    # リポジトリに雛形を置かず、各マシンで手動設定する。
 
     # Create config.local.toml template if it doesn't exist
     if [ ! -f "$CODEX_DIR/config.local.toml" ]; then

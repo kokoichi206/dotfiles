@@ -68,11 +68,12 @@ DARWIN_HOST=<hostname> make nix-switch   # or make hm-switch
 | home-manager | CLI tools — bat, eza, fd, ripgrep, gh, ghq, starship, … | `nix/home/identity.nix` |
 | home-manager | user-scope macOS defaults — Dock, trackpad, shortcuts, … | `nix/home/darwin-defaults.nix` |
 | nix-darwin | root-scope system settings — `/etc`, launchd, `pmset`, login window | `nix/darwin/configuration.nix` |
-| Homebrew | GUI apps & docker | `Brewfile` |
+| Homebrew | GUI apps, docker, and tools installed via `brew` / `cargo` / `go` / `npm` entries | `Brewfile` |
 
-CLI tools live in exactly one layer. A formula that home-manager owns must not appear
-in the `Brewfile`; `make update-brewfile` strips the list in `HOME_MANAGER_FORMULAE`
-after `brew bundle dump` so it cannot creep back in.
+CLI tools live in exactly one layer. A package that home-manager owns must not appear in
+the `Brewfile` under any entry type — `brew`, `cargo`, `go` and `npm` all install binaries
+onto `PATH`. `make update-brewfile` strips the `HOME_MANAGER_PACKAGES` list across those
+entry types after `brew bundle dump`, so a package cannot creep back in as a dependency.
 
 ## Maintenance
 
