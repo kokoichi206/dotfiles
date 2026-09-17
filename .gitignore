@@ -2,6 +2,8 @@
 .claude/scheduled_tasks.lock
 .claude/scheduled_tasks.json
 nix/local/identity.nix
+# nix build が作る成果物 symlink (make nix-bootstrap / hm-bootstrap)
+/result
 
 .DS_Store
 __pycache__/

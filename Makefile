@@ -64,3 +64,18 @@ nix-build:	## Build without applying (dry-run)
 .PHONY: nix-update
 nix-update:	## Update flake.lock inputs
 	nix --extra-experimental-features 'nix-command flakes' flake update
+
+# nix-darwin を使わず、ユーザー環境だけを適用する経路。sudo を必要としない。
+# nix-darwin と同一マシンで併用しないこと (パッケージの置き場所が競合する)。
+.PHONY: hm-bootstrap
+hm-bootstrap:	## [初回] home-manager 単体でユーザー環境を適用 (home-manager コマンド不在時)
+	nix --extra-experimental-features 'nix-command flakes' build $(FLAKE_REF)#homeConfigurations.$(DARWIN_HOST).activationPackage
+	./result/activate
+
+.PHONY: hm-switch
+hm-switch:	## home-manager 単体でユーザー環境を適用 (sudo 不要)
+	home-manager switch --flake $(FLAKE_REF)#$(DARWIN_HOST)
+
+.PHONY: hm-build
+hm-build:	## home-manager 単体構成をビルドのみ (dry-run)
+	nix --extra-experimental-features 'nix-command flakes' build --no-link $(FLAKE_REF)#homeConfigurations.$(DARWIN_HOST).activationPackage

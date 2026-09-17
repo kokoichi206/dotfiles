@@ -21,26 +21,43 @@ SuperWhisper details: [`superwhisper/README.md`](./superwhisper/README.md).
 
 ## nix-darwin + home-manager
 
-nix-darwin manages macOS system defaults (Dock, trackpad, keyboard shortcuts) and
-home-manager manages user CLI tools. Both are applied together via `make nix-switch`.
+home-manager owns user CLI tools **and** user-scope macOS defaults (Dock, trackpad,
+keyboard shortcuts, screenshot location). nix-darwin owns only what needs root:
+`/etc`, launchd daemons, `pmset`, and `/Library/Preferences`.
+
+Two application paths. **Pick one per machine** — mixing them puts packages in two
+different profiles (`/etc/profiles/per-user` vs `~/.nix-profile`).
 
 ```sh
 # Create local identity file (username / hostname / system; not tracked by Git)
 cp nix/local/identity.example.nix nix/local/identity.nix
-
-# First machine only: darwin-rebuild is not yet on PATH
-make nix-bootstrap
-
-make nix-switch   # Apply configuration
-make nix-build    # Build without applying (dry-run)
-make nix-check    # Validate flake outputs
-make nix-update   # Update pinned inputs (flake.lock)
 ```
 
-If the hostname differs from `hostname -s`:
+**Path 1 — nix-darwin + home-manager (needs sudo on every switch)**
 
 ```sh
-DARWIN_HOST=<hostname> make nix-switch
+make nix-bootstrap   # First machine only: darwin-rebuild is not yet on PATH
+make nix-switch      # Apply configuration
+make nix-build       # Build without applying (dry-run)
+make nix-check       # Validate flake outputs
+make nix-update      # Update pinned inputs (flake.lock)
+```
+
+**Path 2 — home-manager standalone (no sudo after Nix itself is installed)**
+
+Use this where typing a sudo password on every switch is painful (remote machines),
+or where the root-scope settings are overridden anyway (MDM-managed machines).
+
+```sh
+make hm-bootstrap   # First time: the home-manager command is not yet on PATH
+make hm-switch      # Apply user environment
+make hm-build       # Build without applying (dry-run)
+```
+
+Both paths key their flake output by hostname. If it differs from `hostname -s`:
+
+```sh
+DARWIN_HOST=<hostname> make nix-switch   # or make hm-switch
 ```
 
 ## What manages what
@@ -49,7 +66,8 @@ DARWIN_HOST=<hostname> make nix-switch
 | --- | --- | --- |
 | mise | language runtimes — node, python, ruby, rust, terraform, neovim, … | `.config/mise/config.toml` |
 | home-manager | CLI tools — bat, eza, fd, ripgrep, gh, ghq, starship, … | `nix/home/identity.nix` |
-| nix-darwin | macOS system defaults | `nix/darwin/configuration.nix` |
+| home-manager | user-scope macOS defaults — Dock, trackpad, shortcuts, … | `nix/home/darwin-defaults.nix` |
+| nix-darwin | root-scope system settings — `/etc`, launchd, `pmset`, login window | `nix/darwin/configuration.nix` |
 | Homebrew | GUI apps & docker | `Brewfile` |
 
 ## Maintenance
