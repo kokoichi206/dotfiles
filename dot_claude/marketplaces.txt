@@ -9,4 +9,3 @@
 anthropics/claude-plugins-official
 kokoichi206/cc-plugins
 nextlevelbuilder/ui-ux-pro-max-skill
-ComposioHQ/awesome-claude-skills
