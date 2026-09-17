@@ -1,4 +1,4 @@
-{ config, ... }:
+{ config, lib, ... }:
 let
   # 内蔵トラックパッドと Magic Trackpad は別ドメインに同名のキーを持つ。
   # 片方だけに書くと接続機器によって挙動が変わるため、同じ値を両方へ適用する。
@@ -275,4 +275,13 @@ in
       };
     };
   };
+
+  # Dock・SystemUIServer は起動時に読み込んだ設定を使い続け、
+  # targets.darwin.defaults の `defaults import` だけでは反映されない。
+  # setDarwinDefaults の後に再読み込みさせる。
+  home.activation.reloadDarwinDefaults = lib.hm.dag.entryAfter [ "setDarwinDefaults" ] ''
+    run /System/Library/PrivateFrameworks/SystemAdministration.framework/Resources/activateSettings -u
+    run killall Dock || true
+    run killall SystemUIServer || true
+  '';
 }
