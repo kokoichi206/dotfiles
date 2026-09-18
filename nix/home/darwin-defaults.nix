@@ -97,8 +97,10 @@ in
     "com.apple.driver.AppleBluetoothMultitouch.trackpad" = trackpad;
 
     "com.apple.screencapture" = {
-      # 保存先を既定の Desktop から ~/Documents/imgs へ変更。
-      location = "${config.home.homeDirectory}/Documents/imgs";
+      # 保存先を既定の Desktop から変更する。CleanShot の保存先と同じ場所を指し、
+      # どちらで撮っても 1 つのフォルダに集まるようにする。
+      # ディレクトリ名の e が 3 つなのは既存フォルダの綴りに合わせているため。
+      location = "${config.home.homeDirectory}/Documents/screeenshot";
     };
 
     "com.apple.WindowManager" = {
