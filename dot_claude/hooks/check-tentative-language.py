@@ -15,10 +15,37 @@ TENTATIVE_PATTERNS = [
     r"取り急ぎ",
 ]
 
+
+def extract_assistant_text(entry):
+    """transcript の 1 エントリからアシスタントのテキストを取り出す。
+
+    Claude Code の transcript は {"type": "assistant", "message": {"role": ..., "content": [...]}}
+    の入れ子形式。旧フラット形式 {"role": "assistant", "content": ...} も受ける。
+    """
+    message = entry.get('message') if entry.get('type') == 'assistant' else entry
+    if not isinstance(message, dict) or message.get('role') != 'assistant':
+        return None
+
+    content = message.get('content', '')
+    if isinstance(content, str):
+        return content
+    if isinstance(content, list):
+        return ' '.join(
+            item.get('text', '')
+            for item in content
+            if isinstance(item, dict) and item.get('type') == 'text'
+        )
+    return None
+
+
 def main():
     try:
         hook_input = json.load(sys.stdin)
     except json.JSONDecodeError:
+        sys.exit(0)
+
+    # block 後の再実行では再ブロックしない（無限ループ防止）
+    if hook_input.get('stop_hook_active'):
         sys.exit(0)
 
     transcript_path = hook_input.get('transcript_path', '')
@@ -26,7 +53,6 @@ def main():
     if not transcript_path or not Path(transcript_path).exists():
         sys.exit(0)
 
-    # 会話履歴から最新のアシスタント出力を取得
     try:
         with open(transcript_path, 'r', encoding='utf-8') as f:
             lines = f.readlines()
@@ -37,24 +63,16 @@ def main():
     for line in reversed(lines):
         try:
             entry = json.loads(line)
-            if entry.get('role') == 'assistant':
-                content = entry.get('content', '')
-                if isinstance(content, str):
-                    text = content
-                elif isinstance(content, list):
-                    text = ' '.join(
-                        item.get('text', '')
-                        for item in content
-                        if isinstance(item, dict) and item.get('type') == 'text'
-                    )
-                break
         except json.JSONDecodeError:
             continue
+        extracted = extract_assistant_text(entry)
+        if extracted is not None:
+            text = extracted
+            break
 
     if not text:
         sys.exit(0)
 
-    # パターン検出
     found = []
     for p in TENTATIVE_PATTERNS:
         match = re.search(p, text)
