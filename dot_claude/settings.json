@@ -580,7 +580,7 @@
   "theme": "light-daltonized",
   "voice": {
     "enabled": true,
-    "mode": "hold"
+    "mode": "tap"
   },
   "voiceEnabled": true
 }

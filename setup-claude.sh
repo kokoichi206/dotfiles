@@ -92,6 +92,9 @@ setup_claude() {
     create_symlink "$SCRIPT_DIR/dot_claude/commands" "$CLAUDE_DIR/commands"
     create_symlink "$SCRIPT_DIR/dot_claude/rules" "$CLAUDE_DIR/rules"
 
+    # keybindings.json は Claude Code が読み取りと watch しかしないため symlink でよい。
+    create_symlink "$SCRIPT_DIR/dot_claude/keybindings.json" "$CLAUDE_DIR/keybindings.json"
+
     # settings.json は Claude Code 自身が rename 書き込みで symlink を壊すため、
     # symlink ではなくコピーで配置する。以後の同期は make claude-apply / claude-pull。
     if [ -L "$CLAUDE_DIR/settings.json" ]; then
