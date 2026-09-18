@@ -92,8 +92,8 @@ config.pane_select_fg_color = "#FFFFFF"
 config.window_decorations = "RESIZE"
 -- タブバーの表示
 config.show_tabs_in_tab_bar = true
--- タブが一つの時は非表示
-config.hide_tab_bar_if_only_one_tab = true
+-- 利用枠の表示はこのバーの右側に載るため、タブが一つでもバーを出す
+config.hide_tab_bar_if_only_one_tab = false
 -- falseにするとタブバーの透過が効かなくなる
 -- config.use_fancy_tab_bar = false
 
@@ -118,7 +118,8 @@ config.show_close_tab_button_in_tabs = false
 -- タブ同士の境界線を非表示
 config.colors = {
 	tab_bar = {
-		background = "#5c6d74",
+		-- タブ以外の領域（ステータス表示を含む）の背景。window_frame の暗さに揃える。
+		background = "#0d0d0d",
 		inactive_tab_edge = "none",
 	},
 	-- ペイン間の区切り線の色を変更。
@@ -160,6 +161,17 @@ wezterm.on("format-tab-title", function(tab, tabs, panes, config, hover, max_wid
 end)
 
 ----------------------------------------------------
+-- Claude Code / Codex の利用枠
+----------------------------------------------------
+local agent_usage = require("agent-usage")
+local keybinds = require("keybinds")
+
+wezterm.on("update-status", function(window, _pane)
+	keybinds.track_active_tab(window)
+	agent_usage.update(window, keybinds.status_text(window))
+end)
+
+----------------------------------------------------
 -- Claude Code 完了時にフォーカスを戻す
 ----------------------------------------------------
 wezterm.on("user-var-changed", function(window, pane, name, value)
@@ -174,8 +186,8 @@ end)
 -- keybinds
 ----------------------------------------------------
 config.disable_default_key_bindings = true
-config.keys = require("keybinds").keys
-config.key_tables = require("keybinds").key_tables
+config.keys = keybinds.keys
+config.key_tables = keybinds.key_tables
 config.leader = { key = "q", mods = "CTRL", timeout_milliseconds = 2000 }
 
 return config

@@ -7,8 +7,9 @@ local equalize = require("equalize")
 local prev_tab_idx = {}
 local current_tab_idx = {}
 
--- Show which key table is active in the status area + pane info
-wezterm.on("update-right-status", function(window, pane)
+-- 右ステータスは 1 か所しか持てず、最後に set_right_status を呼んだ側が全体を置き換える。
+-- ここでは文字列を返すだけにして、描画は agent-usage.lua に合成させる。
+local function status_text(window)
 	local status = {}
 
 	-- キーテーブル表示
@@ -32,12 +33,19 @@ wezterm.on("update-right-status", function(window, pane)
 		end
 	end
 
-	-- タブ変更の追跡
+	return table.concat(status, " | ")
+end
+
+-- SUPER+- の「前のタブに戻る」が prev_tab_idx を参照するため、毎 tick 呼ぶ必要がある。
+local function track_active_tab(window)
+	local tab = window:active_tab()
+	if not tab then
+		return
+	end
 	local win_id = window:window_id()
-	local tabs = window:mux_window():tabs()
 	local active_idx = 0
-	for i, t in ipairs(tabs) do
-		if t:tab_id() == pane:tab():tab_id() then
+	for i, t in ipairs(window:mux_window():tabs()) do
+		if t:tab_id() == tab:tab_id() then
 			active_idx = i - 1
 			break
 		end
@@ -46,11 +54,11 @@ wezterm.on("update-right-status", function(window, pane)
 		prev_tab_idx[win_id] = current_tab_idx[win_id]
 		current_tab_idx[win_id] = active_idx
 	end
-
-	window:set_right_status(table.concat(status, " | "))
-end)
+end
 
 return {
+	status_text = status_text,
+	track_active_tab = track_active_tab,
 	keys = {
 		{
 			-- workspaceの切り替え
