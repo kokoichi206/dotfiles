@@ -88,8 +88,11 @@ config.pane_select_fg_color = "#FFFFFF"
 ----------------------------------------------------
 -- Tab
 ----------------------------------------------------
--- タイトルバーを非表示
-config.window_decorations = "RESIZE"
+-- タブバーのダブルクリックによる最大化は、この組み合わせちょうどのときだけ効く。フラグを足すと無効になる。
+-- ボタンは出さない。macOS 既定の MacOsNative スタイルは integrated_title_buttons を無視するため、空にするにはスタイルを替える。
+config.window_decorations = "INTEGRATED_BUTTONS|RESIZE"
+config.integrated_title_button_style = "Windows"
+config.integrated_title_buttons = {}
 -- タブバーの表示
 config.show_tabs_in_tab_bar = true
 -- 利用枠の表示はこのバーの右側に載るため、タブが一つでもバーを出す
