@@ -8,8 +8,12 @@ uuid() {
   uuidgen | tr A-Z a-z
 }
 
+payload-claims() {
+  awk '(l = length($0)){printf $0} END {if (l%4 != 0) {for(i=1; i<=(4-l%4); i++){printf "="}}}' | base64 -d
+}
+
 jwt-claims() {
-  awk -F. '(l = length($2)){printf $2} END {if (l%4 != 0) {for(i=1; i<=(4-l%4); i++){printf "="}}}' | base64 -d
+  awk -F. '{printf $2}' | payload-claims
 }
 
 jtg() {
