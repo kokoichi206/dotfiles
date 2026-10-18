@@ -421,6 +421,7 @@
     ],
     "defaultMode": "auto",
     "deny": [
+      "Artifact",
       "Bash(rm -rf /)",
       "Bash(rm -rf ~)",
       "Bash(rm -rf /*)",
@@ -515,7 +516,7 @@
         }
       ]
     },
-    "enabled": true,
+    "enabled": false,
     "excludedCommands": [
       "afplay",
       "docker",
