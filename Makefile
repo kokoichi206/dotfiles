@@ -61,6 +61,16 @@ test-claude-hooks:	## dot_claude/hooks の単体テストを実行
 	python3 dot_claude/hooks/check-tentative-language.test.py
 	bash dot_claude/hooks/detect-toolcall-leak.test.sh
 
+.PHONY: codex-apply codex-check test-codex-config
+codex-apply:	## 共通設定を ~/.codex/config.toml へマージ (要 Codex 再起動)
+	uv run --script dot_codex/apply_config.py
+
+codex-check:	## Codex の共通設定に未反映の変更があれば失敗 (値は表示しない)
+	uv run --script dot_codex/apply_config.py --check
+
+test-codex-config:	## Codex 共通設定のマージとローカル設定の保持を検査
+	uv run --with tomlkit==0.13.3 python -m unittest discover -s dot_codex -p 'test_apply_config.py'
+
 .PHONY: claude-lint
 claude-lint:	## settings.json の hook 配線を検査
 	./claude-lint-settings.sh

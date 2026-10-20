@@ -11,7 +11,7 @@ set -euo pipefail
 
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 CLAUDE_DIR="$HOME/.claude"
-CODEX_DIR="$HOME/.codex"
+CODEX_DIR="${CODEX_HOME:-$HOME/.codex}"
 
 # Colors for output
 RED='\033[0;31m'
@@ -159,21 +159,8 @@ setup_codex() {
     create_symlink "$SCRIPT_DIR/dot_codex/AGENTS.md" "$CODEX_DIR/AGENTS.md"
     create_symlink "$SCRIPT_DIR/dot_codex/skills" "$CODEX_DIR/skills"
 
-    # config.toml は MCP サーバーの認証情報とマシン固有の絶対パスを含むため
-    # リポジトリに雛形を置かず、各マシンで手動設定する。
-
-    # Create config.local.toml template if it doesn't exist
-    if [ ! -f "$CODEX_DIR/config.local.toml" ]; then
-        cat > "$CODEX_DIR/config.local.toml" <<'EOF'
-# Machine-specific Codex configuration
-# This file is .gitignored and should contain environment-specific settings
-
-# Example: Add trusted projects for this machine
-# [projects."/path/to/your/project"]
-# trust_level = "trusted"
-EOF
-        log_info "Created config.local.toml template"
-    fi
+    # 認証情報とマシン固有の設定を残すため、共通設定だけをマージする。
+    uv run --script "$SCRIPT_DIR/dot_codex/apply_config.py" --target "$CODEX_DIR/config.toml"
 
     log_info "Codex CLI setup complete!"
 }

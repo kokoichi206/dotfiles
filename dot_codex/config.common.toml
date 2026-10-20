@@ -1,0 +1,30 @@
+# 認証情報・アカウント・絶対パスは ~/.codex/config.toml に残す。
+mcp_oauth_credentials_store = "keyring"
+hide_agent_reasoning = true
+model = "gpt-6.1-sol"
+model_reasoning_effort = "medium"
+network_access = true
+personality = "pragmatic"
+
+[mcp_servers.aws_mcp]
+command = "uvx"
+args = [
+  "mcp-proxy-for-aws-cli@1.7.0",
+  "https://aws-mcp.ap-northeast-1.api.aws/mcp",
+  "--region", "ap-northeast-1",
+  "--metadata", "AWS_REGION=ap-northeast-1",
+  "--read-only",
+]
+startup_timeout_sec = 60
+
+[mcp_servers.context7]
+command = "npx"
+args = ["-y", "@upstash/context7-mcp@latest"]
+
+[mcp_servers.terraform]
+command = "docker"
+args = ["run", "-i", "--rm", "hashicorp/terraform-mcp-server"]
+
+[mcp_servers.chrome-devtools]
+command = "npx"
+args = ["chrome-devtools-mcp@latest"]
